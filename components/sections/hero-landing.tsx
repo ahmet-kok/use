@@ -7,7 +7,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { Icons } from "@/components/shared/icons";
 
 export default async function HeroLanding() {
-  const { stargazers_count: stars } = await fetch(
+  const { stargazers_count: stars } = {
+    stargazers_count: 12345,
+  }; /* await fetch(
     "https://api.github.com/repos/mickasmt/next-saas-stripe-starter",
     {
       ...(env.GITHUB_OAUTH_TOKEN && {
@@ -21,7 +23,7 @@ export default async function HeroLanding() {
     },
   )
     .then((res) => res.json())
-    .catch((e) => console.log(e));
+    .catch((e) => console.log(e)); */
 
   return (
     <section className="space-y-6 py-12 sm:py-20 lg:py-20">
@@ -35,8 +37,10 @@ export default async function HeroLanding() {
           target="_blank"
         >
           <span className="mr-3">🎉</span>
-          <span className="hidden md:flex">Introducing&nbsp;</span> Next Auth
-          Roles Template on <Icons.twitter className="ml-2 size-3.5" />
+          <span className="hidden md:flex">
+            Introducing&nbsp;
+          </span> Next Auth Roles Template on{" "}
+          <Icons.twitter className="ml-2 size-3.5" />
         </Link>
 
         <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
