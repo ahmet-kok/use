@@ -13,7 +13,11 @@ interface MultiLangLinkProps extends Omit<NextLinkProps, 'href'> {
 const Link: React.FC<MultiLangLinkProps> = ({ href, children, className, target, rel, ...props }) => {
   const locale = useLocale();
 
-  const localizedHref = href.startsWith('/') ? `/${locale}${href}` : href;
+  // Only add locale prefix for non-English locales (zh, tr)
+  // For English (default locale), use the path as is
+  const localizedHref = href.startsWith('/') 
+    ? (locale === 'en' ? href : `/${locale}${href}`) 
+    : href;
 
   return (
     <NextLink href={localizedHref} className={className} target={target} rel={rel} {...props}>

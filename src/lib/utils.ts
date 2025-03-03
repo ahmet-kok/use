@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { clsx, type ClassValue } from "clsx";
 import ms from "ms";
 import { twMerge } from "tailwind-merge";
@@ -9,6 +9,10 @@ import { siteConfig } from "@/config/site";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+// Define theme colors for light and dark modes
+export const lightThemeColor = "#ffffff"; // Light theme color
+export const darkThemeColor = "#18181b";  // Dark theme color
 
 export function constructMetadata({
   title = siteConfig.name,
@@ -58,7 +62,7 @@ export function constructMetadata({
       creator: "@miickasmt",
     },
     icons,
-    metadataBase: new URL(siteConfig.url),
+    metadataBase: new URL(siteConfig.url || "http://localhost:3000"),
     manifest: `${siteConfig.url}/site.webmanifest`,
     ...(noIndex && {
       robots: {
@@ -66,6 +70,16 @@ export function constructMetadata({
         follow: false,
       },
     }),
+  };
+}
+
+// Create a viewport configuration function with theme-responsive colors
+export function constructViewport(): Viewport {
+  return {
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: lightThemeColor },
+      { media: "(prefers-color-scheme: dark)", color: darkThemeColor }
+    ],
   };
 }
 

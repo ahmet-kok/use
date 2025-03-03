@@ -5,7 +5,7 @@ import { fontGeist, fontHeading, fontSans, fontUrban } from "@/assets/fonts";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 
-import { cn, constructMetadata } from "@/lib/utils";
+import { cn, constructMetadata, constructViewport } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@/components/analytics";
 import ModalProvider from "@/components/modals/providers";
@@ -14,7 +14,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 
 export const runtime = 'edge';
 
-const locales = ['en', 'zh'];
+const locales = ['en', 'zh', 'tr'];
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -22,6 +22,7 @@ interface RootLayoutProps {
 }
 
 export const metadata = constructMetadata();
+export const viewport = constructViewport();
 
 export function generateStaticParams() {
   return locales.map((locale) => ({locale}));

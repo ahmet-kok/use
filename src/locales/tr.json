@@ -1,0 +1,588 @@
+{
+    "HomePage": {
+      "title": "Merhaba dünya!"
+    },
+    "HeroLanding": {
+      "introducing": "Şablonu Tanıtıyoruz",
+      "kickoff": "İlk Yurt Dışı SaaS Şablonunuz:",
+      "saasStarter": "FFlow Next",
+      "description": "Next.js 14, Next Intl, Drizzle ORM, Neon, Auth.js v5, Resend, React Email, Shadcn/ui, Stripe kullanarak bir sonraki Yurt Dışı SaaS projenizi oluşturun.",
+      "goPricing": "Fiyatlandırmaya Git",
+      "starOn": "Yıldızla",
+      "github": "GitHub",
+      "goIFB": "Blogum"
+    },
+    "layout": {
+      "english": "İngilizce",
+      "chinese": "Çince",
+      "turkish": "Türkçe"
+    },
+    "BlogPage": {
+      "title": "Blog - FFlow Next",
+      "description": "FFlow Next'ten en son haberler ve güncellemeler.",
+      "all": "Hepsi",
+      "categories": "Kategoriler",
+      "guides": "Kılavuzlar",
+      "news": {
+        "title": "Haberler",
+        "description": "FFlow Next'ten güncellemeler ve duyurular."
+      },
+      "education": {
+        "title": "Eğitim",
+        "description": "SaaS yönetimi hakkında eğitici içerikler."
+      },
+      "authors": {
+        "noone": {
+          "name": "kimse"
+        },
+        "shadcn": {
+          "name": "shadcn"
+        }
+      }
+    },
+    "PricingPage": {
+      "seriously": "Cidden?",
+      "youare": "Sen bir",
+      "backto": "Geri dön",
+      "dashboard": "Kontrol Paneli",
+      "starter": {
+        "title": "Başlangıç",
+        "description": "Yeni Başlayanlar İçin",
+        "benefit1": "Aylık 100 gönderiye kadar",
+        "benefit2": "Temel analitik ve raporlama",
+        "benefit3": "Standart şablonlara erişim",
+        "limitation1": "Yeni özelliklere öncelikli erişim yok.",
+        "limitation2": "Sınırlı müşteri desteği",
+        "limitation3": "Özel marka oluşturma yok",
+        "limitation4": "Sınırlı iş kaynaklarına erişim."
+      },
+      "pro": {
+        "title": "Pro",
+        "description": "Gelişmiş Özellikleri Açın",
+        "benefit1": "Aylık 500 gönderiye kadar",
+        "benefit2": "Gelişmiş analitik ve raporlama",
+        "benefit3": "İş şablonlarına erişim",
+        "benefit4": "Öncelikli müşteri desteği",
+        "benefit5": "Özel web seminerleri ve eğitimler.",
+        "limitation1": "Özel marka oluşturma yok",
+        "limitation2": "Sınırlı iş kaynaklarına erişim."
+      },
+      "business": {
+        "title": "İşletme",
+        "description": "Güçlü Kullanıcılar İçin",
+        "benefit1": "Sınırsız gönderi",
+        "benefit2": "Gerçek zamanlı analitik ve raporlama",
+        "benefit3": "Tüm şablonlara, özel markalama dahil erişim",
+        "benefit4": "7/24 iş müşteri desteği",
+        "benefit5": "Kişiselleştirilmiş onboarding ve hesap yönetimi."
+      },
+      "features": {
+        "analytics": "Analitik Erişimi",
+        "branding": "Özel Markalama",
+        "support": "Öncelikli Destek",
+        "reporting": "Gelişmiş Raporlama",
+        "manager": "Atanmış Yönetici",
+        "apiAccess": "API Erişimi",
+        "webinars": "Aylık Web Seminerleri",
+        "integrations": "Özel Entegrasyonlar",
+        "roles": "Roller ve İzinler",
+        "onboarding": "Onboarding Yardımı",
+        "custom": "Özel",
+        "unlimited": "Sınırsız",
+        "support247": "7/24 Destek",
+        "full": "Tam",
+        "available": "Mevcut",
+        "advanced": "Gelişmiş",
+        "fullService": "Tam Hizmet"
+      },
+      "tooltips": {
+        "analytics": "Tüm planlar, performans takibi için temel analitik içerir.",
+        "branding": "Özel markalama, Pro planından itibaren kullanılabilir.",
+        "reporting": "Gelişmiş raporlama, İşletme ve Enterprise planlarında mevcuttur.",
+        "manager": "Enterprise plan, atanmış bir hesap yöneticisi içerir.",
+        "webinars": "Pro ve üzeri planlar, aylık web seminerlerine erişimi içerir.",
+        "integrations": "Özel entegrasyonlar, İşletme ve Enterprise planlarında mevcuttur.",
+        "roles": "Kullanıcı rolleri ve izin yönetimi, daha yüksek planlarda iyileşir.",
+        "onboarding": "Daha yüksek planlar, daha kapsamlı onboarding yardımı içerir."
+      },
+      "year": "yıllık faturalandırıldığında tahsil edilecek",
+      "month": "aylık faturalandırıldığında",
+      "goToDashboard": "Kontrol paneline git",
+      "startAtFullSpeed": "Tam hızda başlayın !",
+      "pricing": "Fiyatlandırma",
+      "forContact": "destek ekibimizle iletişim kurmak için.",
+      "testSubscriptions": "Abonelikleri test edebilirsiniz ve ücret alınmaz.",
+      "email": "E-posta",
+      "plans": "Planlar",
+      "compareOurPlans": "Planlarımızı Karşılaştırın",
+      "findThePerfectPlan": "İşletmenizin ihtiyaçlarına özel mükemmel planı bulun!",
+      "planTable": {
+        "starter": "Başlangıç",
+        "pro": "Pro",
+        "business": "İşletme",
+        "enterprise": "Kurumsal"
+      },
+      "faq": {
+        "label": "SSS",
+        "title": "Sıkça Sorulan Sorular",
+        "subtitle": "Ortak sorulara hızlı cevaplar bulmak için kapsamlı SSS'mizi inceleyin. Daha fazla yardıma ihtiyaç duyarsanız, kişiselleştirilmiş yardım için bizimle iletişime geçmekten çekinmeyin."
+      },
+      "faqItems": {
+        "item1": {
+          "question": "Ücretsiz planın maliyeti nedir?",
+          "answer": "Ücretsiz planımız tamamen ücretsizdir, aylık veya yıllık bir ücret yoktur. Temel özelliklerimizi keşfetmek ve başlamak için harika bir yoldur."
+        },
+        "item2": {
+          "question": "Basic Aylık planın ücreti nedir?",
+          "answer": "Basic Aylık planın fiyatı aylık 15 dolardır. Temel özelliklere erişim sağlar ve aylık olarak faturalandırılır."
+        },
+        "item3": {
+          "question": "Pro Aylık planın fiyatı nedir?",
+          "answer": "Pro Aylık plan aylık 25 dolardır. Gelişmiş özellikler sunar ve aylık olarak faturalandırılır, esneklik sağlar."
+        },
+        "item4": {
+          "question": "Yıllık abonelik planlarınız var mı?",
+          "answer": "Evet, daha fazla tasarruf için yıllık abonelik planlarımız var. Basic Yıllık plan yılda 144 dolar, Pro Yıllık plan ise yılda 300 dolardır."
+        },
+        "item5": {
+          "question": "Ücretli planlar için deneme süresi var mı?",
+          "answer": "Hem Pro Aylık hem de Pro Yıllık planlar için 14 günlük ücretsiz deneme sunuyoruz. Ücretli bir abonelik taahhüdüne girmeden önce tüm özellikleri deneyimlemek için harika bir fırsat."
+        }
+      }
+    },
+    "QuotaPage": {
+      "resourceTypes": {
+        "api_calls": "API Çağrıları",
+        "storage": "Depolama",
+        "exports": "Dışa Aktarımlar",
+        "team_members": "Takım Üyeleri"
+      },
+      "resourceUsageQuota": "Kaynak Kullanım Kotası",
+      "monitorResourceUsage": "Farklı kaynaklar için kullanımınızı ve kalan kotanızı izleyin.",
+      "totalQuota": "Toplam Kota",
+      "usedQuota": "Kullanılan Kota",
+      "remainingQuota": "Kalan Kota",
+      "usageProgress": "Kullanım İlerlemesi",
+      "percentUsed": "Kullanıldı {percent}%",
+      "fetchError": "Kota verileri alınamadı",
+      "noQuotaData": "Kota verisi yok",
+      "noQuotaDataDescription": "Lütfen daha sonra tekrar kontrol edin.",
+      "refreshQuotaData": "Kota Verilerini Yenile"
+    },
+    "APIKeysPage": {
+      "createAPIKey": "API Anahtarı Oluştur",
+      "deleteAPIKey": "API Anahtarını Sil",
+      "deleteAPIKeyConfirm": "Bu API anahtarını silmek istediğinizden emin misiniz?",
+      "deleteAPIKeySuccess": "API anahtarı başarıyla silindi",
+      "deleteAPIKeyError": "API anahtarı silinemedi",
+      "deleteAPIKeyCancel": "İptal",
+      "defaultKeyName": "Yeni Anahtar",
+      "heading": "API Anahtarları",
+      "subheading": "API anahtarlarınızı burada yönetin.",
+      "noAPIKeys": "API anahtarı bulunamadı",
+      "noAPIKeysDescription": "Aşağıdaki düğmeye tıklayarak yeni bir API anahtarı oluşturabilirsiniz.",
+      "keyCopiedSuccess": "API anahtarı panoya kopyalandı",
+      "keyDeletedSuccess": "API anahtarı başarıyla silindi",
+      "keyDeletionError": "API anahtarı silinemedi",
+      "apiKeyNamePlaceholder": "API anahtarı adını girin",
+      "name": "Ad",
+      "create": "Oluştur",
+      "apiKey": "API Anahtarı",
+      "created": "Oluşturuldu",
+      "actions": "Eylemler",
+      "copyFullAPIKey": "Tam API anahtarını kopyala"
+    },
+    "Dashboard": {
+      "sidebar": {
+        "menu": "MENÜ",
+        "adminPanel": "Yönetici Paneli",
+        "dashboard": "Kontrol Paneli",
+        "billing": "Faturalandırma",
+        "charts": "Grafikler",
+        "chatBot": "Sohbet Botu",
+        "apiKeys": "API Anahtarları",
+        "quota": "Kota",
+        "orders": "Siparişler",
+        "userPosts": "Kullanıcı Gönderileri",
+        "options": "SEÇENEKLER",
+        "settings": "Ayarlar",
+        "homepage": "Ana Sayfa",
+        "documentation": "Dokümantasyon",
+        "support": "Destek"
+      },
+      "main": {
+        "heading": "Kontrol Paneli",
+        "currentRole": "Mevcut Rol: {role} — Rolünüzü ayarlardan değiştirebilirsiniz.",
+        "loadingCurrentRole": "Mevcut Rol :",
+        "noContentTitle": "Oluşturulmuş içerik yok",
+        "noContentDescription": "Henüz bir içeriğiniz yok. İçerik oluşturmaya başlayın.",
+        "addContent": "İçerik Ekle"
+      }
+    },
+    "AdminPage": {
+      "heading": "Yönetici Paneli",
+      "subheading": "Yalnızca ADMIN rolüne sahip kullanıcılar için erişim.",
+      "infoCards": {
+        "subscriptions": "Abonelikler",
+        "subscriptionsDesc": "+180.1% (geçen aya göre)",
+        "revenue": "Gelir",
+        "revenueDesc": "+25.8% (geçen aya göre)",
+        "transactions": "İşlemler",
+        "transactionsDesc": "+14.2% (geçen aya göre)",
+        "activeUsers": "Aktif Kullanıcılar",
+        "activeUsersDesc": "+5.7% (geçen aya göre)"
+      },
+      "transactionsList": {
+        "title": "İşlemler",
+        "description": "Mağazanızdaki son işlemler.",
+        "viewAll": "Hepsini Gör",
+        "customer": "Müşteri",
+        "type": "Tür",
+        "status": "Durum",
+        "date": "Tarih",
+        "amount": "Tutar",
+        "sale": "Satış",
+        "refund": "İade",
+        "subscription": "Abonelik",
+        "approved": "Onaylandı",
+        "declined": "Reddedildi"
+      },
+      "ordersPage": {
+        "heading": "Siparişler",
+        "subheading": "En son siparişlerinizi kontrol edin ve yönetin.",
+        "emptyTitle": "Listelecek sipariş yok",
+        "emptyDescription": "Henüz herhangi bir siparişiniz yok. Bir ürün sipariş etmeye başlayın.",
+        "buyProducts": "Ürün Satın Al"
+      }
+    },
+    "Chat": {
+      "chatBot": "Sohbet Botu",
+      "chatWithAI": "Yapay zeka asistanımızla sohbet edin.",
+      "initialQuestions1": "FFlow Next ile nasıl başlayabilirim?",
+      "initialQuestions2": "FFlow Next hangi özellikleri sunuyor?",
+      "initialQuestions3": "FFlow Next'te UI bileşenlerini özelleştirebilir miyim?",
+      "initialQuestions4": "FFlow Next kimlik doğrulamayı nasıl ele alıyor?",
+      "welcomeMessage": "**FFlow Next SohbetBot'a Hoş Geldiniz**",
+      "inputPlaceholder": "Mesajınızı yazın...",
+      "sendButton": "Gönder"
+    },
+    "Charts": {
+      "heading": "Grafikler",
+      "subheading": "shadcn-ui tarafından sunulan grafik listesi."
+    },
+    "UpgradeCard": {
+      "title": "Pro'ya Yükseltin",
+      "description": "Tüm özelliklerin kilidini açın ve destek ekibimize sınırsız erişim elde edin.",
+      "upgradeButton": "Yükselt"
+    },
+    "Powered": {
+      "poweredby": "Tarafından desteklenmektedir"
+    },
+    "Testimonials": {
+      "label": "Referanslar",
+      "title": "Müşterilerimiz neler paylaşıyor.",
+      "subtitle": "Dünyanın dört bir yanından memnun müşterilerimizin olumlu geri bildirimlerini keşfedin.",
+      "reviews": {
+        "1": "FFlow Next, geliştirme sürecimizi dönüştürdü. İnanılmaz derecede hızlı ve verimli!",
+        "2": "Next.js 14 ve diğer en yeni teknolojilerin entegrasyonu FFlow Next'i tam bir oyunun kurucusu yapıyor.",
+        "3": "Ekibimizin üretkenliği, FFlow Next'i benimsedikten sonra hızla arttı. Şiddetle tavsiye edilir!",
+        "4": "fflow-next'in kod kalitesi ve net dokümantasyonundan çok etkilendim. Ekibe tebrikler!",
+        "5": "fflow-next, kullanıcı verilerini verimli bir şekilde yönetmek için ihtiyacım olan araçları sağladı. Çok teşekkürler!",
+        "6": "fflow-next, bir pazarlama yöneticisi olarak işimde benim için paha biçilemez bir araç oldu. Stripe ile sorunsuz entegrasyonu sayesinde, yerleşik ödeme işlevselliği ile hedefli pazarlama kampanyaları başlatabildim ve ürünlerimizi ve hizmetlerimizi daha etkili bir şekilde ticarileştirmemize olanak tanıdı.",
+        "7": "fflow-next sayesinde, modern ve çekici kullanıcı arayüzlerini rekor sürede oluşturabildim. Başlangıç kiti, şık ve sezgisel tasarımlar oluşturmak için sağlam bir temel sunarak, işimin daha yaratıcı yönlerine odaklanmama olanak sağladı."
+      }
+    },
+    "PreviewLanding": {
+      "imageAlt": "Önizleme açılışı"
+    },
+    "BentoGrid": {
+      "customizable": "Özelleştirilebilir",
+      "secureByDefault": "Varsayılan olarak güvenli",
+      "secureByDefaultDescription": "Provident fugit ve vero voluptate. magnam magni doloribus dolores voluptates a sapiente nisi.",
+      "fasterThanLight": "Işık Hızından Daha Hızlı",
+      "fasterThanLightDescription": "Provident fugit vero voluptate. magnam magni doloribus dolores voluptates inventore nisi.",
+      "fasterThanLightAltDescription": "Provident fugit vero voluptate. Voluptates a sapiente inventore nisi.",
+      "keepLovedOnesSafe": "Sevdiklerinizi Güvende Tutun",
+      "keepLovedOnesSafeDescription": "Voluptate. magnam magni doloribus dolores voluptates a sapiente."
+    },
+    "Features": {
+      "label": "Özellikler",
+      "title": "Tüm özellikleri keşfedin.",
+      "subtitle": "Bu özellikler, üretkenliğinizi ve kullanıcı deneyiminizi geliştirmek için tasarlanmıştır.",
+      "visitSite": "Siteyi Ziyaret Et",
+      "feature1": {
+        "title": "Özellik 1",
+        "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+        "link": "/",
+        "icon": "nextjs"
+      },
+      "feature2": {
+        "title": "Özellik 2",
+        "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+        "link": "/",
+        "icon": "google"
+      },
+      "feature3": {
+        "title": "Özellik 3",
+        "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+        "link": "/",
+        "icon": "gitHub"
+      },
+      "feature4": {
+        "title": "Özellik 4",
+        "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+        "link": "/",
+        "icon": "laptop"
+      },
+      "feature5": {
+        "title": "Özellik 5",
+        "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+        "link": "/",
+        "icon": "user"
+      },
+      "feature6": {
+        "title": "Özellik 6",
+        "description": "Amet praesentium deserunt ex commodi tempore fuga voluptatem. Sit, sapiente.",
+        "link": "/",
+        "icon": "copy"
+      }
+    },
+    "InfoLanding": {
+      "Empower your projects": {
+        "title": "Projelerinizi Güçlendirin",
+        "description": "Açık kaynaklı SaaS platformumuzla projelerinizin tüm potansiyelini açığa çıkarın. Kolayca iş birliği yapın, zahmetsizce yenilik yapın ve sınırsızca ölçeklendirin.",
+        "list": {
+          "Collaborative": {
+            "title": "İş Birlikçi",
+            "description": "Ekip üyelerinizle gerçek zamanlı olarak birlikte çalışın."
+          },
+          "Innovative": {
+            "title": "Yenilikçi",
+            "description": "Sürekli güncellemelerle güncel kalarak önde olun."
+          },
+          "Scalable": {
+            "title": "Ölçeklenebilir",
+            "description": "Platformumuz, ihtiyaçlarınıza uyacak şekilde ölçeklenebilirlik sunar."
+          }
+        }
+      },
+      "Seamless Integration": {
+        "title": "Sorunsuz Entegrasyon",
+        "description": "Açık kaynaklı SaaS'ımızı mevcut iş akışlarınıza sorunsuzca entegre edin. Favori araçlarınız ve servislerinizle zahmetsizce bağlanarak akıcı bir deneyim elde edin.",
+        "list": {
+          "Flexible": {
+            "title": "Esnek",
+            "description": "Entegrasyonlarınızı benzersiz gereksinimlerinize göre özelleştirin."
+          },
+          "Efficient": {
+            "title": "Verimli",
+            "description": "Manuel çabayı azaltarak süreçlerinizi kolaylaştırın."
+          },
+          "Reliable": {
+            "title": "Güvenilir",
+            "description": "Sağlam altyapımıza ve kapsamlı dokümantasyonumuza güvenin."
+          }
+        }
+      }
+    },
+    "Marketing": {
+      "nav": {
+        "pricing": "Fiyatlandırma",
+        "blog": "Blog",
+        "documentation": "Dokümantasyon"
+      },
+      "siteName": "FFlow Next",
+      "dashboard": "Kontrol Paneli",
+      "login": "Giriş Yap",
+      "signUp": "Kayıt Ol",
+      "admin": "Yönetici"
+    },
+    "Settings": {
+      "heading": "Ayarlar",
+      "subheading": "Hesap ve site ayarlarını yönetin."
+    },
+    "UserNameForm": {
+      "errorTitle": "Bir şeyler yanlış gitti",
+      "errorDescription": "Adınız güncellenemedi. Lütfen daha sonra tekrar deneyin.",
+      "successDescription": "Adınız güncellendi.",
+      "nameLabel": "Ad",
+      "namePlaceholder": "Adınızı girin",
+      "nameDescription": "Bu, herkese açık görünen adınızdır. Gerçek adınız veya bir takma ad olabilir.",
+      "saveChanges": "Değişiklikleri kaydet"
+    },
+    "UserRoleForm": {
+      "title": "Rolünüz",
+      "description": "Uygulamayı hangi rolle test etmek istediğinizi seçin.",
+      "roleLabel": "Rol",
+      "selectPlaceholder": "Bir rol seçin",
+      "saveChanges": "Değişiklikleri Kaydet",
+      "errorTitle": "Bir şeyler yanlış gitti",
+      "errorDescription": "Rolünüz güncellenemedi. Lütfen tekrar deneyin.",
+      "successDescription": "Rolünüz güncellendi.",
+      "removeInProduction": "Gerçek üretimde bu alanı kaldırın"
+    },
+    "DeleteAccountSection": {
+      "title": "Hesabı Sil",
+      "description": "Burası tehlikeli bölge - Dikkatli olun!",
+      "areYouSure": "Emin misiniz?",
+      "activeSubscription": "Aktif Abonelik",
+      "deleteWarning": "Permanently delete your {siteName} hesabınızı kalıcı olarak silin. Bu işlem geri alınamaz, lütfen dikkatli devam edin.",
+      "deleteButton": "Hesabı Sil"
+    },
+    "UserAccountNav": {
+      "admin": "Yönetici",
+      "dashboard": "Kontrol Paneli",
+      "settings": "Ayarlar",
+      "logOut": "Çıkış yap"
+    },
+    "Footer": {
+      "sections": {
+        "Company": {
+          "title": "Şirket",
+          "items": {
+            "About": "Hakkında",
+            "Enterprise": "Kurumsal",
+            "Terms": "Şartlar",
+            "Privacy": "Gizlilik"
+          }
+        },
+        "Product": {
+          "title": "Ürün",
+          "items": {
+            "Security": "Güvenlik",
+            "Customization": "Özelleştirme",
+            "Customers": "Müşteriler",
+            "Changelog": "Değişiklik Günlüğü"
+          }
+        },
+        "Docs": {
+          "title": "Dokümanlar",
+          "items": {
+            "Introduction": "Giriş",
+            "Installation": "Kurulum",
+            "Components": "Bileşenler",
+            "Code Blocks": "Kod Blokları"
+          }
+        }
+      },
+      "builtBy": "Tarafından inşa edildi",
+      "hostedOn": "Şurada barındırılıyor",
+      "illustrationsBy": "İllüstrasyonlar hazırlayan"
+    },
+    "DocsSearch": {
+      "searchPlaceholder": "Dokümantasyon içinde ara...",
+      "notImplementedTitle": "Henüz uygulanmadı",
+      "notImplementedDescription": "Arama üzerinde hala çalışıyoruz."
+    },
+    "SearchCommand": {
+      "search": "Ara",
+      "documentation": "dokümantasyon",
+      "inputPlaceholder": "Bir komut girin veya arama yapın...",
+      "noResults": "Sonuç bulunamadı.",
+      "sections": {
+        "MENU": "MENÜ",
+        "OPTIONS": "SEÇENEKLER"
+      },
+      "items": {
+        "Admin Panel": "Yönetici Paneli",
+        "Dashboard": "Kontrol Paneli",
+        "Billing": "Faturalandırma",
+        "Charts": "Grafikler",
+        "Chat Bot": "Sohbet Botu",
+        "API Keys": "API Anahtarları",
+        "Quota": "Kota",
+        "Orders": "Siparişler",
+        "User Posts": "Kullanıcı Gönderileri",
+        "Settings": "Ayarlar",
+        "Homepage": "Ana Sayfa",
+        "Documentation": "Dokümantasyon",
+        "Support": "Destek"
+      }
+    },
+    "ProjectSwitcher": {
+      "newProject": "Yeni Proje",
+      "noProjects": "Henüz bir projeniz yok. Başlamak için bir tane oluşturun.",
+      "name": "Ad",
+      "description": "Açıklama",
+      "enterProjectName": "Proje adını girin",
+      "enterProjectDescription": "Proje açıklamasını girin",
+      "create": "Oluştur",
+      "createProjectError": "Proje oluşturulamadı"
+    },
+    "Docs": {
+      "pageHeader": {
+        "Docs": "Dokümanlar"
+      },
+      "mainNav": {
+        "documentation": "Dokümantasyon",
+        "guides": "Kılavuzlar"
+      },
+      "sidebarNav": {
+        "gettingStarted": "Başlarken",
+        "introduction": "Giriş",
+        "installation": "Kurulum",
+        "configuration": "Yapılandırma",
+        "authentification": "Kimlik Doğrulama",
+        "blog": "Blog",
+        "components": "Bileşenler",
+        "configFiles": "Yapılandırma dosyaları",
+        "database": "Veritabanı",
+        "email": "E-posta",
+        "layouts": "Düzenler",
+        "markdownFiles": "Markdown dosyaları",
+        "subscriptions": "Abonelikler"
+      }
+    },
+    "Guides": {
+      "title": "Kılavuzlar",
+      "description": "Bu bölüm, Next.js 13 uygulamaları geliştirmek için uçtan uca kılavuzları içerir.",
+      "view": "Görüntüle",
+      "featured": "Öne Çıkan",
+      "noGuides": "Yayınlanmış kılavuz yok."
+    },
+    "SignIn": {
+      "signIn": "Giriş Yap",
+      "description": "Bu tamamen demo amaçlıdır - yalnızca e-postanız ve profil resminiz saklanacaktır.",
+      "google": "Google ile Giriş Yap",
+      "github": "GitHub ile Giriş Yap"
+    },
+    "NewsletterForm": {
+      "label": "Bültenimize abone olun",
+      "button": "Abone Ol"
+    },
+    "CustomerPortalButton": {
+      "openCustomerPortal": "Müşteri Portalını Aç"
+    },
+    "BillingPage": {
+      "heading": "Faturalandırma",
+      "subheading": "Faturalandırmayı ve abonelik planınızı yönetin.",
+      "subscriptionPlan": "Abonelik Planı",
+      "choosePlan": "Bir plan seçin",
+      "willBeCanceledOn": "Planınız şu tarihte iptal edilecek ",
+      "willRenewOn": "Planınız şu tarihte yenilenecek ",
+      "youAreCurrentlyOnThe": "Şu anda bu plandasınız:",
+      "plan": "plan."
+    },
+    "LoginPage": {
+      "back": "Geri",
+      "welcomeBack": "Tekrar Hoş Geldiniz",
+      "enterEmail": "Hesabınıza giriş yapmak için e-postanızı girin",
+      "noAccount": "Hesabınız yok mu? Kayıt Ol"
+    },
+    "RegisterPage": {
+      "login": "Giriş Yap",
+      "createAccount": "Hesap Oluştur",
+      "enterEmailToCreateAccount": "Hesabınızı oluşturmak için aşağıya e-postanızı girin",
+      "byClickingContinue": "Devam'a tıklayarak, şu koşulları kabul etmiş olursunuz:",
+      "termsOfService": "Hizmet Şartları",
+      "and": "ve",
+      "privacyPolicy": "Gizlilik Politikası"
+    },
+    "AuthLayout": {
+      "quote": "FFlow Next, geliştirme sürecimizi dönüştürdü. İnanılmaz derecede hızlı ve verimli!",
+      "author": "John Doe, Yazılım Mühendisi",
+      "orContinueWith": "Veya devam et",
+      "signUpWithEmail": "E-posta ile Kayıt Ol",
+      "signInWithEmail": "E-posta ile Giriş Yap"
+    }
+  }
