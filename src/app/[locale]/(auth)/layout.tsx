@@ -1,4 +1,4 @@
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 import { getCurrentUser } from "@/lib/session";
@@ -12,8 +12,7 @@ export default async function AuthLayout({
   children,
   params: { locale },
 }: AuthLayoutProps) {
-  unstable_setRequestLocale(locale);
-
+setRequestLocale(locale);
   const user = await getCurrentUser();
 
   if (user) {

@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { eq } from "drizzle-orm";
 export const runtime = 'edge';
 
-export const GET = auth(async (req: NextRequest) => {
+export async function GET(req: NextRequest) {
     try {
         const user = await getCurrentUser();
         if (!user) {
@@ -28,9 +28,9 @@ export const GET = auth(async (req: NextRequest) => {
         console.error("Failed to fetch projects:", error);
         return new Response(ApiResponse.error(500, "Internal server error"), { status: 500 });
     }
-});
+}
 
-export const POST = auth(async (req: NextRequest) => {
+export async function POST(req: NextRequest) {
     try {
         const user = await getCurrentUser();
         if (!user) {
@@ -81,4 +81,4 @@ export const POST = auth(async (req: NextRequest) => {
         console.error("Failed to create project:", error);
         return new Response(ApiResponse.error(500, "Internal server error"), { status: 500 });
     }
-});
+}

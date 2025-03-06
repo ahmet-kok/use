@@ -5,7 +5,7 @@
   "HeroLanding": {
     "introducing": "Introducing Template",
     "kickoff": "Your First Overseas SaaS Template: ",
-    "saasStarter": "FFlow Next",
+    "saasStarter": "UseEfficiently",
     "description": "Build your Next Overseas SaaS project using Next.js 14, Next Intl, Drizzle ORM, Neon, Auth.js v5, Resend, React Email, Shadcn/ui, Stripe.",
     "goPricing": "Go Pricing",
     "starOn": "Star on",
@@ -18,14 +18,14 @@
     "turkish": "Turkish"
   },
   "BlogPage": {
-    "title": "Blog - FFlow Next",
-    "description": "Latest news and updates from FFlow Next.",
+    "title": "Blog - UseEfficiently",
+    "description": "Latest news and updates from UseEfficiently.",
     "all": "All",
     "categories": "Categories",
     "guides": "Guides",
     "news": {
       "title": "News",
-      "description": "Updates and announcements from FFlow Next."
+      "description": "Updates and announcements from UseEfficiently."
     },
     "education": {
       "title": "Education",
@@ -258,11 +258,11 @@
   "Chat": {
     "chatBot": "Chat Bot",
     "chatWithAI": "Chat with our AI assistant.",
-    "initialQuestions1": "How can I get started with FFlow Next?",
-    "initialQuestions2": "What features does FFlow Next offer?",
-    "initialQuestions3": "Can I customize the UI components in FFlow Next?",
-    "initialQuestions4": "How does FFlow Next handle authentication?",
-    "welcomeMessage": "**Welcome to FFlow Next ChatBot**",
+    "initialQuestions1": "How can I get started with UseEfficiently?",
+    "initialQuestions2": "What features does UseEfficiently offer?",
+    "initialQuestions3": "Can I customize the UI components in UseEfficiently?",
+    "initialQuestions4": "How does UseEfficiently handle authentication?",
+    "welcomeMessage": "**Welcome to UseEfficiently ChatBot**",
     "inputPlaceholder": "Type your message...",
     "sendButton": "Send"
   },
@@ -283,9 +283,9 @@
     "title": "What our clients are sharing.",
     "subtitle": "Discover the glowing feedback from our delighted customers worldwide.",
     "reviews": {
-      "1": "FFlow Next has revolutionized our development process. It's incredibly fast and efficient!",
-      "2": "The integration of Next.js 14 and other cutting-edge technologies makes FFlow Next a game-changer.",
-      "3": "Our team's productivity skyrocketed after adopting FFlow Next. Highly recommended!",
+      "1": "UseEfficiently has revolutionized our development process. It's incredibly fast and efficient!",
+      "2": "The integration of Next.js 14 and other cutting-edge technologies makes UseEfficiently a game-changer.",
+      "3": "Our team's productivity skyrocketed after adopting UseEfficiently. Highly recommended!",
       "4": "I'm impressed by the quality of code and clear documentation of fflow-next. Kudos to the team!",
       "5": "fflow-next provided me with the tools I needed to efficiently manage user data. Thank you so much!",
       "6": "fflow-next has been an invaluable asset in my role as a marketing manager. With its seamless integration with Stripe, I've been able to launch targeted marketing campaigns with built-in payment functionality, allowing us to monetize our products and services more effectively.",
@@ -387,11 +387,12 @@
   },
   "Marketing": {
     "nav": {
-      "pricing": "Pricing",
+      "portfolio": "Portfolio",
       "blog": "Blog",
-      "documentation": "Documentation"
+      "contact": "Contact",
+      "company": "Company"
     },
-    "siteName": "FFlow Next",
+    "siteName": "UseEfficiently",
     "dashboard": "Dashboard",
     "login": "Login",
     "signUp": "Sign Up",
@@ -579,10 +580,51 @@
     "privacyPolicy": "Privacy Policy"
   },
   "AuthLayout": {
-    "quote": "FFlow Next has revolutionized our development process. It's incredibly fast and efficient!",
+    "quote": "UseEfficiently has revolutionized our development process. It's incredibly fast and efficient!",
     "author": "John Doe, Software Engineer",
     "orContinueWith": "Or continue with",
     "signUpWithEmail": "Sign Up with Email",
     "signInWithEmail": "Sign In with Email"
+  },
+  "CareerPage": {
+    "metadata": {
+      "title": "Careers",
+      "description": "Join our team and help us build amazing products"
+    },
+    "header": {
+      "title": "Join Our Team",
+      "description": "We're looking for passionate individuals who share our commitment to creating meaningful digital experiences through minimalist design."
+    },
+    "sections": {
+      "openPositions": "Open Positions",
+      "quickContact": "Quick Contact",
+      "ourValues": "Our Values"
+    },
+    "contactInfo": {
+      "noMatchText": "Don't see a position that matches your skills? We're always interested in meeting talented individuals.",
+      "emailLabel": "career@useefficiently.com",
+      "scheduleCall": "Schedule a 15-minute call"
+    },
+    "values": {
+      "lessBetter": {
+        "title": "Less, but better",
+        "description": "We believe in the power of reduction and focus on what truly matters."
+      },
+      "innovation": {
+        "title": "Innovation with purpose",
+        "description": "We push boundaries while staying true to fundamental design principles."
+      },
+      "learning": {
+        "title": "Continuous learning",
+        "description": "We foster an environment of growth and knowledge sharing."
+      }
+    },
+    "careerList": {
+      "position": "Position",
+      "type": "Type",
+      "location": "Location",
+      "actions": "Actions",
+      "apply": "Apply"
+    }
   }
 }

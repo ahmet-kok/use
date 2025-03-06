@@ -1,5 +1,5 @@
 import { NextIntlClientProvider, useTranslations } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 
 import { DashboardHeader } from "@/components/dashboard/header";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
@@ -32,14 +32,17 @@ function OrdersPageClient() {
   );
 }
 
-export default async function OrdersPage({
-  params: { locale }
-}: {
-  params: { locale: string }
-}) {
+type OrdersPageParams = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function OrdersPage({ params }: OrdersPageParams) {
   // const user = await getCurrentUser();
   // if (!user || user.role !== "ADMIN") redirect("/login");
 
+  const { locale } = await params;
+  setRequestLocale(locale);
+  
   const messages = await getMessages({ locale });
 
   return (

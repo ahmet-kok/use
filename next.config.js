@@ -1,12 +1,14 @@
 // const { setupDevPlatform } = require("@cloudflare/next-on-pages/next-dev");
-const { withContentlayer } = require("next-contentlayer2");
-const createNextIntlPlugin = require('next-intl/plugin');
-const withNextIntl = createNextIntlPlugin();
+// const { withContentlayer } = require("next-contentlayer2");
+const createNextIntlPlugin = require("next-intl/plugin");
+
+// Use the built-in default path or specify the path explicitly
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 import("./env.mjs");
 
 // Setup the Cloudflare dev platform if in development mode
-// if (process.env.NODE_ENV === 'development') {
+// if (env.NODE_ENV === 'development') {
 //   setupDevPlatform().then(() => {
 //     console.log('Cloudflare dev platform setup complete');
 //   }).catch((err) => {
@@ -17,7 +19,6 @@ import("./env.mjs");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -32,13 +33,15 @@ const nextConfig = {
         protocol: "https",
         hostname: "randomuser.me",
       },
+      {
+        protocol: "https",
+        hostname: "v5.airtableusercontent.com",
+      },
     ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ["@prisma/client"],
-  },
+  serverExternalPackages: ["@prisma/client"],
 };
 
 // Ensure withContentlayer is applied first, then withNextIntl
-const configWithContentlayer = withContentlayer(nextConfig);
-module.exports = withNextIntl(configWithContentlayer);
+//const configWithContentlayer = withContentlayer(nextConfig);
+module.exports = withNextIntl(nextConfig);

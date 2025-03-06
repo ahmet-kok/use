@@ -19,13 +19,13 @@ export const sendVerificationRequest: EmailConfig["sendVerificationRequest"] =
       ? `Sign-in link for ${siteConfig.name}`
       : "Activate your account";
 
+    const fromEmail = provider.from || siteConfig.mailSupport;
+
     try {
       const { data, error } = await resend.emails.send({
-        from: provider.from,
+        from: fromEmail,
         to:
-          process.env.NODE_ENV === "development"
-            ? "delivered@resend.dev"
-            : identifier,
+          env.NODE_ENV === "development" ? "delivered@resend.dev" : identifier,
         subject: authSubject,
         react: MagicLinkEmail({
           firstName: user?.name as string,

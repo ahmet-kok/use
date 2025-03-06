@@ -10,7 +10,7 @@ import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
 import { Icons } from "@/components/shared/icons";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-
+import LocaleSwitcher from "@/components/locale/locale-switcher";
 import { DocsConfig, MarketingConfig } from "@/types";
 import { ModeToggle } from "./mode-toggle";
 
@@ -144,7 +144,8 @@ export function NavMobile({ marketingConfig, translations, docsConfig }: NavMobi
             <Icons.gitHub className="size-6" />
             <span className="sr-only">GitHub</span>
           </Link>
-          <ModeToggle />
+          <ModeToggle dropdown={false} />
+          <LocaleSwitcher dropdown={false} />
         </div>
       </nav>
     </>

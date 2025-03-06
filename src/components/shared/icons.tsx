@@ -3,6 +3,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   BookOpen,
+  Bot,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -10,9 +11,11 @@ import {
   CreditCard,
   File,
   FileText,
+  Folder,
   HelpCircle,
   Home,
   Image,
+  Key,
   Laptop,
   LayoutPanelLeft,
   LineChart,
@@ -31,10 +34,7 @@ import {
   Trash,
   User,
   X,
-  Bot,
-  Key,
   Zap,
-  Folder,
 } from "lucide-react";
 
 export type Icon = LucideIcon;

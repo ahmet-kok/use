@@ -9,17 +9,22 @@ import { Metadata } from "next";
 
 import { constructMetadata, getBlurDataURL } from "@/lib/utils";
 
-export async function generateStaticParams() {
+// Type for static params generation (without Promise)
+type MarketingPageParams = {
+  slug: string;
+  locale?: string;
+};
+
+export async function generateStaticParams(): Promise<MarketingPageParams[]> {
   return allPages.map((page) => ({
     slug: page.slugAsParams,
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
+export async function generateMetadata(props: {
+  params: Promise<MarketingPageParams>;
 }): Promise<Metadata | undefined> {
+  const params = await props.params;
   const page = allPages.find((page) => page.slugAsParams === params.slug);
   if (!page) {
     return;
@@ -28,18 +33,15 @@ export async function generateMetadata({
   const { title, description } = page;
 
   return constructMetadata({
-    title: `${title} – FFlow Next`,
+    title: `${title} – FFlow Next`,
     description: description,
   });
 }
 
-export default async function PagePage({
-  params,
-}: {
-  params: {
-    slug: string;
-  };
+export default async function PagePage(props: {
+  params: Promise<MarketingPageParams>;
 }) {
+  const params = await props.params;
   const page = allPages.find((page) => page.slugAsParams === params.slug);
 
   if (!page) {

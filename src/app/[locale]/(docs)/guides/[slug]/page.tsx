@@ -16,18 +16,43 @@ import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { buttonVariants } from "@/components/ui/button";
 import { cn, constructMetadata } from "@/lib/utils";
 
-export async function generateStaticParams() {
-  return allGuides.map((guide) => ({
-    slug: guide.slugAsParams,
-  }));
+// Type for static params generation (without Promise)
+type GuidePageParams = {
+  slug: string;
+  locale: string;
+};
+
+async function getGuideFromParams(params: GuidePageParams) {
+  const slug = params.slug
+    ? params.locale + "/" + params.slug
+    : params.locale;
+
+  const guide = allGuides.find((guide) => {
+    return guide.slugAsParams === slug;
+  });
+
+  if (!guide) return null;
+  
+  return guide;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
+export async function generateStaticParams(): Promise<GuidePageParams[]> {
+  return allGuides.map((guide) => {
+    // Assuming the slugAsParams has format "locale/slug"
+    const slugParts = guide.slugAsParams.split("/");
+    return {
+      locale: slugParts[0] || "",
+      slug: slugParts[1] || slugParts[0] || "",
+    };
+  });
+}
+
+export async function generateMetadata(props: {
+  params: Promise<GuidePageParams>;
 }): Promise<Metadata | undefined> {
-  const guide = allGuides.find((guide) => guide.slugAsParams === params.slug);
+  const params = await props.params;
+  const guide = await getGuideFromParams(params);
+  
   if (!guide) {
     return;
   }
@@ -35,26 +60,16 @@ export async function generateMetadata({
   const { title, description } = guide;
 
   return constructMetadata({
-    title: `${title} – FFlow Next`,
+    title: `${title} – FFlow Next`,
     description: description,
   });
 }
 
-export default async function GuidePage({
-  params,
-}: {
-  params: {
-    slug: string;
-    locale: string;
-  };
+export default async function GuidePage(props: {
+  params: Promise<GuidePageParams>;
 }) {
-  const slug = params.slug
-  ? params.locale + "/" + params.slug
-  : params.locale;
-
-  const guide = allGuides.find((guide) => {
-    return guide.slugAsParams === slug;
-  });
+  const params = await props.params;
+  const guide = await getGuideFromParams(params);
 
   if (!guide) {
     notFound();

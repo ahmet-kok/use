@@ -1,12 +1,13 @@
 import { notFound } from "next/navigation";
 import { allPosts } from "contentlayer/generated";
 
+import { getSingleBlog } from "@/lib/airtable";
 import { Mdx } from "@/components/content/mdx-components";
 
 import "@/styles/mdx.css";
 
 import { Metadata } from "next";
-import Link from "@/components/link/link";
+import { Attachment } from "airtable";
 
 import { BLOG_CATEGORIES } from "@/config/blog";
 import { getTableOfContents } from "@/lib/toc";
@@ -19,22 +20,28 @@ import {
 } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import Author from "@/components/content/author";
+import Link from "@/components/link/link";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { DashboardTableOfContents } from "@/components/shared/toc";
 
-export async function generateStaticParams() {
+// Type for static params generation (without Promise)
+type BlogPostPageParams = {
+  slug: string;
+  locale?: string;
+};
+
+export async function generateStaticParams(): Promise<BlogPostPageParams[]> {
   return allPosts.map((post) => ({
     slug: post.slugAsParams,
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
+export async function generateMetadata(props: {
+  params: Promise<BlogPostPageParams>;
 }): Promise<Metadata | undefined> {
-  const post = allPosts.find((post) => post.slugAsParams === params.slug);
+  const params = await props.params;
+  const post = await getSingleBlog(params.slug);
   if (!post) {
     return;
   }
@@ -42,39 +49,38 @@ export async function generateMetadata({
   const { title, description, image } = post;
 
   return constructMetadata({
-    title: `${title} – FFlow Next`,
+    title: `${title} – FFlow Next`,
     description: description,
-    image,
+    image: image[0].url,
   });
 }
 
-export default async function PostPage({
-  params,
-}: {
-  params: {
-    slug: string;
-  };
+export default async function PostPage(props: {
+  params: Promise<BlogPostPageParams>;
 }) {
-  const post = allPosts.find((post) => post.slugAsParams === params.slug);
+  const params = await props.params;
+  // get the first item from the array
+  let post = await getSingleBlog(params.slug);
+  console.log(post);
 
   if (!post) {
     notFound();
   }
 
   const category = BLOG_CATEGORIES.find(
-    (category) => category.slug === post.categories[0],
+    (category) => category.slug === post.category,
   )!;
 
-  const relatedArticles =
+  /* const relatedArticles =
     (post.related &&
       post.related.map(
         (slug) => allPosts.find((post) => post.slugAsParams === slug)!,
       )) ||
-    [];
+    []; */
 
-  const toc = await getTableOfContents(post.body.raw);
+  const toc = await getTableOfContents(post.content);
 
-  const [thumbnailBlurhash, images] = await Promise.all([
+  /* const [thumbnailBlurhash, images] = await Promise.all([
     getBlurDataURL(post.image),
     await Promise.all(
       post.images.map(async (src: string) => ({
@@ -83,13 +89,15 @@ export default async function PostPage({
       })),
     ),
   ]);
+ */
+  const thumbnailBlurhash = await getBlurDataURL(post.image[0].url);
 
   return (
     <>
       <MaxWidthWrapper className="pt-6 md:pt-10">
         <div className="flex flex-col space-y-4">
           <div className="flex items-center space-x-4">
-            <Link
+            {/* <Link
               href={`/blog/category/${category.slug}`}
               className={cn(
                 buttonVariants({
@@ -101,7 +109,7 @@ export default async function PostPage({
               )}
             >
               {category.title}
-            </Link>
+            </Link> */}
             <time
               dateTime={post.date}
               className="text-sm font-medium text-muted-foreground"
@@ -116,9 +124,12 @@ export default async function PostPage({
             {post.description}
           </p>
           <div className="flex flex-nowrap items-center space-x-5 pt-1 md:space-x-8">
-            {post.authors.map((author) => (
-              <Author username={author} key={post._id + author} />
-            ))}
+            <Author
+              name={post.authorName}
+              title={post.authorRole}
+              image={post.authorImage[0].url}
+              key={post.id + post.authorName}
+            />
           </div>
         </div>
       </MaxWidthWrapper>
@@ -136,11 +147,11 @@ export default async function PostPage({
               height={630}
               priority
               placeholder="blur"
-              src={post.image}
+              src={post.image[0].url}
               sizes="(max-width: 768px) 770px, 1000px"
             />
             <div className="px-[.8rem] pb-10 md:px-8">
-              <Mdx code={post.body.raw} images={images} />
+              <Mdx code={post.content} />
             </div>
           </div>
 
@@ -150,7 +161,7 @@ export default async function PostPage({
         </MaxWidthWrapper>
       </div>
 
-      <MaxWidthWrapper>
+      {/* <MaxWidthWrapper>
         {relatedArticles.length > 0 && (
           <div className="flex flex-col space-y-4 pb-16">
             <p className="font-heading text-2xl text-foreground">
@@ -178,7 +189,7 @@ export default async function PostPage({
             </div>
           </div>
         )}
-      </MaxWidthWrapper>
+      </MaxWidthWrapper> */}
     </>
   );
 }

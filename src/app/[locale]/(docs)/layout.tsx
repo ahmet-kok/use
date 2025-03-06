@@ -4,18 +4,22 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { getDocsConfig } from "@/config/docs";
 import { getMarketingConfig } from "@/config/marketing";
-import { useTranslations } from "next-intl";
-import {unstable_setRequestLocale} from 'next-intl/server';
+import { getTranslations, setRequestLocale } from "next-intl/server";
+
+// Type definition for layout params
+type DocsLayoutParams = {
+  locale: string;
+};
 
 interface DocsLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<DocsLayoutParams>;
 }
 
-export default function DocsLayout({ children, params: {locale} }: DocsLayoutProps) {
-  unstable_setRequestLocale(locale);
-
-  const t = useTranslations();
+export default async function DocsLayout({ children, params }: DocsLayoutProps) {
+  const resolvedParams = await params;
+  setRequestLocale(resolvedParams.locale);
+  const t = await getTranslations();
   const marketingConfig = getMarketingConfig(t);
   const docsConfig = getDocsConfig(t);
 

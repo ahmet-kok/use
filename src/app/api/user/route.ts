@@ -1,25 +1,39 @@
 import { auth } from "@/auth";
-
 import { db } from "@/db/db";
 import { users } from "@/db/schema";
+import { ApiResponse } from "@/lib/utils";
 import { eq } from "drizzle-orm";
+import { NextRequest } from "next/server";
+import { getCurrentUser } from "@/lib/session";
+
 export const runtime = 'edge';
 
-export const DELETE = auth(async (req) => {
-  if (!req.auth) {
-    return new Response("Not authenticated", { status: 401 });
-  }
-
-  const currentUser = req.auth.user;
+export async function DELETE(req: NextRequest) {
+  const currentUser = await getCurrentUser();
   if (!currentUser) {
-    return new Response("Invalid user", { status: 401 });
+    return new Response(ApiResponse.error(401, "Not authenticated"), { 
+      status: 401,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   try {
     await db.delete(users).where(eq(users.id, currentUser.id as string));
   } catch (error) {
-    return new Response("Internal server error", { status: 500 });
+    return new Response(ApiResponse.error(500, "Internal server error"), { 
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
-  return new Response("User deleted successfully!", { status: 200 });
-});
+  return new Response(ApiResponse.successWithMessage("User deleted successfully!", null), { 
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+}

@@ -8,30 +8,68 @@ import { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
-export const DELETE = auth(async (req: NextRequest, { params }: { params: { id: string } }) => {
-    const user = await getCurrentUser();
-    if (!user) {
-        return new Response("Not authenticated", { status: 401 });
-    }
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const session = await auth();
+  if (!session) {
+    return new Response(ApiResponse.error(401, "Not authenticated"), { 
+      status: 401,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
 
-    const keyId = params.id;
+  const user = await getCurrentUser();
+  if (!user) {
+    return new Response(ApiResponse.error(401, "Not authenticated"), { 
+      status: 401,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
 
-    if (!keyId) {
-        return new Response(ApiResponse.error(400, "Missing API key ID"), { status: 400 });
-    }
+  const { id: keyId } = await params;
 
-    try {
-        const resp = await db.delete(apiKeys).where(
-            and(
-                eq(apiKeys.id, keyId),
-                eq(apiKeys.userId, user.id as string)
-            )
-        );
-        if (!resp || resp.rowCount === 0) {
-            return new Response(ApiResponse.error(404, "API key not found"), { status: 404 });
+  if (!keyId) {
+    return new Response(ApiResponse.error(400, "Missing API key ID"), { 
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  try {
+    const resp = await db.delete(apiKeys).where(
+      and(
+        eq(apiKeys.id, keyId),
+        eq(apiKeys.userId, user.id as string)
+      )
+    );
+    if (!resp || resp.rowCount === 0) {
+      return new Response(ApiResponse.error(404, "API key not found"), { 
+        status: 404,
+        headers: {
+          'Content-Type': 'application/json'
         }
-        return new Response(ApiResponse.successWithoutData(), { status: 200 });
-    } catch (error) {
-        return new Response("Internal server error", { status: 500 });
+      });
     }
-});
+    return new Response(ApiResponse.successWithoutData(), { 
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  } catch (error) {
+    return new Response(ApiResponse.error(500, "Internal server error"), { 
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+}

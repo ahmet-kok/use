@@ -10,12 +10,13 @@ import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { Index } from "@upstash/vector";
-import { StreamingTextResponse, Message as VercelChatMessage } from "ai";
+import { Message as VercelChatMessage, streamText } from "ai";
 import { AgentExecutor, createOpenAIFunctionsAgent } from "langchain/agents";
 import { createRetrieverTool } from "langchain/tools/retriever";
 import { auth } from "@/auth";
 import { NextAuthRequest } from "next-auth/lib";
-
+import { ApiResponse } from "@/lib/utils";
+import { env } from "@/env.mjs";
 export const runtime = "edge";
 
 const redis = Redis.fromEnv();
@@ -35,11 +36,27 @@ const convertVercelMessageToLangChainMessage = (message: VercelChatMessage) => {
   }
 };
 
-export const POST = auth(async (req: NextAuthRequest) => {
-  const user = req.auth;
+export async function POST(req: NextAuthRequest) {
+  const session = await auth();
+  
+  if (!session) {
+    return new Response(ApiResponse.error(401, "Not authenticated"), { 
+      status: 401,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  const user = session.user;
 
   if (!user) {
-    return new Response("Not authenticated", { status: 401 });
+    return new Response(ApiResponse.error(401, "Not authenticated"), { 
+      status: 401,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
   try {
@@ -47,17 +64,15 @@ export const POST = auth(async (req: NextAuthRequest) => {
     const { success } = await ratelimit.limit(ip);
 
     if (!success) {
-      const textEncoder = new TextEncoder();
-      const customString =
-        "Oops! It seems you've reached the rate limit. Please try again later.";
-
-      const transformStream = new ReadableStream({
-        async start(controller) {
-          controller.enqueue(textEncoder.encode(customString));
-          controller.close();
+      const stream = streamText({
+        text: "Oops! It seems you've reached the rate limit. Please try again later."
+      });
+      
+      return stream.toTextStreamResponse({
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
         },
       });
-      return new StreamingTextResponse(transformStream);
     }
 
     const body = await req.json();
@@ -87,8 +102,8 @@ export const POST = auth(async (req: NextAuthRequest) => {
 
     // Creating the index with the provided credentials.
     const indexWithCredentials = new Index({
-      url: process.env.UPSTASH_VECTOR_REST_URL as string,
-      token: process.env.UPSTASH_VECTOR_REST_TOKEN as string,
+      url: env.UPSTASH_VECTOR_REST_URL as string,
+      token: env.UPSTASH_VECTOR_REST_TOKEN as string,
     });
 
     const vectorstore = new UpstashVectorStore(embeddings, {
@@ -169,20 +184,27 @@ export const POST = auth(async (req: NextAuthRequest) => {
         chat_history: previousMessages,
       });
 
-      const textEncoder = new TextEncoder();
-      const transformStream = new ReadableStream({
-        async start(controller) {
-          if (process.env.NODE_ENV === "development") {
-            controller.enqueue(
-              textEncoder.encode(
-                "Hello, I'm FFlow Next Chat Bot. How can I help you today?",
-              ),
-            );
-            controller.close();
-            return;
-          }
+      if (env.NODE_ENV === "development") {
+        const stream = streamText({
+          text: "Hello, I'm FFlow Next Chat Bot. How can I help you today?"
+        });
+        
+        return stream.toTextStreamResponse({
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        });
+      }
 
-          console.log("Streaming response...");
+      console.log("Streaming response...");
+      
+      // Create a TransformStream to process the log chunks
+      const { readable, writable } = new TransformStream();
+      const writer = writable.getWriter();
+      
+      // Process log chunks in the background
+      (async () => {
+        try {
           for await (const chunk of logStream) {
             if (chunk.ops?.length > 0 && chunk.ops[0].op === "add") {
               const addOp = chunk.ops[0];
@@ -191,16 +213,25 @@ export const POST = auth(async (req: NextAuthRequest) => {
                 typeof addOp.value === "string" &&
                 addOp.value.length
               ) {
-                controller.enqueue(textEncoder.encode(addOp.value));
+                // Write the value to the stream
+                writer.write(new TextEncoder().encode(addOp.value));
               }
             }
           }
-          console.log("Streaming response...");
-          controller.close();
+        } catch (error) {
+          console.error("Error processing stream:", error);
+        } finally {
+          console.log("Streaming complete");
+          writer.close();
+        }
+      })();
+      
+      // Return the readable stream as response
+      return new Response(readable, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
         },
       });
-
-      return new StreamingTextResponse(transformStream);
     } else {
       /**
        * Intermediate steps are the default outputs with the executor's `.stream()` method.
@@ -229,4 +260,5 @@ export const POST = auth(async (req: NextAuthRequest) => {
     console.log(e.message);
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
-});
+}
+

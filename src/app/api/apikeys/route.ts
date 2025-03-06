@@ -8,10 +8,25 @@ import { NextRequest } from 'next/server';
 
 export const runtime = 'edge';
 
-export const GET = auth(async (req: NextRequest) => {
+export async function GET(req: NextRequest) {
+    const session = await auth();
+    if (!session) {
+        return new Response(ApiResponse.error(401, "Not authenticated"), { 
+            status: 401,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
     const user = await getCurrentUser();
     if (!user) {
-        return new Response("Not authenticated", { status: 401 });
+        return new Response(ApiResponse.error(401, "Not authenticated"), { 
+            status: 401,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
     const page = parseInt(req.nextUrl.searchParams.get('page') || '1');
@@ -37,14 +52,34 @@ export const GET = auth(async (req: NextRequest) => {
             limit
         }), { status: 200 });
     } catch (error) {
-        return new Response("Internal server error", { status: 500 });
+        return new Response(ApiResponse.error(500, "Internal server error"), { 
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
-});
+}
 
-export const POST = auth(async (req: NextRequest) => {
+export async function POST(req: NextRequest) {
+    const session = await auth();
+    if (!session) {
+        return new Response(ApiResponse.error(401, "Not authenticated"), { 
+            status: 401,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
     const user = await getCurrentUser();
     if (!user) {
-        return new Response("Not authenticated", { status: 401 });
+        return new Response(ApiResponse.error(401, "Not authenticated"), { 
+            status: 401,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 
     try {
@@ -60,7 +95,7 @@ export const POST = auth(async (req: NextRequest) => {
     } catch (error) {
         return new Response("Internal server error", { status: 500 });
     }
-});
+}
 
 function generateApiKey() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

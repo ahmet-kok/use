@@ -108,5 +108,5 @@ export const {
       from: env.EMAIL_FROM,
     }),
   ],
-  // debug: process.env.NODE_ENV !== "production"
+  // debug: env.NODE_ENV !== "production"
 });

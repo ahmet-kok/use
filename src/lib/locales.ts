@@ -1,26 +1,26 @@
-import { LocalePrefix } from "next-intl/dist/types/src/routing/types";
+import { defaultLocale, localePrefix } from "@/i18n";
+import { createNavigation } from "next-intl/navigation";
 
-import { createSharedPathnamesNavigation } from 'next-intl/navigation';
+// Define the type locally since the import is causing issues
 
-const localePrefix: LocalePrefix = 'as-needed';
 // FIXME: Update this configuration file based on your project information
 export const AppConfig = {
-  name: 'FFlow Next',
+  name: "FFlow Next",
   locales: [
     {
-      id: 'en',
-      name: 'English',
+      id: "en",
+      name: "English",
     },
-    { id: 'zh', name: '中文' },
-    { id: 'tr', name: 'Türkçe' },
+    { id: "tr", name: "Türkçe" },
   ],
-  defaultLocale: 'en',
+  defaultLocale,
   localePrefix,
 };
 
 export const AllLocales = AppConfig.locales.map((locale) => locale.id);
 
-export const { usePathname, useRouter } = createSharedPathnamesNavigation({
+export const { usePathname, useRouter } = createNavigation({
   locales: AllLocales,
+  defaultLocale: AppConfig.defaultLocale,
   localePrefix: AppConfig.localePrefix,
 });

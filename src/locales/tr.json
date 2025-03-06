@@ -584,5 +584,46 @@
       "orContinueWith": "Veya devam et",
       "signUpWithEmail": "E-posta ile Kayıt Ol",
       "signInWithEmail": "E-posta ile Giriş Yap"
+    },
+    "CareerPage": {
+      "metadata": {
+        "title": "Kariyer",
+        "description": "Takımımıza katılın ve harika ürünler geliştirmemize yardımcı olun"
+      },
+      "header": {
+        "title": "Takımımıza Katılın",
+        "description": "Minimalist tasarım aracılığıyla anlamlı dijital deneyimler yaratma konusundaki taahhüdümüzü paylaşan tutkulu bireyler arıyoruz."
+      },
+      "sections": {
+        "openPositions": "Açık Pozisyonlar",
+        "quickContact": "Hızlı İletişim",
+        "ourValues": "Değerlerimiz"
+      },
+      "contactInfo": {
+        "noMatchText": "Becerilerinize uygun bir pozisyon görmüyor musunuz? Her zaman yetenekli kişilerle tanışmakla ilgileniyoruz.",
+        "emailLabel": "career@useefficiently.com",
+        "scheduleCall": "15 dakikalık görüşme planlayın"
+      },
+      "values": {
+        "lessBetter": {
+          "title": "Az, daha iyidir",
+          "description": "Sadeleştirmenin gücüne ve gerçekten önemli olana odaklanmaya inanıyoruz."
+        },
+        "innovation": {
+          "title": "Amaçlı yenilik",
+          "description": "Temel tasarım ilkelerine sadık kalırken sınırları zorluyoruz."
+        },
+        "learning": {
+          "title": "Sürekli öğrenme",
+          "description": "Büyüme ve bilgi paylaşımı için bir ortam yaratıyoruz."
+        }
+      },
+      "careerList": {
+        "position": "Pozisyon",
+        "type": "Tür",
+        "location": "Konum",
+        "actions": "İşlemler",
+        "apply": "Başvur"
+      }
     }
   }

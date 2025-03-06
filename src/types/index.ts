@@ -27,6 +27,7 @@ export type SiteConfig = {
     links: {
         twitter: string;
         github: string;
+        airtable: string;
     };
 };
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
@@ -24,11 +24,7 @@ export default function QuotaPageClient({ locale }: { locale: string }) {
   const [quotaData, setQuotaData] = useState<QuotaData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchQuotaData();
-  }, []);
-
-  async function fetchQuotaData() {
+  const fetchQuotaData = useCallback(async () => {
     try {
       setLoading(true);
       const resp = await fetch("/api/quota");
@@ -42,7 +38,11 @@ export default function QuotaPageClient({ locale }: { locale: string }) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [t]);
+
+  useEffect(() => {
+    fetchQuotaData();
+  }, [fetchQuotaData]);
 
   if (loading) {
     return (

@@ -13,13 +13,13 @@ import { Metadata } from "next";
 
 import { constructMetadata, getBlurDataURL } from "@/lib/utils";
 
-interface DocPageProps {
-  params: {
-    slug: string[];
-  };
-}
+// Type for static params generation (without Promise)
+type DocPageParams = {
+  slug: string[];
+  locale: string;
+};
 
-async function getDocFromParams(params) {
+async function getDocFromParams(params: DocPageParams) {
   const slug = params.slug
     ? params.locale + "/" + params.slug.join("/")
     : params.locale;
@@ -32,9 +32,10 @@ async function getDocFromParams(params) {
   return doc;
 }
 
-export async function generateMetadata({
-  params,
-}: DocPageProps): Promise<Metadata> {
+export async function generateMetadata(props: {
+  params: Promise<DocPageParams>;
+}): Promise<Metadata> {
+  const params = await props.params;
   const doc = await getDocFromParams(params);
 
   if (!doc) return {};
@@ -42,20 +43,25 @@ export async function generateMetadata({
   const { title, description } = doc;
 
   return constructMetadata({
-    title: `${title} – FFlow Next`,
+    title: `${title} – FFlow Next`,
     description: description,
   });
 }
 
-export async function generateStaticParams(): Promise<
-  DocPageProps["params"][]
-> {
-  return allDocs.map((doc) => ({
-    slug: doc.slugAsParams.split("/"),
-  }));
+export async function generateStaticParams(): Promise<DocPageParams[]> {
+  return allDocs.map((doc) => {
+    const slugParts = doc.slugAsParams.split("/");
+    return {
+      locale: slugParts[0],
+      slug: slugParts.slice(1),
+    };
+  });
 }
 
-export default async function DocPage({ params }: DocPageProps) {
+export default async function DocPage(props: {
+  params: Promise<DocPageParams>;
+}) {
+  const params = await props.params;
   const doc = await getDocFromParams(params);
 
   if (!doc) {

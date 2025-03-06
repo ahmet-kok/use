@@ -1,8 +1,8 @@
-import { getTranslations } from "next-intl/server";
 
-import { env } from "@/env.mjs";
+import { getTranslations } from "next-intl/server";
 import { siteConfig } from "@/config/site";
 import { cn, nFormatter } from "@/lib/utils";
+import { SiAirtable as Airtable } from "react-icons/si";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "@/components/link/link";
 import { Icons } from "@/components/shared/icons";
@@ -13,86 +13,66 @@ interface HeroLandingProps {
 
 export default async function HeroLanding({ locale }: HeroLandingProps) {
   const t = await getTranslations("HeroLanding");
-  const { stargazers_count: stars } = await fetch(
-    "https://api.github.com/repos/hunterzhang86/fflow-next",
-    {
-      ...(env.GITHUB_OAUTH_TOKEN && {
-        headers: {
-          Authorization: `Bearer ${process.env.GITHUB_OAUTH_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }),
-      // data will revalidate every hour
-      next: { revalidate: 3600 },
-    },
-  )
-    .then((res) => res.json())
-    .catch((e) => console.log(e));
-
   return (
-    <section className="space-y-6 py-12 sm:py-20 lg:py-20">
-      <div className="container flex max-w-5xl flex-col items-center gap-5 text-center">
-        <Link
-          locale={false}
-          href="https://twitter.com/hunterzhang86"
-          className={cn(
-            buttonVariants({ variant: "outline", size: "sm", rounded: "full" }),
-            "px-4",
-          )}
-          target="_blank"
-        >
-          <span className="mr-3">🎉</span>
-          <span className="hidden md:flex">&nbsp;</span> {t("introducing")}{" "}
-          <Icons.twitter className="ml-2 size-3.5" />
-        </Link>
+    <section className="mt-16">
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center gap-4">
+          <Link
+            href={siteConfig.links.airtable}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants({
+                variant: "outline",
+                size: "sm",
+                rounded: "lg",
+              }),
+              "group px-5",
+            )}
+          >
+            <Airtable className="mr-2 size-5" />
+            <span>Airtable Services Partner</span>
+            <Icons.arrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </div>
 
-        <h1 className="text-balance font-urban text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[66px]">
-          {t("kickoff")}{" "}
-          <span className="text-gradient_indigo-purple font-extrabold">
-            {t("saasStarter")}
-          </span>
+        <h1 className="text-balance text-4xl font-medium mb-0">
+          We create meaningful digital experiences through minimalist design
+          principles.
         </h1>
 
-        <p
-          className="max-w-2xl text-balance leading-normal text-muted-foreground sm:text-xl sm:leading-8"
-          style={{ animationDelay: "0.35s", animationFillMode: "forwards" }}
-        >
-          {t("description")}
+        <p className=" max-w-lg text-base">
+          Our approach is guided by Dieter Rams&apos; principles of good design,
+          focusing on innovation, usefulness, and environmental consciousness.
         </p>
 
-        <div
-          className="flex justify-center space-x-2 md:space-x-4"
-          style={{ animationDelay: "0.4s", animationFillMode: "forwards" }}
-        >
+        <div className="flex flex-col gap-4 sm:flex-row">
           <Link
             href={`/pricing`}
             prefetch={true}
             className={cn(
-              buttonVariants({ size: "lg", rounded: "full" }),
-              "gap-2",
+              buttonVariants({
+                size: "lg",
+                rounded: "lg",
+              }),
+              "group",
             )}
           >
-            <span>{t("goPricing")}</span>
-            <Icons.arrowRight className="size-4" />
+            <span>Book a free discovery call</span>
+            <Icons.arrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
           <Link
-            href={siteConfig.links.github}
-            target="_blank"
-            rel="noreferrer"
+            href={`/about`}
+            prefetch={true}
             className={cn(
               buttonVariants({
                 variant: "outline",
                 size: "lg",
-                rounded: "full",
+                rounded: "lg",
               }),
-              "px-5",
             )}
           >
-            <Icons.gitHub className="mr-2 size-4" />
-            <p>
-              <span className="hidden sm:inline-block">{t("starOn")}</span>{" "}
-              GitHub <span className="font-semibold">{nFormatter(stars)}</span>
-            </p>
+            <span>About us</span>
           </Link>
         </div>
       </div>

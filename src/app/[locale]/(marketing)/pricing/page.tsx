@@ -1,10 +1,6 @@
 import Image from "next/image";
-import { NextIntlClientProvider, useTranslations } from "next-intl";
-import {
-  getMessages,
-  getTranslations,
-  unstable_setRequestLocale,
-} from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { getCurrentUser } from "@/lib/session";
 import { getUserSubscriptionPlan } from "@/lib/subscription";
@@ -19,7 +15,14 @@ export const metadata = constructMetadata({
   description: "Explore our subscription plans.",
 });
 
-export default async function PricingPage({ params: { locale } }) {
+type PricingPageParams = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function PricingPage({ params }: PricingPageParams) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  
   const t = await getTranslations("PricingPage");
   const messages = await getMessages({ locale });
 

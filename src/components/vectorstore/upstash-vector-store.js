@@ -2,7 +2,7 @@ import { Document } from "@langchain/core/documents";
 import { maximalMarginalRelevance } from "@langchain/core/utils/math";
 import { VectorStore } from "@langchain/core/vectorstores";
 import { Index } from "@upstash/vector";
-
+import { env } from "@/env.mjs";
 export class UpstashVectorStore extends VectorStore {
   _vectorstoreType() {
     return "upstash";
@@ -12,8 +12,8 @@ export class UpstashVectorStore extends VectorStore {
     super(embeddings);
 
     this.index = new Index({
-      url: process.env.UPSTASH_VECTOR_URL,
-      token: process.env.UPSTASH_VECTOR_TOKEN,
+      url: env.UPSTASH_VECTOR_URL,
+      token: env.UPSTASH_VECTOR_TOKEN,
     });
   }
 

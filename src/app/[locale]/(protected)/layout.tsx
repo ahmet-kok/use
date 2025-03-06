@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { SearchCommand } from "@/components/dashboard/search-command";
 import {
@@ -16,15 +16,15 @@ import { getCurrentUser } from "@/lib/session";
 
 interface ProtectedLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export default async function Dashboard({
   children,
-  params: { locale },
+  params,
 }: ProtectedLayoutProps) {
-  unstable_setRequestLocale(locale);
-
+  const { locale } = await params;
+  setRequestLocale(locale);
   const user = await getCurrentUser();
 
   if (!user) redirect(`/${locale}/login`);
@@ -53,8 +53,8 @@ export default async function Dashboard({
                 <SearchCommand links={filteredLinks} />
               </div>
 
-              <ModeToggle />
-              <LocaleSwitcher />
+              <ModeToggle dropdown={false} />
+              <LocaleSwitcher dropdown={false} />
               <UserAccountNav />
             </MaxWidthWrapper>
           </header>

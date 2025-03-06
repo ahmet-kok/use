@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getMessages } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 
 import { getCurrentUser } from "@/lib/session";
@@ -11,11 +11,14 @@ export const metadata = constructMetadata({
   description: "Admin page for only admin management.",
 });
 
-export default async function AdminPage({
-  params: { locale }
-}: {
-  params: { locale: string }
-}) {
+type AdminPageParams = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function AdminPage({ params }: AdminPageParams) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  
   const user = await getCurrentUser();
   if (!user || user.role as string !== "ADMIN") redirect("/login");
 

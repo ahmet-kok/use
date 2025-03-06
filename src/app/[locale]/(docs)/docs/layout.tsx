@@ -3,17 +3,23 @@ import { NavMobile } from "@/components/layout/mobile-nav";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getDocsConfig } from "@/config/docs";
 import { getMarketingConfig } from "@/config/marketing";
-import { useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from "next-intl/server";
+
+// Next.js 15 expects layout params to be a Promise type
+type DocsLayoutParams = {
+  locale: string;
+};
 
 interface DocsLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<DocsLayoutParams>;
 }
 
-export default function DocsLayout({ children, params: {locale}}: DocsLayoutProps) {
-  unstable_setRequestLocale(locale);
-  const t = useTranslations();
+export default async function DocsLayout({ children, params }: DocsLayoutProps) {
+  // Resolve the Promise to get the actual params
+  const resolvedParams = await params;
+  setRequestLocale(resolvedParams.locale);
+  const t = await getTranslations();
   const marketingConfig = getMarketingConfig(t);
   const docsConfig = getDocsConfig(t);
   

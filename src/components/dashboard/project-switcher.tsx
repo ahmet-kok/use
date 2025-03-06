@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import pinyin from "pinyin";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
@@ -231,13 +230,7 @@ function CreateProjectModal({
   const [projectDescription, setProjectDescription] = useState("");
 
   const generateKey = (projectName: string) => {
-    const pinyinResult = pinyin(projectName, {
-      style: pinyin.STYLE_NORMAL,
-      heteronym: false,
-    })
-      .flat()
-      .join("");
-    return pinyinResult
+    return projectName
       .toLowerCase()
       .replace(/[^a-z0-9]/g, "")
       .slice(0, 8);

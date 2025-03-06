@@ -1,0 +1,922 @@
+{
+  "tables": [
+    {
+      "id": "tbl5DOCi8g2mYuJuv",
+      "name": "companies",
+      "primaryFieldId": "fldiMeR5iww0JJBwD",
+      "fields": [
+        {
+          "type": "singleLineText",
+          "id": "fldiMeR5iww0JJBwD",
+          "name": "company"
+        },
+        {
+          "type": "number",
+          "options": { "precision": 0 },
+          "id": "fldkJg861yf8OnLPT",
+          "name": "order"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fldWRPwLsceDgeH7G",
+          "name": "logo"
+        },
+        { "type": "url", "id": "fldQXXeAGFT6tQPKF", "name": "url" },
+        { "type": "singleLineText", "id": "fldMlFuLEnVqpTH7B", "name": "name" },
+        { "type": "singleLineText", "id": "fldzVWkBluikJ6dYR", "name": "slug" }
+      ],
+      "views": [{ "id": "viw5oH7smoiqJThJX", "name": "all", "type": "grid" }]
+    },
+    {
+      "id": "tblfUzj0AYm6sKFiM",
+      "name": "team",
+      "primaryFieldId": "fldrX1l0KlFUl5DcD",
+      "fields": [
+        { "type": "singleLineText", "id": "fldrX1l0KlFUl5DcD", "name": "name" },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fldzObMZYY6iKQwnM",
+          "name": "photo"
+        },
+        {
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "seloYkiWwadmRplOY",
+                "name": "CEO",
+                "color": "yellowDark1"
+              },
+              {
+                "id": "selEpvqkpXFOYTM0h",
+                "name": "Founder",
+                "color": "orangeDark1"
+              },
+              {
+                "id": "selgb393KGSoAVfON",
+                "name": "Coordinator",
+                "color": "blueLight1"
+              },
+              {
+                "id": "selHayzM6q2H8fRvs",
+                "name": "CFO",
+                "color": "greenDark1"
+              },
+              {
+                "id": "selgzImvW9hvDM6ms",
+                "name": "COO",
+                "color": "blueDark1"
+              },
+              {
+                "id": "seloaeWZaQLDQYeh7",
+                "name": "CTO",
+                "color": "grayDark1"
+              },
+              {
+                "id": "selUFacw6PdY6kbSG",
+                "name": "IT Generalist",
+                "color": "grayLight1"
+              },
+              {
+                "id": "sel6qZcD0vbqx8G9s",
+                "name": "Executive Producer",
+                "color": "blueLight2"
+              },
+              {
+                "id": "selbUqrORnemASGKc",
+                "name": "Producer",
+                "color": "cyanLight2"
+              },
+              {
+                "id": "selqp7b459jUxSykS",
+                "name": "Associate Producer",
+                "color": "tealLight2"
+              },
+              {
+                "id": "selJIdEFoicHgdTOj",
+                "name": "Senior Youth Programs Coordinator",
+                "color": "pinkLight1"
+              },
+              {
+                "id": "seleLIvljIsOlphXm",
+                "name": "Youth Programs Director",
+                "color": "orangeLight2"
+              },
+              {
+                "id": "selzfNjjifPtRqjZt",
+                "name": "Founder & CEO",
+                "color": "grayBright"
+              }
+            ]
+          },
+          "id": "fldNd9Fc2iy0YT5xI",
+          "name": "role"
+        },
+        { "type": "multilineText", "id": "fldT5cyysyZfYBsj4", "name": "bio" },
+        {
+          "type": "number",
+          "options": { "precision": 0 },
+          "id": "fld4LLEOZB8P8CQYK",
+          "name": "order"
+        },
+        { "type": "url", "id": "fld9LWsBVhQzUUVSa", "name": "linkedin" },
+        {
+          "type": "multilineText",
+          "id": "fldjyDLPMdlUxxKTF",
+          "name": "My tasks"
+        }
+      ],
+      "views": [{ "id": "viwhpHk0TP7cytzmu", "name": "all", "type": "grid" }]
+    },
+    {
+      "id": "tblYwmB04qyF05Uyl",
+      "name": "blog",
+      "primaryFieldId": "fldspV2BQPpSbzl5y",
+      "fields": [
+        {
+          "type": "singleLineText",
+          "id": "fldspV2BQPpSbzl5y",
+          "name": "title"
+        },
+        { "type": "singleLineText", "id": "fldhY0dR8WGMkkDQ4", "name": "slug" },
+        {
+          "type": "multilineText",
+          "id": "fldbDQpTWctNsn01p",
+          "name": "description"
+        },
+        {
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "sel7Jl8Xc3Mh0HqbD",
+                "name": "Airtable",
+                "color": "blueDark1"
+              },
+              {
+                "id": "seljrADcXtFT4CDDc",
+                "name": "UX Research",
+                "color": "blueLight2"
+              },
+              {
+                "id": "selmNmbj8o38nvNRV",
+                "name": "UI Design",
+                "color": "cyanLight2"
+              },
+              {
+                "id": "selUBYdaN6fKd5GQj",
+                "name": "Design System",
+                "color": "tealLight2"
+              },
+              {
+                "id": "selkzGwyehYvz8CHT",
+                "name": "Application Managemet",
+                "color": "tealLight1"
+              },
+              {
+                "id": "selnnIg9ZlGBIjzb5",
+                "name": "Workflow Automation and Productivity",
+                "color": "redLight1"
+              },
+              {
+                "id": "selIO9ZSRa8wtRleZ",
+                "name": "Data Migration and Process Optimization",
+                "color": "yellowLight1"
+              },
+              {
+                "id": "selK9HPylyvIsO239",
+                "name": "Cost Reduction",
+                "color": "purpleLight1"
+              },
+              {
+                "id": "selxuTRo2b9EpM7LX",
+                "name": "Lead Generation and Sales Automation",
+                "color": "redBright"
+              }
+            ]
+          },
+          "id": "fld6qfYYfjarz7I7a",
+          "name": "category"
+        },
+        {
+          "type": "formula",
+          "options": {
+            "isValid": true,
+            "formula": "T(DATETIME_FORMAT({fld0ceMTJc6Kk4gBS}, 'MMM DD, YYYY'))",
+            "referencedFieldIds": ["fld0ceMTJc6Kk4gBS"],
+            "result": { "type": "singleLineText" }
+          },
+          "id": "fldhHMfSUX574Rq6s",
+          "name": "date"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fldy9ZpKnb3VL5Pdh",
+          "name": "coverImage"
+        },
+        {
+          "type": "formula",
+          "options": {
+            "isValid": true,
+            "formula": "{fldIvcKkqU4DO8BjZ} & \" min read\"",
+            "referencedFieldIds": ["fldIvcKkqU4DO8BjZ"],
+            "result": { "type": "singleLineText" }
+          },
+          "id": "fldBWY2TkhuxUmBB9",
+          "name": "readTime"
+        },
+        {
+          "type": "date",
+          "options": { "dateFormat": { "name": "friendly", "format": "LL" } },
+          "id": "fld0ceMTJc6Kk4gBS",
+          "name": "Date FROM"
+        },
+        {
+          "type": "number",
+          "options": { "precision": 0 },
+          "id": "fldIvcKkqU4DO8BjZ",
+          "name": "time"
+        },
+        {
+          "type": "singleLineText",
+          "id": "fldsFSBM7aOygRU0L",
+          "name": "people"
+        },
+        {
+          "type": "singleLineText",
+          "id": "flddkxmQVmI1nbFWJ",
+          "name": "authorName"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fld2lWcyU1bnOtjvf",
+          "name": "authorImage"
+        },
+        {
+          "type": "multipleSelects",
+          "options": {
+            "choices": [
+              {
+                "id": "seloYkiWwadmRplOY",
+                "name": "CEO",
+                "color": "yellowDark1"
+              },
+              {
+                "id": "selEpvqkpXFOYTM0h",
+                "name": "Founder",
+                "color": "orangeDark1"
+              },
+              {
+                "id": "selgb393KGSoAVfON",
+                "name": "Coordinator",
+                "color": "blueLight1"
+              },
+              {
+                "id": "selHayzM6q2H8fRvs",
+                "name": "CFO",
+                "color": "greenDark1"
+              },
+              {
+                "id": "selgzImvW9hvDM6ms",
+                "name": "COO",
+                "color": "blueDark1"
+              },
+              {
+                "id": "seloaeWZaQLDQYeh7",
+                "name": "CTO",
+                "color": "grayDark1"
+              },
+              {
+                "id": "selUFacw6PdY6kbSG",
+                "name": "IT Generalist",
+                "color": "grayLight1"
+              },
+              {
+                "id": "sel6qZcD0vbqx8G9s",
+                "name": "Executive Producer",
+                "color": "blueLight2"
+              },
+              {
+                "id": "selbUqrORnemASGKc",
+                "name": "Producer",
+                "color": "cyanLight2"
+              },
+              {
+                "id": "selqp7b459jUxSykS",
+                "name": "Associate Producer",
+                "color": "tealLight2"
+              },
+              {
+                "id": "selJIdEFoicHgdTOj",
+                "name": "Senior Youth Programs Coordinator",
+                "color": "pinkLight1"
+              },
+              {
+                "id": "seleLIvljIsOlphXm",
+                "name": "Youth Programs Director",
+                "color": "orangeLight2"
+              },
+              {
+                "id": "selzfNjjifPtRqjZt",
+                "name": "Founder & CEO",
+                "color": "grayBright"
+              }
+            ]
+          },
+          "id": "fldUIEU35S32vCXmn",
+          "name": "authorRole"
+        },
+        { "type": "richText", "id": "fldpuD9XPuwy7ZXgm", "name": "content" },
+        {
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "selCPND6xBr9BmTDz",
+                "name": "Show on website",
+                "color": "purpleBright"
+              }
+            ]
+          },
+          "id": "fldabL1kykzadqtyX",
+          "name": "Show in website"
+        },
+        {
+          "type": "checkbox",
+          "options": { "icon": "check", "color": "greenBright" },
+          "id": "flduETGvB1b47zgrB",
+          "name": "Featured"
+        }
+      ],
+      "views": [
+        { "id": "viwdvWYTjeelTObYP", "name": "all", "type": "grid" },
+        { "id": "viwL18NpiF68vIWxa", "name": "single", "type": "grid" },
+        { "id": "viwW6unsCZ7cuLuUL", "name": "featured", "type": "grid" }
+      ]
+    },
+    {
+      "id": "tbloC3sSfJ4JEpus1",
+      "name": "projects",
+      "primaryFieldId": "fldPLzlzv53MBIGtP",
+      "fields": [
+        {
+          "type": "singleLineText",
+          "id": "fldPLzlzv53MBIGtP",
+          "name": "title"
+        },
+        { "type": "singleLineText", "id": "fldDU4C5R6wqQxfsN", "name": "slug" },
+        {
+          "type": "multilineText",
+          "id": "fldRfI00ssDDS6snp",
+          "name": "description"
+        },
+        {
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "sel7Jl8Xc3Mh0HqbD",
+                "name": "Airtable",
+                "color": "blueDark1"
+              },
+              {
+                "id": "seljrADcXtFT4CDDc",
+                "name": "UX Research",
+                "color": "blueLight2"
+              },
+              {
+                "id": "selmNmbj8o38nvNRV",
+                "name": "UI Design",
+                "color": "cyanLight2"
+              },
+              {
+                "id": "selUBYdaN6fKd5GQj",
+                "name": "Design System",
+                "color": "tealLight2"
+              },
+              {
+                "id": "selkzGwyehYvz8CHT",
+                "name": "Application Managemet",
+                "color": "tealLight1"
+              },
+              {
+                "id": "selnnIg9ZlGBIjzb5",
+                "name": "Workflow Automation and Productivity",
+                "color": "redLight1"
+              },
+              {
+                "id": "selIO9ZSRa8wtRleZ",
+                "name": "Data Migration and Process Optimization",
+                "color": "yellowLight1"
+              },
+              {
+                "id": "selK9HPylyvIsO239",
+                "name": "Cost Reduction",
+                "color": "purpleLight1"
+              },
+              {
+                "id": "selxuTRo2b9EpM7LX",
+                "name": "Lead Generation and Sales Automation",
+                "color": "redBright"
+              }
+            ]
+          },
+          "id": "fldV8oDYqiXApOamm",
+          "name": "category"
+        },
+        {
+          "type": "multipleSelects",
+          "options": {
+            "choices": [
+              {
+                "id": "sel2OY2fHIDRGxowy",
+                "name": "App Development",
+                "color": "blueLight2"
+              },
+              {
+                "id": "selagR14QzN6r67Hv",
+                "name": "System Design",
+                "color": "cyanLight2"
+              },
+              {
+                "id": "selC7eFJI9s0ZYMJZ",
+                "name": "Hello",
+                "color": "tealLight2"
+              },
+              {
+                "id": "selwCV7rHoI3c7Ldz",
+                "name": "Workflow Automation",
+                "color": "tealLight1"
+              },
+              {
+                "id": "selzfy4Tv82TqaxUI",
+                "name": "Application Management",
+                "color": "greenLight2"
+              },
+              {
+                "id": "selm027yb7rf1aNaT",
+                "name": "Email Automation",
+                "color": "grayLight2"
+              },
+              {
+                "id": "sel5G9H9OPhYbeujv",
+                "name": "Process Optimization",
+                "color": "cyanLight1"
+              },
+              {
+                "id": "selN7JkqUPCoWBRoG",
+                "name": "Productivity Improvement",
+                "color": "cyanBright"
+              },
+              {
+                "id": "selA1ha8ZiQc6sC8u",
+                "name": "Data Management",
+                "color": "yellowLight2"
+              },
+              {
+                "id": "selG6Hg5mAgKnbemO",
+                "name": "Custom System Development",
+                "color": "orangeLight2"
+              },
+              {
+                "id": "selHPdmNcn7jfiwkD",
+                "name": "Data Migration",
+                "color": "blueDark1"
+              },
+              {
+                "id": "selBu7fdHrnm1STGX",
+                "name": "Cost Optimization",
+                "color": "purpleLight2"
+              },
+              {
+                "id": "selz3kEf54lp8i25a",
+                "name": "Lead Generation Automation",
+                "color": "redLight2"
+              }
+            ]
+          },
+          "id": "fldf4sIQJBxXyytx6",
+          "name": "services"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fldn8xG4JEBRSeY8U",
+          "name": "coverImage"
+        },
+        {
+          "type": "checkbox",
+          "options": { "icon": "check", "color": "greenBright" },
+          "id": "fldjBeB32kfdZy9Fq",
+          "name": "featured"
+        },
+        {
+          "type": "number",
+          "options": { "precision": 0 },
+          "id": "fldavGQV5sRMMHlMG",
+          "name": "order"
+        },
+        {
+          "type": "multilineText",
+          "id": "fldkBdIOFAPYyxXho",
+          "name": "challenge"
+        },
+        {
+          "type": "multilineText",
+          "id": "fldSQGwFYbQYEi1SI",
+          "name": "solution"
+        },
+        {
+          "type": "multilineText",
+          "id": "fldsGRtIKc9DNi7A6",
+          "name": "outcome"
+        },
+        {
+          "type": "number",
+          "options": { "precision": 0 },
+          "id": "fld9PuiowgIwVLTuL",
+          "name": "year"
+        },
+        {
+          "type": "multilineText",
+          "id": "fld5mAJHeFK04LrZ8",
+          "name": "client"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fldMPFMF4lWNVaCwn",
+          "name": "images"
+        },
+        {
+          "type": "singleLineText",
+          "id": "fldLfIB2UuPgj47RV",
+          "name": "testimonialQuote"
+        },
+        {
+          "type": "singleLineText",
+          "id": "fldFBtRt9tll4nF6E",
+          "name": "testimonialAuthor"
+        },
+        {
+          "type": "multipleSelects",
+          "options": {
+            "choices": [
+              {
+                "id": "seloYkiWwadmRplOY",
+                "name": "CEO",
+                "color": "yellowDark1"
+              },
+              {
+                "id": "selEpvqkpXFOYTM0h",
+                "name": "Founder",
+                "color": "orangeDark1"
+              },
+              {
+                "id": "selgb393KGSoAVfON",
+                "name": "Coordinator",
+                "color": "blueLight1"
+              },
+              {
+                "id": "selHayzM6q2H8fRvs",
+                "name": "CFO",
+                "color": "greenDark1"
+              },
+              {
+                "id": "selgzImvW9hvDM6ms",
+                "name": "COO",
+                "color": "blueDark1"
+              },
+              {
+                "id": "seloaeWZaQLDQYeh7",
+                "name": "CTO",
+                "color": "grayDark1"
+              },
+              {
+                "id": "selUFacw6PdY6kbSG",
+                "name": "IT Generalist",
+                "color": "grayLight1"
+              },
+              {
+                "id": "sel6qZcD0vbqx8G9s",
+                "name": "Executive Producer",
+                "color": "blueLight2"
+              },
+              {
+                "id": "selbUqrORnemASGKc",
+                "name": "Producer",
+                "color": "cyanLight2"
+              },
+              {
+                "id": "selqp7b459jUxSykS",
+                "name": "Associate Producer",
+                "color": "tealLight2"
+              },
+              {
+                "id": "selJIdEFoicHgdTOj",
+                "name": "Senior Youth Programs Coordinator",
+                "color": "pinkLight1"
+              },
+              {
+                "id": "seleLIvljIsOlphXm",
+                "name": "Youth Programs Director",
+                "color": "orangeLight2"
+              },
+              {
+                "id": "selzfNjjifPtRqjZt",
+                "name": "Founder & CEO",
+                "color": "grayBright"
+              }
+            ]
+          },
+          "id": "fldySTo5sIyoDb8yF",
+          "name": "testimonialRole"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fldNhyOwnSPai0Dr7",
+          "name": "testimonialImage"
+        }
+      ],
+      "views": [
+        { "id": "viw89C49s7Q4bNH1J", "name": "all", "type": "grid" },
+        { "id": "viwEuPd4vqhCeX6ca", "name": "single", "type": "grid" },
+        { "id": "viwNZTMtR8L9thUhX", "name": "featured", "type": "grid" }
+      ]
+    },
+    {
+      "id": "tblnJWlul5lyYXao3",
+      "name": "testimonials",
+      "primaryFieldId": "flduivEDOwoXPYRdB",
+      "fields": [
+        {
+          "type": "singleLineText",
+          "id": "flduivEDOwoXPYRdB",
+          "name": "title"
+        },
+        { "type": "multilineText", "id": "fldqsg9fWyJcPNwLo", "name": "quote" },
+        {
+          "type": "singleLineText",
+          "id": "fldXHacU3MeSCO3uY",
+          "name": "author"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fldapl9XcgDAdEaoW",
+          "name": "image"
+        },
+        {
+          "type": "multipleSelects",
+          "options": {
+            "choices": [
+              {
+                "id": "seloYkiWwadmRplOY",
+                "name": "CEO",
+                "color": "yellowDark1"
+              },
+              {
+                "id": "selEpvqkpXFOYTM0h",
+                "name": "Founder",
+                "color": "orangeDark1"
+              },
+              {
+                "id": "selgb393KGSoAVfON",
+                "name": "Coordinator",
+                "color": "blueLight1"
+              },
+              {
+                "id": "selHayzM6q2H8fRvs",
+                "name": "CFO",
+                "color": "greenDark1"
+              },
+              {
+                "id": "selgzImvW9hvDM6ms",
+                "name": "COO",
+                "color": "blueDark1"
+              },
+              {
+                "id": "seloaeWZaQLDQYeh7",
+                "name": "CTO",
+                "color": "grayDark1"
+              },
+              {
+                "id": "selUFacw6PdY6kbSG",
+                "name": "IT Generalist",
+                "color": "grayLight1"
+              },
+              {
+                "id": "sel6qZcD0vbqx8G9s",
+                "name": "Executive Producer",
+                "color": "blueLight2"
+              },
+              {
+                "id": "selbUqrORnemASGKc",
+                "name": "Producer",
+                "color": "cyanLight2"
+              },
+              {
+                "id": "selqp7b459jUxSykS",
+                "name": "Associate Producer",
+                "color": "tealLight2"
+              },
+              {
+                "id": "selJIdEFoicHgdTOj",
+                "name": "Senior Youth Programs Coordinator",
+                "color": "pinkLight1"
+              },
+              {
+                "id": "seleLIvljIsOlphXm",
+                "name": "Youth Programs Director",
+                "color": "orangeLight2"
+              },
+              {
+                "id": "selzfNjjifPtRqjZt",
+                "name": "Founder & CEO",
+                "color": "grayBright"
+              }
+            ]
+          },
+          "id": "fld16X8enTKTSQxmW",
+          "name": "role"
+        },
+        {
+          "type": "singleLineText",
+          "id": "fldwQlPCOitPjjAd9",
+          "name": "company"
+        },
+        {
+          "type": "number",
+          "options": { "precision": 0 },
+          "id": "fldO6A5HtrCOpR0nx",
+          "name": "order"
+        },
+        { "type": "singleLineText", "id": "flddgmsKRhvgrzZmt", "name": "slug" },
+        {
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "selEIIAfRGNFWtAWr",
+                "name": "Show on website",
+                "color": "purpleBright"
+              }
+            ]
+          },
+          "id": "fldQgeASb0hKbXyKw",
+          "name": "Show on website"
+        },
+        {
+          "type": "checkbox",
+          "options": { "icon": "check", "color": "greenBright" },
+          "id": "fldrLPPMgK6GUeoJQ",
+          "name": "Featured"
+        }
+      ],
+      "views": [{ "id": "viwDRzTQWwAzvUUuP", "name": "all", "type": "grid" }]
+    },
+    {
+      "id": "tbl9rQL3ar1jlmPFp",
+      "name": "services",
+      "primaryFieldId": "fldTJyel5d4gy5QWk",
+      "fields": [
+        {
+          "type": "singleLineText",
+          "id": "fldTJyel5d4gy5QWk",
+          "name": "title"
+        },
+        { "type": "singleLineText", "id": "fldcAoILqzKUXZ9si", "name": "slug" },
+        {
+          "type": "multilineText",
+          "id": "fld11k0ds8Jb9xDn5",
+          "name": "description"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fldg2qChQh3og2Uqe",
+          "name": "coverImage"
+        },
+        {
+          "type": "number",
+          "options": { "precision": 0 },
+          "id": "fldoUni7YuGCWNPWV",
+          "name": "order"
+        },
+        {
+          "type": "multipleAttachments",
+          "options": { "isReversed": false },
+          "id": "fld1vw4AesOBt6Fal",
+          "name": "icon"
+        },
+        {
+          "type": "multipleSelects",
+          "options": {
+            "choices": [
+              {
+                "id": "sel1NprC3GYOYK3Qq",
+                "name": "User Interface Design",
+                "color": "blueLight2"
+              },
+              {
+                "id": "selyUrAhz0LBFvL5A",
+                "name": "User Experience Design",
+                "color": "cyanLight2"
+              },
+              {
+                "id": "selPI2LrNBq4D94NO",
+                "name": "Design Systems",
+                "color": "tealLight2"
+              },
+              {
+                "id": "sel7ZlrT3AY2YZd8K",
+                "name": "Brand Identity",
+                "color": "greenLight2"
+              },
+              {
+                "id": "selbx2AmbiyCFipk8",
+                "name": "Motion Design",
+                "color": "yellowLight2"
+              },
+              {
+                "id": "selL0AWrATA1i9iSL",
+                "name": "Prototyping",
+                "color": "orangeLight2"
+              }
+            ]
+          },
+          "id": "fldDocvm7YYnYFnfq",
+          "name": "features"
+        },
+        {
+          "type": "richText",
+          "id": "fldgHf50tAmRtoga3",
+          "name": "longDescription"
+        }
+      ],
+      "views": [
+        { "id": "viwZc6yVh7tHJZuwW", "name": "all", "type": "grid" },
+        { "id": "viwg615YoTCsQNTQ4", "name": "single", "type": "grid" }
+      ]
+    },
+    {
+      "id": "tbl3o6HcTGH6Oilmu",
+      "name": "careers",
+      "primaryFieldId": "fldoOsFc05pg2S6V5",
+      "fields": [
+        {
+          "type": "singleLineText",
+          "id": "fldoOsFc05pg2S6V5",
+          "name": "title"
+        },
+        {
+          "type": "multilineText",
+          "id": "fldwTGRK5RWycCzqm",
+          "name": "description"
+        },
+        {
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "id": "selcF2SsYgzAzwiQj",
+                "name": "Full-time",
+                "color": "redLight2"
+              },
+              {
+                "id": "selmkgaUTtYNDOCfz",
+                "name": "In progress",
+                "color": "yellowLight2"
+              },
+              {
+                "id": "selG53oqnYPYjyE4q",
+                "name": "Done",
+                "color": "greenLight2"
+              }
+            ]
+          },
+          "id": "fldGWOuqQOH3FubFv",
+          "name": "type"
+        },
+        {
+          "type": "singleLineText",
+          "id": "fld4rh4TRXCB3A9Gv",
+          "name": "location"
+        },
+        { "type": "url", "id": "fldqL5W0WlaqHG3qc", "name": "url" },
+        {
+          "type": "number",
+          "options": { "precision": 0 },
+          "id": "fldp7zk2sKFMD4suM",
+          "name": "order"
+        }
+      ],
+      "views": [{ "id": "viw4S9YhDpfh2s5VG", "name": "all", "type": "grid" }]
+    }
+  ]
+}

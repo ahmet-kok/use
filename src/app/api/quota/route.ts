@@ -8,7 +8,7 @@ import { getCurrentUser } from "@/lib/session";
 
 export const runtime = 'edge';
 
-export const GET = auth(async (req: NextRequest) => {
+export async function GET(req: NextRequest) {
     const user = await getCurrentUser();
     if (!user) {
         return new Response(ApiResponse.error(401, "Not authenticated"), { status: 401 });
@@ -39,4 +39,4 @@ export const GET = auth(async (req: NextRequest) => {
         console.error("Error fetching quota data:", error);
         return new Response(ApiResponse.error(500, "Internal server error"), { status: 500 });
     }
-});
+}

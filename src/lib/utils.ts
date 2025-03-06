@@ -27,6 +27,9 @@ export function constructMetadata({
   icons?: string;
   noIndex?: boolean;
 } = {}): Metadata {
+  // Make sure we have a valid URL for metadataBase
+  const url = siteConfig.url || 'http://localhost:3000';
+  
   return {
     title,
     description,
@@ -49,10 +52,18 @@ export function constructMetadata({
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: siteConfig.url,
+      url: url,
       title,
       description,
       siteName: title,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title
+        }
+      ]
     },
     twitter: {
       card: "summary_large_image",
@@ -62,8 +73,8 @@ export function constructMetadata({
       creator: "@miickasmt",
     },
     icons,
-    metadataBase: new URL(siteConfig.url || "http://localhost:3000"),
-    manifest: `${siteConfig.url}/site.webmanifest`,
+    metadataBase: new URL(url),
+    manifest: `${url}/site.webmanifest`,
     ...(noIndex && {
       robots: {
         index: false,
@@ -83,13 +94,30 @@ export function constructViewport(): Viewport {
   };
 }
 
-export function formatDate(input: string | number): string {
-  const date = new Date(input);
-  return date.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+/**
+ * Format a date string for display
+ * @param dateString Date string to format
+ * @param options Intl.DateTimeFormatOptions
+ * @returns Formatted date string
+ */
+export function formatDate(
+  dateString: string, 
+  options: Intl.DateTimeFormatOptions = { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  }
+): string {
+  if (!dateString) return '';
+  
+  const date = new Date(dateString);
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) {
+    return dateString;
+  }
+  
+  return new Intl.DateTimeFormat('en-US', options).format(date);
 }
 
 export function formatDateWithLocale(locale: string, input: string | number): string {

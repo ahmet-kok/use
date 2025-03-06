@@ -1,0 +1,309 @@
+import { cache } from "react";
+import Airtable, { Attachment, FieldSet } from "airtable";
+
+// Configure Airtable with environment variables
+const airtableApiKey = process.env.AIRTABLE_API_KEY;
+const airtableBaseId = process.env.AIRTABLE_BASE_ID;
+
+// Initialize Airtable
+const base = new Airtable({
+  apiKey: airtableApiKey,
+}).base(airtableBaseId!);
+
+// Define table IDs from schema for easy reference
+export const TABLES = {
+  COMPANIES: "tbl5DOCi8g2mYuJuv",
+  TEAM: "tblfUzj0AYm6sKFiM",
+  BLOG: "tblYwmB04qyF05Uyl",
+  PROJECTS: "tbloC3sSfJ4JEpus1",
+  TESTIMONIALS: "tblnJWlul5lyYXao3",
+  SERVICES: "tbl9rQL3ar1jlmPFp",
+  career: "tbl3o6HcTGH6Oilmu",
+};
+
+// Define table names for easier reference
+export const TABLE_NAMES = {
+  COMPANIES: "companies",
+  TEAM: "team",
+  BLOG: "blog",
+  PROJECTS: "projects",
+  TESTIMONIALS: "testimonials",
+  SERVICES: "services",
+  career: "career",
+};
+
+// Utility function to get image URL from Airtable attachments
+export function getImageUrl(
+  attachments: any[] | undefined,
+): { url: string; thumbnail: string } | undefined {
+  if (!attachments || attachments.length === 0) return undefined;
+  return {
+    url: attachments[0]?.url,
+    thumbnail: attachments[0]?.thumbnails?.large?.url,
+  };
+}
+
+export interface Image {
+  url: string;
+  thumbnail: string;
+}
+
+// Generic function to fetch data from Airtable with improved typing
+export async function fetchFromAirtable<T>({
+  tableName,
+  view = "all",
+  filterByFormula,
+  sort = [],
+  maxRecords,
+  fields,
+  transformer,
+}: {
+  tableName: string;
+  view?: string;
+  filterByFormula?: string;
+  sort?: { field: string; direction: "asc" | "desc" }[];
+  maxRecords?: number;
+  fields?: string[];
+  transformer?: (record: Airtable.Record<FieldSet>) => T;
+}): Promise<T[]> {
+  try {
+    // Create select options
+    const selectOptions: Record<string, any> = {};
+
+    if (view) selectOptions.view = view;
+    if (filterByFormula) selectOptions.filterByFormula = filterByFormula;
+    if (sort.length > 0) selectOptions.sort = sort;
+    if (maxRecords) selectOptions.maxRecords = maxRecords;
+    if (fields && fields.length > 0) selectOptions.fields = fields;
+
+    // Execute the query
+    const query = base(tableName).select(selectOptions);
+    const records = await query.all();
+
+    // Transform records if transformer is provided
+    if (transformer) {
+      return records.map(transformer) as T[];
+    }
+
+    // Return raw records otherwise
+    return records as T[];
+  } catch (error) {
+    console.error(`Error fetching from Airtable [${tableName}]:`, error);
+    throw new Error(`Failed to fetch data from ${tableName}`);
+  }
+}
+
+// Simplified wrapper for the generic fetch function
+export async function fetchFromAirtableSimple<T>(
+  tableName: string,
+  options: {
+    view?: string;
+    filterByFormula?: string;
+    sort?: { field: string; direction: "asc" | "desc" }[];
+    maxRecords?: number;
+    fields?: string[];
+    transformer?: (record: Airtable.Record<FieldSet>) => T;
+  },
+): Promise<T[]> {
+  return fetchFromAirtable({
+    tableName,
+    ...options,
+  });
+}
+
+// Define Career type based on the schema
+export interface Career {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  location: string;
+  url: string;
+  order: number;
+}
+
+// Function to get career with caching
+export const getCareer = cache(
+  async ({
+    view = "all",
+  }: {
+    view?: string;
+    type?: string;
+  } = {}) => {
+    try {
+      // Fetch career from Airtable
+      return await fetchFromAirtableSimple<Career>("career", {
+        view,
+        sort: [{ field: "order", direction: "asc" }],
+        transformer: (record: Airtable.Record<FieldSet>) => {
+          const fields = record.fields;
+          return {
+            id: record.id,
+            title: fields.title as string,
+            description: fields.description as string,
+            type: fields.type as string,
+            location: fields.location as string,
+            url: fields.url as string,
+            order: (fields.order as number) || 0,
+          };
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching career:", error);
+      throw new Error("Failed to fetch career");
+    }
+  },
+);
+
+export interface singleBlog {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  image: Attachment[];
+  category: string;
+  date: string;
+  readTime: string;
+  authorName: string;
+  authorRole: string;
+  authorImage: Attachment[];
+}
+
+export const getSingleBlog = cache(async (slug: string) => {
+  try {
+    const records = await fetchFromAirtableSimple<singleBlog>("blog", {
+      filterByFormula: `{slug} = '${slug}'`,
+      view: "single",
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        return {
+          id: record.id,
+          title: fields.title as string,
+          slug: fields.slug as string,
+          description: fields.description as string,
+          content: fields.content as string,
+          image: fields.image as Attachment[],
+          category: fields.category as string,
+          date: fields.date as string,
+          readTime: fields.readTime as string,
+          authorName: fields.authorName as string,
+          authorRole: fields.authorRole as string,
+          authorImage: fields.authorImage as Attachment[],
+        };
+      },
+    });
+    return records[0];
+  } catch (error) {
+    console.error("Error fetching career:", error);
+    throw new Error("Failed to fetch career");
+  }
+});
+
+export interface Blog {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  image: Attachment[];
+  category: string;
+  date: string;
+  readTime: string;
+  authorName: string;
+  authorRole: string;
+  authorImage: Attachment[];
+}
+
+export const getBlog = cache(async (view: "all" | "featured") => {
+  try {
+    // Fetch career from Airtable
+    return await fetchFromAirtableSimple<Blog>("blog", {
+      view,
+      sort: [{ field: "date", direction: "desc" }],
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        return {
+          id: record.id,
+          title: fields.title as string,
+          slug: fields.slug as string,
+          description: fields.description as string,
+          image: fields.image as Attachment[],
+          category: fields.category as string,
+          date: fields.date as string,
+          readTime: fields.readTime as string,
+          authorName: fields.authorName as string,
+          authorRole: fields.authorRole as string,
+          authorImage: fields.authorImage as Attachment[],
+        };
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching career:", error);
+    throw new Error("Failed to fetch career");
+  }
+});
+
+export interface Testimonial {
+  id: string;
+  quote: string;
+  slug?: string;
+  author: string;
+  role: string;
+  company: string;
+  image: Attachment[];
+}
+
+export const getTestimonials = cache(async () => {
+  try {
+    // Fetch testimonials from Airtable
+    return await fetchFromAirtableSimple<Testimonial>("testimonials", {
+      view: "all",
+      sort: [{ field: "order", direction: "desc" }],
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        return {
+          id: record.id,
+          quote: fields.quote as string,
+          slug: fields.slug as string,
+          author: fields.author as string,
+          role: fields.role as string,
+          company: fields.company as string,
+          image: fields.image as Attachment[],
+        };
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching testimonials:", error);
+    throw new Error("Failed to fetch testimonials");
+  }
+});
+
+export interface Company {
+  id: string;
+  name: string;
+  logo: Attachment[];
+  url: string;
+  slug?: string;
+}
+
+export const getCompanies = cache(async () => {
+  try {
+    return await fetchFromAirtableSimple<Company>("companies", {
+      view: "all",
+      sort: [{ field: "order", direction: "asc" }],
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        return {
+          id: record.id,
+          name: fields.name as string,
+          logo: fields.logo as Attachment[],
+          url: fields.url as string,
+          slug: fields.slug as string,
+        };
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching companies:", error);
+    throw new Error("Failed to fetch companies");
+  }
+});

@@ -1,25 +1,31 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import { env } from "@/env.mjs";
 import { getDocsConfig } from "@/config/docs";
 import { getMarketingConfig } from "@/config/marketing";
 import { NavMobile } from "@/components/layout/mobile-nav";
 import { NavBar } from "@/components/layout/navbar";
 import { SiteFooter } from "@/components/layout/site-footer";
 
+// Type for layout params
+type MarketingLayoutParams = {
+  locale: string;
+};
+
 interface MarketingLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<MarketingLayoutParams>;
 }
 
-export default function MarketingLayout({
+export default async function MarketingLayout({
   children,
-  params: { locale },
+  params,
 }: MarketingLayoutProps) {
-  unstable_setRequestLocale(locale);
+  const resolvedParams = await params;
+  setRequestLocale(resolvedParams.locale);
 
-  const t = useTranslations();
+  const t = await getTranslations();
   const marketingConfig = getMarketingConfig(t);
   const docsConfig = getDocsConfig(t);
 
@@ -32,8 +38,8 @@ export default function MarketingLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
-      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
-        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      {env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+        <GoogleAnalytics gaId={env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
       )}
       <NavMobile
         marketingConfig={marketingConfig}
@@ -46,7 +52,7 @@ export default function MarketingLayout({
         docsConfig={docsConfig}
         translations={translations}
       />
-      <main className="flex-1">{children}</main>
+      <main className="px-6 flex-1">{children}</main>
       <SiteFooter />
     </div>
   );

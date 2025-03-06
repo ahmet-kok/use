@@ -1,21 +1,23 @@
 "use client";
 
+import { useContext } from "react";
+import { useSelectedLayoutSegment } from "next/navigation";
 import { DocsConfig, MarketingConfig } from "@/types";
 import { useSession } from "next-auth/react";
 import { useLocale } from "next-intl";
-import { useSelectedLayoutSegment } from "next/navigation";
-import { useContext } from "react";
 
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+import { useScroll } from "@/hooks/use-scroll";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import Link from "@/components/link/link";
 import LocaleSwitcher from "@/components/locale/locale-switcher";
 import { ModalContext } from "@/components/modals/providers";
 import { Icons } from "@/components/shared/icons";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import { siteConfig } from "@/config/site";
-import { useScroll } from "@/hooks/use-scroll";
-import { cn } from "@/lib/utils";
+
+import { ModeToggle } from "./mode-toggle";
 
 interface NavBarProps {
   scroll?: boolean;
@@ -54,22 +56,39 @@ export function NavBar({
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 flex w-full justify-center bg-background/60 backdrop-blur-xl transition-all",
+        "sticky top-0 z-40 flex w-full justify-center bg-background/60 px-6 backdrop-blur-xl transition-all",
         scroll ? (scrolled ? "border-b" : "bg-transparent") : "border-b",
       )}
     >
       <MaxWidthWrapper
-        className="flex h-14 items-center justify-between py-4"
+        className="grid h-14 w-full grid-cols-3 justify-between"
         large={documentation}
       >
-        <div className="flex gap-6 md:gap-10">
-          <Link href={`/`} className="flex items-center space-x-1.5">
-            <Icons.logo />
-            <span className="font-urban text-xl font-bold">
-              {siteConfig.name}
-            </span>
+        <div className="flex gap-6 md:gap-10 items-center">
+          <Link prefetch={true} href="/" className="text-xl font-bold">
+            <div className="relative text-nowrap">
+              <span
+                className={`inline-block transition-[opacity,transform] duration-500 ${
+                  scrolled
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-[100%] opacity-0"
+                }`}
+              >
+                use technology efficiently
+              </span>
+              <span
+                className={`absolute left-0 top-0 inline-block transition-[opacity,transform] duration-500 ${
+                  scrolled
+                    ? "translate-y-[-100%] opacity-0"
+                    : "translate-y-0 opacity-100"
+                }`}
+              >
+                {siteConfig.name}
+              </span>
+            </div>
           </Link>
-
+        </div>
+        <div className="flex justify-center items-center">
           {links && links.length > 0 ? (
             <nav className="hidden gap-6 md:flex">
               {links.map((item, index) => (
@@ -91,12 +110,10 @@ export function NavBar({
             </nav>
           ) : null}
         </div>
-
-        <div className="flex items-center space-x-2 md:space-x-3">
-          <LocaleSwitcher />
-
-          {/* 移动端按钮 */}
-          {session ? (
+        <div className="hidden justify-end items-center space-x-2 md:flex md:space-x-3">
+          <ModeToggle dropdown={false} />
+          <LocaleSwitcher dropdown={false} />
+          {/* {session ? (
             <Link
               href={session.user.role === "ADMIN" ? "/admin" : "/dashboard"}
               className="md:hidden"
@@ -116,8 +133,7 @@ export function NavBar({
             <Skeleton className="size-9 rounded-full md:hidden" />
           )}
 
-          {/* 桌面端按钮 */}
-          {session ? (
+           {session ? (
             <Link
               href={session.user.role === "ADMIN" ? "/admin" : "/dashboard"}
               className="hidden md:block"
@@ -140,7 +156,7 @@ export function NavBar({
             </Button>
           ) : (
             <Skeleton className="hidden h-9 w-28 rounded-full md:flex" />
-          )}
+          )} */}
         </div>
       </MaxWidthWrapper>
     </header>

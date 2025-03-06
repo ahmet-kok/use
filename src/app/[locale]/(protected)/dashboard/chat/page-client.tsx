@@ -76,7 +76,7 @@ export default function ChatPageClient({ locale }: { locale: string }) {
   return (
     <>
       <DashboardHeader heading={t("chatBot")} text={t("chatWithAI")} />
-      <main className="w-auto place-content-center items-center justify-center">
+      <main className="w-auto place-content-center items-center">
         <div className="w-full">
           {messages.map((message: MessageProps) => {
             return <Message key={message.id} {...message} />;

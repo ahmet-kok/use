@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import dayjs from "dayjs";
 import { CopyIcon, TrashIcon } from "lucide-react";
@@ -48,11 +48,7 @@ export default function APIKeysPageClient({ locale }: { locale: string }) {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [newKeyName, setNewKeyName] = useState(t("defaultKeyName"));
 
-  useEffect(() => {
-    fetchAPIKeys();
-  }, [pagination.current, pagination.pageSize]);
-
-  async function fetchAPIKeys() {
+  const fetchAPIKeys = useCallback(async () => {
     try {
       setLoading(true);
       const response = await getAPIKeys(
@@ -69,7 +65,11 @@ export default function APIKeysPageClient({ locale }: { locale: string }) {
     } finally {
       setLoading(false);
     }
-  }
+  }, [pagination, t]);
+
+  useEffect(() => {
+    fetchAPIKeys();
+  }, [fetchAPIKeys]);
 
   async function handleCreateKey() {
     const trimmedKeyName = newKeyName.trim();

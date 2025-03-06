@@ -1,16 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
+import { defaultLocale, localePrefix, locales } from './i18n';
 export { auth as authMiddleware } from "@/auth";
 
+// Create the internationalization middleware
 const intlMiddleware = createMiddleware({
-    // A list of all locales that are supported
-    locales: ['en', 'zh', 'tr'],
-
-    // Used when no locale matches
-    defaultLocale: 'en',
-    
-    // Don't add a prefix for the default locale
-    localePrefix: 'as-needed'
+    locales,
+    defaultLocale,
+    localePrefix
 });
 
 export default async function middlewareHandler(req: NextRequest) {
@@ -25,8 +22,10 @@ export default async function middlewareHandler(req: NextRequest) {
 
     // If the path doesn't contain a locale prefix and isn't the root path,
     // check if it should be handled as a default locale (English) path
-    const isLocalePath = /^\/(zh|tr)(\/|$)/.test(pathname);
-    // Don't redirect the root path or paths that already have non-English locale prefixes
+    const nonDefaultLocalePattern = new RegExp(`^\\/(${locales.filter(l => l !== defaultLocale).join('|')})(\\\/|$)`);
+    const isLocalePath = nonDefaultLocalePattern.test(pathname);
+    
+    // Don't redirect the root path or paths that already have non-default locale prefixes
     if (!isLocalePath && pathname !== '/') {
         // Check if this is an internal Next.js path that should be left alone
         const isNextInternalPath = /^\/_next\//.test(pathname);
@@ -39,8 +38,14 @@ export default async function middlewareHandler(req: NextRequest) {
     return intlMiddleware(req);
 }
 
-export { createMiddleware };
-
+// Use a declarative API for configuring the middleware matcher
 export const config = {
-    matcher: ["/((?!api|_static|_next|.*\\.png$|.*\\.jpg$).*)"],
+    matcher: [
+        // Match all pathnames except those starting with:
+        // - api (API routes)
+        // - _static (static files)
+        // - _next (Next.js internals)
+        // - .*\\. (files with extension)
+        "/((?!api|_static|_next|.*\\.[^/]*$).*)"
+    ]
 };

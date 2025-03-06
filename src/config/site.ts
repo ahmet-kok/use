@@ -1,19 +1,21 @@
 import { SidebarNavItem, SiteConfig } from "@/types";
+
 import { env } from "@/env.mjs";
 
 const site_url = env.NEXT_PUBLIC_APP_URL;
 
 export const siteConfig: SiteConfig = {
-  name: "FFlow Next",
+  name: "UseEfficiently",
   description:
-    "Get your project off to an explosive start with FFlow Next! Harness the power of Next.js 14, Drizzle ORM, Neon, Auth.js v5, Resend, React Email, Shadcn/ui and Stripe to build your next big thing.",
+    "We are a design agency guided by Dieter Rams' principles. Our mission is to create digital experiences that are innovative, useful, and environmentally friendly.",
   url: site_url,
   ogImage: `${site_url}/_static/og.jpg`,
   links: {
-    twitter: "https://twitter.com/hunterzhang86",
-    github: "https://github.com/hunterzhang86/fflow-next",
+    twitter: "",
+    github: "",
+    airtable: "https://ecosystem.airtable.com/consultants/useefficiently",
   },
-  mailSupport: "support@fflowlink.com",
+  mailSupport: "support@useefficiently.com",
 };
 
 export const footerLinks: SidebarNavItem[] = [
