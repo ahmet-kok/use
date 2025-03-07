@@ -8,7 +8,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 export const metadata = constructMetadata({
-  title: "Billing – FFlow Next",
+  title: "Billing – UseEfficiently",
   description: "Manage billing and your subscription plan.",
 });
 

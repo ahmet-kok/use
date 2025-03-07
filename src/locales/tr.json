@@ -5,7 +5,7 @@
     "HeroLanding": {
       "introducing": "Şablonu Tanıtıyoruz",
       "kickoff": "İlk Yurt Dışı SaaS Şablonunuz:",
-      "saasStarter": "FFlow Next",
+      "saasStarter": "UseEfficiently",
       "description": "Next.js 14, Next Intl, Drizzle ORM, Neon, Auth.js v5, Resend, React Email, Shadcn/ui, Stripe kullanarak bir sonraki Yurt Dışı SaaS projenizi oluşturun.",
       "goPricing": "Fiyatlandırmaya Git",
       "starOn": "Yıldızla",
@@ -18,14 +18,14 @@
       "turkish": "Türkçe"
     },
     "BlogPage": {
-      "title": "Blog - FFlow Next",
-      "description": "FFlow Next'ten en son haberler ve güncellemeler.",
+      "title": "Blog",
+      "description": "UseEfficiently'ten en son haberler ve güncellemeler.",
       "all": "Hepsi",
       "categories": "Kategoriler",
       "guides": "Kılavuzlar",
       "news": {
         "title": "Haberler",
-        "description": "FFlow Next'ten güncellemeler ve duyurular."
+        "description": "UseEfficiently'ten güncellemeler ve duyurular."
       },
       "education": {
         "title": "Eğitim",
@@ -258,11 +258,11 @@
     "Chat": {
       "chatBot": "Sohbet Botu",
       "chatWithAI": "Yapay zeka asistanımızla sohbet edin.",
-      "initialQuestions1": "FFlow Next ile nasıl başlayabilirim?",
-      "initialQuestions2": "FFlow Next hangi özellikleri sunuyor?",
-      "initialQuestions3": "FFlow Next'te UI bileşenlerini özelleştirebilir miyim?",
-      "initialQuestions4": "FFlow Next kimlik doğrulamayı nasıl ele alıyor?",
-      "welcomeMessage": "**FFlow Next SohbetBot'a Hoş Geldiniz**",
+      "initialQuestions1": "UseEfficiently ile nasıl başlayabilirim?",
+      "initialQuestions2": "UseEfficiently hangi özellikleri sunuyor?",
+      "initialQuestions3": "UseEfficiently'te UI bileşenlerini özelleştirebilir miyim?",
+      "initialQuestions4": "UseEfficiently kimlik doğrulamayı nasıl ele alıyor?",
+      "welcomeMessage": "**UseEfficiently SohbetBot'a Hoş Geldiniz**",
       "inputPlaceholder": "Mesajınızı yazın...",
       "sendButton": "Gönder"
     },
@@ -283,13 +283,13 @@
       "title": "Müşterilerimiz neler paylaşıyor.",
       "subtitle": "Dünyanın dört bir yanından memnun müşterilerimizin olumlu geri bildirimlerini keşfedin.",
       "reviews": {
-        "1": "FFlow Next, geliştirme sürecimizi dönüştürdü. İnanılmaz derecede hızlı ve verimli!",
-        "2": "Next.js 14 ve diğer en yeni teknolojilerin entegrasyonu FFlow Next'i tam bir oyunun kurucusu yapıyor.",
-        "3": "Ekibimizin üretkenliği, FFlow Next'i benimsedikten sonra hızla arttı. Şiddetle tavsiye edilir!",
-        "4": "fflow-next'in kod kalitesi ve net dokümantasyonundan çok etkilendim. Ekibe tebrikler!",
-        "5": "fflow-next, kullanıcı verilerini verimli bir şekilde yönetmek için ihtiyacım olan araçları sağladı. Çok teşekkürler!",
-        "6": "fflow-next, bir pazarlama yöneticisi olarak işimde benim için paha biçilemez bir araç oldu. Stripe ile sorunsuz entegrasyonu sayesinde, yerleşik ödeme işlevselliği ile hedefli pazarlama kampanyaları başlatabildim ve ürünlerimizi ve hizmetlerimizi daha etkili bir şekilde ticarileştirmemize olanak tanıdı.",
-        "7": "fflow-next sayesinde, modern ve çekici kullanıcı arayüzlerini rekor sürede oluşturabildim. Başlangıç kiti, şık ve sezgisel tasarımlar oluşturmak için sağlam bir temel sunarak, işimin daha yaratıcı yönlerine odaklanmama olanak sağladı."
+        "1": "UseEfficiently, geliştirme sürecimizi dönüştürdü. İnanılmaz derecede hızlı ve verimli!",
+        "2": "Next.js 14 ve diğer en yeni teknolojilerin entegrasyonu UseEfficiently'i tam bir oyunun kurucusu yapıyor.",
+        "3": "Ekibimizin üretkenliği, UseEfficiently'i benimsedikten sonra hızla arttı. Şiddetle tavsiye edilir!",
+        "4": "useefficiently'in kod kalitesi ve net dokümantasyonundan çok etkilendim. Ekibe tebrikler!",
+        "5": "useefficiently, kullanıcı verilerini verimli bir şekilde yönetmek için ihtiyacım olan araçları sağladı. Çok teşekkürler!",
+        "6": "useefficiently, bir pazarlama yöneticisi olarak işimde benim için paha biçilemez bir araç oldu. Stripe ile sorunsuz entegrasyonu sayesinde, yerleşik ödeme işlevselliği ile hedefli pazarlama kampanyaları başlatabildim ve ürünlerimizi ve hizmetlerimizi daha etkili bir şekilde ticarileştirmemize olanak tanıdı.",
+        "7": "useefficiently sayesinde, modern ve çekici kullanıcı arayüzlerini rekor sürede oluşturabildim. Başlangıç kiti, şık ve sezgisel tasarımlar oluşturmak için sağlam bir temel sunarak, işimin daha yaratıcı yönlerine odaklanmama olanak sağladı."
       }
     },
     "PreviewLanding": {
@@ -391,7 +391,7 @@
         "blog": "Blog",
         "documentation": "Dokümantasyon"
       },
-      "siteName": "FFlow Next",
+      "siteName": "UseEfficiently",
       "dashboard": "Kontrol Paneli",
       "login": "Giriş Yap",
       "signUp": "Kayıt Ol",
@@ -579,7 +579,7 @@
       "privacyPolicy": "Gizlilik Politikası"
     },
     "AuthLayout": {
-      "quote": "FFlow Next, geliştirme sürecimizi dönüştürdü. İnanılmaz derecede hızlı ve verimli!",
+      "quote": "UseEfficiently, geliştirme sürecimizi dönüştürdü. İnanılmaz derecede hızlı ve verimli!",
       "author": "John Doe, Yazılım Mühendisi",
       "orContinueWith": "Veya devam et",
       "signUpWithEmail": "E-posta ile Kayıt Ol",

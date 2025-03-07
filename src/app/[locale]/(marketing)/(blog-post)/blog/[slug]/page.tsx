@@ -1,13 +1,11 @@
 import { notFound } from "next/navigation";
-import { allPosts } from "contentlayer/generated";
 
-import { getSingleBlog } from "@/lib/airtable";
+import { getBlog, getSingleBlog } from "@/lib/airtable";
 import { Mdx } from "@/components/content/mdx-components";
 
 import "@/styles/mdx.css";
 
 import { Metadata } from "next";
-import { Attachment } from "airtable";
 
 import { BLOG_CATEGORIES } from "@/config/blog";
 import { getTableOfContents } from "@/lib/toc";
@@ -18,9 +16,7 @@ import {
   getBlurDataURL,
   placeholderBlurhash,
 } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
 import Author from "@/components/content/author";
-import Link from "@/components/link/link";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { DashboardTableOfContents } from "@/components/shared/toc";
@@ -32,8 +28,9 @@ type BlogPostPageParams = {
 };
 
 export async function generateStaticParams(): Promise<BlogPostPageParams[]> {
-  return allPosts.map((post) => ({
-    slug: post.slugAsParams,
+  const posts = await getBlog("all");
+  return posts.map((post) => ({
+    slug: post.slug,
   }));
 }
 
@@ -49,7 +46,7 @@ export async function generateMetadata(props: {
   const { title, description, image } = post;
 
   return constructMetadata({
-    title: `${title} – FFlow Next`,
+    title: `${title} – UseEfficiently`,
     description: description,
     image: image[0].url,
   });
@@ -61,7 +58,6 @@ export default async function PostPage(props: {
   const params = await props.params;
   // get the first item from the array
   let post = await getSingleBlog(params.slug);
-  console.log(post);
 
   if (!post) {
     notFound();
@@ -145,7 +141,7 @@ export default async function PostPage(props: {
               className="aspect-[1200/630] border-b object-cover md:rounded-t-xl"
               width={1200}
               height={630}
-              priority
+              loading="lazy"
               placeholder="blur"
               src={post.image[0].url}
               sizes="(max-width: 768px) 770px, 1000px"

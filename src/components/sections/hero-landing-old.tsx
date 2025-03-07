@@ -22,7 +22,7 @@ interface HeroLandingProps {
 export default async function HeroLanding({ locale }: HeroLandingProps) {
   const t = await getTranslations("HeroLanding");
   const { stargazers_count: stars } = await fetch(
-    "https://api.github.com/repos/hunterzhang86/fflow-next",
+    "https://api.github.com/repos/useefficiently/useefficiently",
     {
       ...(env.GITHUB_OAUTH_TOKEN && {
         headers: {
@@ -41,7 +41,7 @@ export default async function HeroLanding({ locale }: HeroLandingProps) {
     <section className="space-y-6 py-12 sm:py-20 lg:py-20">
       <MaxWidthWrapper className="container flex flex-col items-center gap-5 text-center">
         <Link
-          href="https://twitter.com/hunterzhang86"
+          href="https://twitter.com/useefficiently"
           className={cn(
             buttonVariants({
               variant: "outline",

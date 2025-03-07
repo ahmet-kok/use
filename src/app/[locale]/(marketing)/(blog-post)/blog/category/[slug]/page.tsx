@@ -32,7 +32,7 @@ export async function generateMetadata(props: {
   const { title, description } = category;
 
   return constructMetadata({
-    title: `${title} Posts – FFlow Next`,
+    title: `${title} Posts – UseEfficiently`,
     description,
   });
 }

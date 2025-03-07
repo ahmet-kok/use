@@ -14,7 +14,7 @@ import Link from "@/components/link/link";
 import CareerList, { CareerSkeleton } from "./CareerList";
 
 export const metadata = constructMetadata({
-  title: "Career - FFlow Next",
+  title: "Career",
   description: "Explore our career opportunities.",
 });
 
@@ -57,7 +57,7 @@ export default async function CareerPage({ params }: PricingPageParams) {
             className="inline-flex items-center gap-2 transition-opacity hover:opacity-70"
           >
             <MailIcon className="size-5" />
-            <span>careers@useefficiently.com</span>
+            <span>career@useefficiently.com</span>
           </a>
 
           <Link

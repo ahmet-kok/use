@@ -74,7 +74,7 @@ export default function CareerList({ career }: { career: Career[] }) {
           {career.map((position) => (
             <tr
               key={position.id}
-              className="hover:bg-dark-50 dark:hover:bg-dark-100 transition-colors"
+              className="hover:bg-dark-50 dark:hover:bg-gray-300 transition-colors"
             >
               <td className="p-4 sm:px-6">
                 <h4 className="font-medium">{position.title}</h4>

@@ -1,17 +1,18 @@
 "use client";
 
-import Link from "@/components/link/link";
+import { useEffect, useState } from "react";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { DocsConfig, MarketingConfig } from "@/types";
 import { Menu, X } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useSelectedLayoutSegment } from "next/navigation";
-import { useEffect, useState } from "react";
 
-import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
-import { Icons } from "@/components/shared/icons";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { DocsSidebarNav } from "@/components/docs/sidebar-nav";
+import Link from "@/components/link/link";
 import LocaleSwitcher from "@/components/locale/locale-switcher";
-import { DocsConfig, MarketingConfig } from "@/types";
+import { Icons } from "@/components/shared/icons";
+
 import { ModeToggle } from "./mode-toggle";
 
 interface NavMobileProps {
@@ -25,7 +26,11 @@ interface NavMobileProps {
   };
 }
 
-export function NavMobile({ marketingConfig, translations, docsConfig }: NavMobileProps) {
+export function NavMobile({
+  marketingConfig,
+  translations,
+  docsConfig,
+}: NavMobileProps) {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const selectedLayout = useSelectedLayoutSegment();
@@ -77,14 +82,19 @@ export function NavMobile({ marketingConfig, translations, docsConfig }: NavMobi
                 <Link
                   href={href}
                   onClick={() => setOpen(false)}
-                  className="flex w-full font-medium capitalize"
+                  className="flex w-full font-medium"
                 >
                   {title}
                 </Link>
               </li>
             ))}
+          <li>
+            <Link href="/contact" className="flex w-full font-medium">
+              Book a free discovery call
+            </Link>
+          </li>
 
-          {session ? (
+          {/* {session ? (
             <>
               {session.user.role === "ADMIN" ? (
                 <li className="py-3">
@@ -130,7 +140,7 @@ export function NavMobile({ marketingConfig, translations, docsConfig }: NavMobi
                 </Link>
               </li>
             </>
-          )}
+          )} */}
         </ul>
 
         {documentation ? (
@@ -139,14 +149,14 @@ export function NavMobile({ marketingConfig, translations, docsConfig }: NavMobi
           </div>
         ) : null}
 
-        <div className="mt-5 flex items-center justify-end space-x-4">
+        {/*  <div className="mt-5 flex items-center justify-end space-x-4">
           <Link href={siteConfig.links.github} target="_blank" rel="noreferrer">
             <Icons.gitHub className="size-6" />
             <span className="sr-only">GitHub</span>
           </Link>
           <ModeToggle dropdown={false} />
           <LocaleSwitcher dropdown={false} />
-        </div>
+        </div> */}
       </nav>
     </>
   );

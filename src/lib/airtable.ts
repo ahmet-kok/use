@@ -243,6 +243,96 @@ export const getBlog = cache(async (view: "all" | "featured") => {
   }
 });
 
+export interface singlePortfolio {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  challenge: string;
+  solution: string;
+  outcome: string;
+  category: string;
+  year: string;
+  client: string;
+  services: string;
+  image: Attachment[];
+  images: Attachment[];
+  testimonialQuote: string;
+  testimonialAuthor: string;
+  testimonialRole: string;
+  testimonialCompany: string;
+  testimonialImage: Attachment[];
+}
+export const getSinglePortfolio = cache(async (slug: string) => {
+  try {
+    const records = await fetchFromAirtableSimple<singlePortfolio>(
+      "portfolio",
+      {
+        filterByFormula: `{slug} = '${slug}'`,
+        view: "single",
+        transformer: (record: Airtable.Record<FieldSet>) => {
+          const fields = record.fields;
+          return {
+            id: record.id,
+            title: fields.title as string,
+            slug: fields.slug as string,
+            description: fields.description as string,
+            challenge: fields.challenge as string,
+            solution: fields.solution as string,
+            outcome: fields.outcome as string,
+            category: fields.category as string,
+            year: fields.year as string,
+            client: fields.client as string,
+            services: fields.services as string,
+            image: fields.image as Attachment[],
+            images: fields.images as Attachment[],
+            testimonialQuote: fields.testimonialQuote as string,
+            testimonialAuthor: fields.testimonialAuthor as string,
+            testimonialRole: fields.testimonialRole as string,
+            testimonialCompany: fields.testimonialCompany as string,
+            testimonialImage: fields.testimonialImage as Attachment[],
+          };
+        },
+      },
+    );
+    return records[0];
+  } catch (error) {
+    console.error("Error fetching portfolio:", error);
+    throw new Error("Failed to fetch portfolio");
+  }
+});
+
+export interface Portfolio {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  category: string;
+  image: Attachment[];
+}
+export const getPortfolio = cache(async (view: "all" | "featured") => {
+  try {
+    return await fetchFromAirtableSimple<Portfolio>("portfolio", {
+      view,
+      sort: [{ field: "order", direction: "asc" }],
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        return {
+          id: record.id,
+          title: fields.title as string,
+          slug: fields.slug as string,
+          description: fields.description as string,
+          category: fields.category as string,
+          image: fields.image as Attachment[],
+        };
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching portfolio:", error);
+    throw new Error("Failed to fetch portfolio");
+  }
+});
+
 export interface Testimonial {
   id: string;
   quote: string;
@@ -307,3 +397,58 @@ export const getCompanies = cache(async () => {
     throw new Error("Failed to fetch companies");
   }
 });
+
+// send message to Airtable
+export const postMessage = async (
+  name: string,
+  email: string,
+  companyName: string,
+  companyWebsite: string,
+  message: string,
+) => {
+  if (!process.env.AIRTABLE_WEBHOOK_URL) {
+    throw new Error("AIRTABLE_WEBHOOK_URL is not set");
+  }
+  if (!name || !email || !companyName || !companyWebsite || !message) {
+    return {
+      success: false,
+      error: "All fields are required",
+    };
+  }
+  if (!email.includes("@")) {
+    return {
+      success: false,
+      error: "Invalid email",
+    };
+  }
+  if (!companyName || !companyWebsite) {
+    return {
+      success: false,
+      error: "Company name and website are required",
+    };
+  }
+  if (!message) {
+    return {
+      success: false,
+      error: "Message is required",
+    };
+  }
+  if (!companyWebsite.includes("https")) {
+    return {
+      success: false,
+      error: "Company website must include http or https",
+    };
+  }
+
+  const response = await fetch(process.env.AIRTABLE_WEBHOOK_URL, {
+    method: "POST",
+    body: JSON.stringify({ name, email, companyName, companyWebsite, message }),
+  });
+  if (!response.ok) {
+    return {
+      success: false,
+      error: "Failed to send message",
+    };
+  }
+  return { success: true };
+};

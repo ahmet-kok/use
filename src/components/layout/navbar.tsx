@@ -9,7 +9,7 @@ import { useLocale } from "next-intl";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { useScroll } from "@/hooks/use-scroll";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "@/components/link/link";
 import LocaleSwitcher from "@/components/locale/locale-switcher";
@@ -61,10 +61,10 @@ export function NavBar({
       )}
     >
       <MaxWidthWrapper
-        className="grid h-14 w-full grid-cols-3 justify-between"
+        className="grid h-14 w-full grid-cols-2 justify-between px-0"
         large={documentation}
       >
-        <div className="flex gap-6 md:gap-10 items-center">
+        <div className="flex items-center gap-6 md:gap-10">
           <Link prefetch={true} href="/" className="text-xl font-bold">
             <div className="relative text-nowrap">
               <span
@@ -88,7 +88,7 @@ export function NavBar({
             </div>
           </Link>
         </div>
-        <div className="flex justify-center items-center">
+        <div className="flex items-center justify-end">
           {links && links.length > 0 ? (
             <nav className="hidden gap-6 md:flex">
               {links.map((item, index) => (
@@ -107,13 +107,28 @@ export function NavBar({
                   {item.title}
                 </Link>
               ))}
+              <Link
+                href={`/pricing`}
+                prefetch={true}
+                className={cn(
+                  buttonVariants({
+                    size: "sm",
+                    rounded: "lg",
+                    variant: "outline",
+                  }),
+                  "group text-nowrap",
+                )}
+              >
+                <span>Book a free discovery call</span>
+                <Icons.arrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-0.5" />
+              </Link>
             </nav>
           ) : null}
         </div>
-        <div className="hidden justify-end items-center space-x-2 md:flex md:space-x-3">
+        {/* <div className="hidden justify-end items-center space-x-2 md:flex md:space-x-3">
           <ModeToggle dropdown={false} />
           <LocaleSwitcher dropdown={false} />
-          {/* {session ? (
+          {session ? (
             <Link
               href={session.user.role === "ADMIN" ? "/admin" : "/dashboard"}
               className="md:hidden"
@@ -156,8 +171,8 @@ export function NavBar({
             </Button>
           ) : (
             <Skeleton className="hidden h-9 w-28 rounded-full md:flex" />
-          )} */}
-        </div>
+          )}
+        </div> */}
       </MaxWidthWrapper>
     </header>
   );

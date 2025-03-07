@@ -19,7 +19,8 @@ export default async function Author({
         alt={name}
         width={40}
         height={40}
-        priority
+        
+        loading="lazy"
         placeholder="blur"
         blurDataURL={await getBlurDataURL(image!)}
         className="size-8 rounded-full transition-all group-hover:brightness-90 md:size-10"
@@ -34,7 +35,8 @@ export default async function Author({
         alt={name}
         width={40}
         height={40}
-        priority
+        
+        loading="lazy"
         placeholder="blur"
         blurDataURL={await getBlurDataURL(image!)}
         className="size-8 rounded-full transition-all group-hover:brightness-90 md:size-10"

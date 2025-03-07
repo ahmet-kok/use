@@ -12,26 +12,31 @@ export function cn(...inputs: ClassValue[]) {
 
 // Define theme colors for light and dark modes
 export const lightThemeColor = "#ffffff"; // Light theme color
-export const darkThemeColor = "#18181b";  // Dark theme color
+export const darkThemeColor = "#18181b"; // Dark theme color
 
 export function constructMetadata({
   title = siteConfig.name,
+  titleTemplate = `%s | ${siteConfig.name}`,
   description = siteConfig.description,
   image = siteConfig.ogImage,
   icons = "/favicon.ico",
   noIndex = false,
 }: {
   title?: string;
+  titleTemplate?: string;
   description?: string;
   image?: string;
   icons?: string;
   noIndex?: boolean;
 } = {}): Metadata {
   // Make sure we have a valid URL for metadataBase
-  const url = siteConfig.url || 'http://localhost:3000';
-  
+  const url = siteConfig.url || "http://localhost:3000";
+
   return {
-    title,
+    title: {
+      default: title,
+      template: titleTemplate,
+    },
     description,
     keywords: [
       "Next.js",
@@ -45,10 +50,10 @@ export function constructMetadata({
     ],
     authors: [
       {
-        name: "noone",
+        name: "UseEfficiently",
       },
     ],
-    creator: "noone",
+    creator: "UseEfficiently",
     openGraph: {
       type: "website",
       locale: "en_US",
@@ -61,16 +66,16 @@ export function constructMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: title
-        }
-      ]
+          alt: title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
       images: [image],
-      creator: "@miickasmt",
+      creator: "@useefficiently",
     },
     icons,
     metadataBase: new URL(url),
@@ -89,7 +94,7 @@ export function constructViewport(): Viewport {
   return {
     themeColor: [
       { media: "(prefers-color-scheme: light)", color: lightThemeColor },
-      { media: "(prefers-color-scheme: dark)", color: darkThemeColor }
+      { media: "(prefers-color-scheme: dark)", color: darkThemeColor },
     ],
   };
 }
@@ -101,26 +106,29 @@ export function constructViewport(): Viewport {
  * @returns Formatted date string
  */
 export function formatDate(
-  dateString: string, 
-  options: Intl.DateTimeFormatOptions = { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  }
+  dateString: string,
+  options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  },
 ): string {
-  if (!dateString) return '';
-  
+  if (!dateString) return "";
+
   const date = new Date(dateString);
-  
+
   // Check if date is valid
   if (isNaN(date.getTime())) {
     return dateString;
   }
-  
-  return new Intl.DateTimeFormat('en-US', options).format(date);
+
+  return new Intl.DateTimeFormat("en-US", options).format(date);
 }
 
-export function formatDateWithLocale(locale: string, input: string | number): string {
+export function formatDateWithLocale(
+  locale: string,
+  input: string | number,
+): string {
   const date = new Date(input);
   return date.toLocaleDateString(locale, {
     month: "long",
@@ -136,8 +144,9 @@ export function absoluteUrl(path: string) {
 // Utils from precedent.dev
 export const timeAgo = (timestamp: Date, timeOnly?: boolean): string => {
   if (!timestamp) return "never";
-  return `${ms(Date.now() - new Date(timestamp).getTime())}${timeOnly ? "" : " ago"
-    }`;
+  return `${ms(Date.now() - new Date(timestamp).getTime())}${
+    timeOnly ? "" : " ago"
+  }`;
 };
 
 export async function fetcher<JSON = any>(
@@ -224,7 +233,7 @@ export interface ApiResponse<T> {
   code: number;
   message: string;
   data: T;
-};
+}
 
 export class ApiResponse<T> {
   code: number;

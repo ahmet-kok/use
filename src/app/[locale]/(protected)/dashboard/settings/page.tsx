@@ -9,7 +9,7 @@ import { UserNameForm } from "@/components/forms/user-name-form";
 import { UserRoleForm } from "@/components/forms/user-role-form";
 
 export const metadata = constructMetadata({
-  title: "Settings – FFlow Next",
+  title: "Settings – UseEfficiently",
   description: "Configure your account and website settings.",
 });
 

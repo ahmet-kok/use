@@ -7,7 +7,7 @@ import { constructMetadata } from "@/lib/utils";
 import AdminPageClient from './page-client';
 
 export const metadata = constructMetadata({
-  title: "Admin – FFlow Next",
+  title: "Admin – UseEfficiently",
   description: "Admin page for only admin management.",
 });
 

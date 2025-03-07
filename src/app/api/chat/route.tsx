@@ -186,7 +186,7 @@ export async function POST(req: NextAuthRequest) {
 
       if (env.NODE_ENV === "development") {
         const stream = streamText({
-          text: "Hello, I'm FFlow Next Chat Bot. How can I help you today?"
+          text: "Hello, I'm UseEfficiently Chat Bot. How can I help you today?"
         });
         
         return stream.toTextStreamResponse({

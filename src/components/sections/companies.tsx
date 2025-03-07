@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import { Company, getCompanies } from "@/lib/airtable";
+import { placeholderBlurhash } from "@/lib/utils";
+import BlurImage from "@/components/shared/blur-image";
 import { HeaderSection } from "@/components/shared/header-section";
 
 import CustomButton from "../shared/custom-button";
@@ -32,12 +34,12 @@ function CompanySkeleton() {
       {[...Array(6)].map((_, i) => (
         <div key={i} className="flex h-12">
           <div className="relative h-full w-12 shrink-0">
-            <div className="bg-dark-100 dark:bg-dark-800 absolute inset-0 animate-pulse rounded-lg" />
+            <div className="dark:bg-dark-800 absolute inset-0 animate-pulse rounded-lg bg-gray-300" />
           </div>
           <div className="border-dark-200 ml-6 flex w-full items-center justify-between border-b dark:border-gray-800">
-            <div className="bg-dark-100 dark:bg-dark-800 h-4 w-32 animate-pulse rounded" />
+            <div className="dark:bg-dark-800 h-4 w-32 animate-pulse rounded bg-gray-300" />
             <div className="flex items-center">
-              <div className="bg-dark-100 dark:bg-dark-800 h-4 w-20 animate-pulse rounded" />
+              <div className="dark:bg-dark-800 h-4 w-20 animate-pulse rounded bg-gray-300" />
             </div>
           </div>
         </div>
@@ -51,9 +53,16 @@ interface CompanyListProps {
 }
 
 export function CompanyList({ companies }: CompanyListProps) {
+  /* const companiesWithThumbnailBlurhash = companies.map(async (item) => {
+    const thumbnailBlurhash = await getBlurDataURL(item.logo[0].url);
+    return {
+      thumbnailBlurhash,
+    };
+  }); */
+
   return (
     <div className="grid gap-x-8 gap-y-6 lg:grid-cols-2">
-      {companies.map((item) => (
+      {companies.map((item, index) => (
         <Link
           prefetch={true}
           key={item.id}
@@ -63,15 +72,16 @@ export function CompanyList({ companies }: CompanyListProps) {
           className="group flex h-12"
         >
           <div className="relative h-full w-12 shrink-0">
-            <Image
-              src={item.logo[0]?.thumbnails?.large?.url || item.logo[0]?.url}
+            <BlurImage
               alt={item.name}
+              blurDataURL={placeholderBlurhash}
+              className="aspect-square rounded-lg object-cover"
               width={100}
               height={100}
-              className="size-full object-contain"
+              priority
               placeholder="blur"
-              blurDataURL={item.logo[0]?.thumbnails?.small?.url}
-              loading="lazy"
+              src={item.logo[0].url}
+              sizes="(max-width: 100px) 100px, 100px"
             />
           </div>
           <div className="ml-6 flex w-full items-center justify-between border-b">

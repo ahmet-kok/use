@@ -5,7 +5,7 @@ import { createNavigation } from "next-intl/navigation";
 
 // FIXME: Update this configuration file based on your project information
 export const AppConfig = {
-  name: "FFlow Next",
+  name: "UseEfficiently",
   locales: [
     {
       id: "en",

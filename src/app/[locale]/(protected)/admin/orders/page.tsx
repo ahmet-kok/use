@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { constructMetadata } from "@/lib/utils";
 
 export const metadata = constructMetadata({
-  title: "Orders – FFlow Next",
+  title: "Orders – UseEfficiently",
   description: "Check and manage your latest orders.",
 });
 

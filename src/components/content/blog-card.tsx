@@ -41,6 +41,7 @@ export function BlogCard({
             placeholder="blur"
             src={data.image}
             sizes="(max-width: 768px) 750px, 600px"
+            loading={priority ? "eager" : "lazy"}
           />
         </div>
       )}

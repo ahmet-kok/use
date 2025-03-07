@@ -18,7 +18,7 @@
     "turkish": "Turkish"
   },
   "BlogPage": {
-    "title": "Blog - UseEfficiently",
+    "title": "Blog",
     "description": "Latest news and updates from UseEfficiently.",
     "all": "All",
     "categories": "Categories",
@@ -286,10 +286,10 @@
       "1": "UseEfficiently has revolutionized our development process. It's incredibly fast and efficient!",
       "2": "The integration of Next.js 14 and other cutting-edge technologies makes UseEfficiently a game-changer.",
       "3": "Our team's productivity skyrocketed after adopting UseEfficiently. Highly recommended!",
-      "4": "I'm impressed by the quality of code and clear documentation of fflow-next. Kudos to the team!",
-      "5": "fflow-next provided me with the tools I needed to efficiently manage user data. Thank you so much!",
-      "6": "fflow-next has been an invaluable asset in my role as a marketing manager. With its seamless integration with Stripe, I've been able to launch targeted marketing campaigns with built-in payment functionality, allowing us to monetize our products and services more effectively.",
-      "7": "Thanks to fflow-next, I've been able to create modern and attractive user interfaces in record time. The starter kit provides a solid foundation for building sleek and intuitive designs, allowing me to focus more on the creative aspects of my work."
+      "4": "I'm impressed by the quality of code and clear documentation of useefficiently. Kudos to the team!",
+      "5": "useefficiently provided me with the tools I needed to efficiently manage user data. Thank you so much!",
+      "6": "useefficiently has been an invaluable asset in my role as a marketing manager. With its seamless integration with Stripe, I've been able to launch targeted marketing campaigns with built-in payment functionality, allowing us to monetize our products and services more effectively.",
+      "7": "Thanks to useefficiently, I've been able to create modern and attractive user interfaces in record time. The starter kit provides a solid foundation for building sleek and intuitive designs, allowing me to focus more on the creative aspects of my work."
     }
   },
   "PreviewLanding": {
@@ -588,7 +588,7 @@
   },
   "CareerPage": {
     "metadata": {
-      "title": "Careers",
+      "title": "Career",
       "description": "Join our team and help us build amazing products"
     },
     "header": {

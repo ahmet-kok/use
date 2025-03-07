@@ -4,8 +4,11 @@ import { ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { getTestimonials } from "@/lib/airtable";
+import { placeholderBlurhash } from "@/lib/utils";
 import CustomButton from "@/components/shared/custom-button";
 import { HeaderSection } from "@/components/shared/header-section";
+
+import BlurImage from "../shared/blur-image";
 
 export default function Testimonials({ locale }) {
   const t = useTranslations("Testimonials");
@@ -31,20 +34,17 @@ async function TestimonialsWrapper() {
             className="grid items-start gap-8 md:grid-cols-[1fr,2fr]"
           >
             <div className="space-y-4">
-              <div className="aspect-square size-12 overflow-hidden">
-                <Image
-                  src={
-                    item.image[0]?.thumbnails?.large?.url || item.image[0]?.url
-                  }
-                  alt={item.author}
-                  width={100}
-                  height={100}
-                  className="size-full rounded-full border object-cover"
-                  placeholder="blur"
-                  blurDataURL={item.image[0]?.thumbnails?.small?.url}
-                  loading="lazy"
-                />
-              </div>
+              <BlurImage
+                alt={item.author}
+                blurDataURL={placeholderBlurhash}
+                className="aspect-square size-12 rounded-full border"
+                width={100}
+                height={100}
+                placeholder="blur"
+                src={item.image[0].url}
+                sizes="(max-width: 100px) 100px, 100px"
+                loading="lazy"
+              />
               <div>
                 <h3 className="mb-1">{item.author}</h3>
                 <p>

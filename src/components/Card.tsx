@@ -1,6 +1,10 @@
-import Link from "next/link";
-import Image from "next/image";
 import { Fragment } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+import { placeholderBlurhash } from "@/lib/utils";
+
+import BlurImage from "./shared/blur-image";
 import CustomButton from "./shared/custom-button";
 
 interface CardProps {
@@ -59,14 +63,16 @@ export function Card({
         <Link prefetch={true} href={link || "#"} className={`${className}`}>
           <div className={`${articleClassName}`}>
             {image && (
-              <Image
-                src={image?.thumbnails?.large?.url || image?.url}
+              <BlurImage
                 alt={title || ""}
+                blurDataURL={placeholderBlurhash}
                 className={`${imageClassName}`}
                 width={imageWidth}
                 height={imageHeight}
                 placeholder="blur"
-                blurDataURL={image?.thumbnails?.small?.url}
+                loading={index < 2 ? "eager" : "lazy"}
+                src={image?.url}
+                sizes={`(max-width: ${imageWidth}px) ${imageWidth}px, ${imageHeight}px`}
                 priority={index < 2}
               />
             )}
@@ -95,9 +101,7 @@ export function Card({
                 )}
               </div>
             )}
-            {link && (
-              <CustomButton text={linkText || "Read More"} />
-            )}
+            {link && <CustomButton text={linkText || "Read More"} />}
           </div>
           {children && children}
         </Link>

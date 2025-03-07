@@ -47,3 +47,37 @@ export const footerLinks: SidebarNavItem[] = [
     ],
   },
 ];
+
+export const contactInfo = [
+  {
+    label: "Email",
+    value: "hello@useefficiently.com",
+  },
+  {
+    label: "Phone",
+    value: "+1 (555) 123-4567",
+  },
+  {
+    label: "Location",
+    value: "Toronto, ON, Canada",
+  },
+  {
+    label: "Hours",
+    value: "Mon-Fri, 9am-6pm PST",
+  },
+];
+
+export const meetingTypes = [
+  {
+    slug: "discovery",
+    title: "Discovery Call",
+    description: "25-minute introductory call to discuss your project needs",
+    duration: "25 min",
+  } /* ,
+    {
+      slug: "consultation",
+      title: "Design Consultation",
+      description: "60-minute in-depth discussion about your system design requirements",
+      duration: "60 min",
+    }, */,
+];

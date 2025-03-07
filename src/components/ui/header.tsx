@@ -6,14 +6,16 @@ export function Header({
   description,
   link,
   linkText,
+  topMargin = "mt-8 sm:mt-16",
 }: {
   title: string;
   description: string;
   link?: string;
   linkText?: string;
+  topMargin?: string;
 }) {
   return (
-    <section className="mb-16 mt-8 sm:mt-16">
+    <section className={`mb-16 ${topMargin}`}>
       <h1>{title}</h1>
       <p className="text-base">{description}</p>
       {link && (

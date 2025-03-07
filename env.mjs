@@ -19,6 +19,7 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: z.string().optional(),
     AIRTABLE_API_KEY: z.string().optional(),
     AIRTABLE_BASE_ID: z.string().optional(),
+    AIRTABLE_WEBHOOK_URL: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().optional(),
@@ -41,6 +42,7 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     AIRTABLE_API_KEY: process.env.AIRTABLE_API_KEY,
     AIRTABLE_BASE_ID: process.env.AIRTABLE_BASE_ID,
+    AIRTABLE_WEBHOOK_URL: process.env.AIRTABLE_WEBHOOK_URL,
     // Stripe
     STRIPE_API_KEY: process.env.STRIPE_API_KEY,
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,

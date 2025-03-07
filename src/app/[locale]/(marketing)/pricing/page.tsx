@@ -11,7 +11,7 @@ import { PricingCards } from "@/components/pricing/pricing-cards";
 import { PricingFaq } from "@/components/pricing/pricing-faq";
 
 export const metadata = constructMetadata({
-  title: "Pricing - FFlow Next",
+  title: "Pricing",
   description: "Explore our subscription plans.",
 });
 

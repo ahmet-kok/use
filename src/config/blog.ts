@@ -17,7 +17,7 @@ export const getBlogAuthors = (t: ReturnType<typeof useTranslations>) => ({
   noone: {
     name: t('BlogPage.authors.noone.name'),
     image: "/_static/avatars/noone.png",
-    twitter: "hunterzhang86",
+    twitter: "useefficiently",
   },
   shadcn: {
     name: t('BlogPage.authors.shadcn.name'),
@@ -34,7 +34,7 @@ export const BLOG_CATEGORIES: {
   {
     title: "News",
     slug: "news",
-    description: "Updates and announcements from Next FFlow Next.",
+    description: "Updates and announcements from Next UseEfficiently.",
   },
   {
     title: "Education",
@@ -47,7 +47,7 @@ export const BLOG_AUTHORS = {
   noone: {
     name: "noone",
     image: "/_static/avatars/noone.png",
-    twitter: "hunterzhang86",
+    twitter: "useefficiently",
   },
   shadcn: {
     name: "shadcn",

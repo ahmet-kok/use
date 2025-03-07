@@ -43,7 +43,7 @@ export async function generateMetadata(props: {
   const { title, description } = doc;
 
   return constructMetadata({
-    title: `${title} – FFlow Next`,
+    title: `${title} – UseEfficiently`,
     description: description,
   });
 }

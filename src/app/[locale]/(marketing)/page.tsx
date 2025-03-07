@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import BentoGrid from "@/components/sections/bentogrid";
+import Blog from "@/components/sections/blog";
 import Companies from "@/components/sections/companies";
 import Features from "@/components/sections/features";
 import HeroLanding from "@/components/sections/hero-landing";
@@ -8,7 +9,6 @@ import InfoLanding from "@/components/sections/info-landing";
 import Powered from "@/components/sections/powered";
 import PreviewLanding from "@/components/sections/preview-landing";
 import Testimonials from "@/components/sections/testimonials";
-import Blog from "@/components/sections/blog";
 
 // Type for page params
 type HomePageParams = {
@@ -33,7 +33,7 @@ export default async function HomePage(props: {
       <InfoLanding locale={params.locale} /> 
       <Features />  */}
       <Testimonials locale={params.locale} />
-      <Blog view="featured"/>
+      <Blog view="featured" link="/blog" linkText="View All" />
     </main>
   );
 }

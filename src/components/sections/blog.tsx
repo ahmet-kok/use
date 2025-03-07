@@ -10,13 +10,27 @@ import BlogList from "./blog-list";
 interface BlogProps {
   view: "all" | "featured";
   category?: boolean;
+  link?: string;
+  linkText?: string;
+  main?: boolean;
 }
 
-export default function Blog({ view, category = false }: BlogProps) {
+export default function Blog({
+  view,
+  category = false,
+  link,
+  linkText,
+  main,
+}: BlogProps) {
   const t = useTranslations("Blog");
   return (
     <section>
-      <HeaderSection title="Our journey" />
+      <HeaderSection
+        title="Our journey"
+        link={link}
+        linkText={linkText}
+        main={main}
+      />
       <Suspense fallback={<BlogSkeleton />}>
         <BlogListWrapper view={view} category={category} />
       </Suspense>
