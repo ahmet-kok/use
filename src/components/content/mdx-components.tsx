@@ -24,7 +24,7 @@ const components = {
       <h1
         id={id}
         className={cn(
-          "mt-2 scroll-m-20 text-4xl font-bold tracking-tight",
+          "mt-2 text-4xl font-bold tracking-tight",
           className,
         )}
         {...props}
@@ -49,7 +49,7 @@ const components = {
       <h2
         id={id}
         className={cn(
-          "mt-10 scroll-m-20 border-b pb-1 text-2xl font-semibold tracking-tight first:mt-0",
+          "mt-10 border-b pb-1 text-2xl font-semibold tracking-tight first:mt-0",
           className,
         )}
         {...props}
@@ -74,7 +74,7 @@ const components = {
       <h3
         id={id}
         className={cn(
-          "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+          "mt-8 text-xl font-semibold tracking-tight",
           className,
         )}
         {...props}
@@ -98,7 +98,7 @@ const components = {
       <h4
         id={id}
         className={cn(
-          "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+          "mt-8 text-lg font-semibold tracking-tight",
           className,
         )}
         {...props}
@@ -122,7 +122,7 @@ const components = {
       <h5
         id={id}
         className={cn(
-          "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+          "mt-8 text-lg font-semibold tracking-tight",
           className,
         )}
         {...props}
@@ -147,7 +147,7 @@ const components = {
       <h6
         id={id}
         className={cn(
-          "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
+          "mt-8 text-base font-semibold tracking-tight",
           className,
         )}
         {...props}
@@ -291,7 +291,7 @@ const components = {
       <h3
         id={id}
         className={cn(
-          "mt-8 scroll-m-20 font-heading text-xl font-semibold tracking-tight",
+          "mt-8 font-heading text-xl font-semibold tracking-tight",
           className,
         )}
         {...props}

@@ -10,6 +10,7 @@ import { Metadata } from "next";
 import { BLOG_CATEGORIES } from "@/config/blog";
 import { getTableOfContents } from "@/lib/toc";
 import { constructMetadata, placeholderBlurhash } from "@/lib/utils";
+import { Breadcrumb } from "@/components/breadcrumb";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { DashboardTableOfContents } from "@/components/shared/toc";
@@ -70,10 +71,21 @@ export default async function PostPage(props: {
         (slug) => allPosts.find((post) => post.slugAsParams === slug)!,
       )) ||
     []; */
+  const items = [
+    { title: "Challenge", url: "#challenge" },
+    { title: "Solution", url: "#solution" },
+    { title: "Outcome", url: "#outcome" },
+  ];
+  if (
+    post.testimonialQuote &&
+    post.testimonialAuthor &&
+    post.testimonialRole &&
+    post.testimonialImage
+  ) {
+    items.push({ title: "Testimonial", url: "#testimonial" });
+  }
 
-  const toc = await getTableOfContents(
-    post.challenge + post.solution + post.outcome + post.testimonialQuote,
-  );
+  const toc = { items };
 
   /* const [thumbnailBlurhash, images] = await Promise.all([
     getBlurDataURL(post.image),
@@ -89,6 +101,7 @@ export default async function PostPage(props: {
   return (
     <>
       <MaxWidthWrapper className="pt-6 md:pt-10">
+        <Breadcrumb />
         <div className="flex flex-col space-y-4">
           <h1 className="font-heading text-3xl text-foreground sm:text-4xl">
             {post.title}
@@ -143,7 +156,7 @@ export default async function PostPage(props: {
 
               {/* Challenge */}
               {post.challenge && (
-                <section>
+                <section id="challenge">
                   <h2>Challenge</h2>
 
                   <p className="text-base">{post.challenge}</p>
@@ -152,7 +165,7 @@ export default async function PostPage(props: {
 
               {/* Solution */}
               {post.solution && (
-                <section>
+                <section id="solution">
                   <h2>Solution</h2>
 
                   <p className="text-base">{post.solution}</p>
@@ -166,7 +179,7 @@ export default async function PostPage(props: {
 
               {/* Outcome */}
               {post.outcome && (
-                <section>
+                <section id="outcome">
                   <h2>Outcome</h2>
 
                   <p className="text-base">{post.outcome}</p>
@@ -178,7 +191,10 @@ export default async function PostPage(props: {
                 post.testimonialAuthor &&
                 post.testimonialRole &&
                 post.testimonialImage && (
-                  <section className="border-dark-200 border-t pt-16 dark:border-gray-800">
+                  <section
+                    id="testimonial"
+                    className="border-dark-200 border-t pt-16 dark:border-gray-800"
+                  >
                     <blockquote className="gap-16">
                       <div>
                         <p className="mb-6 text-lg font-medium">

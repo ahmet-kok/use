@@ -16,6 +16,7 @@ import {
   getBlurDataURL,
   placeholderBlurhash,
 } from "@/lib/utils";
+import { Breadcrumb } from "@/components/breadcrumb";
 import Author from "@/components/content/author";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
@@ -91,6 +92,7 @@ export default async function PostPage(props: {
   return (
     <>
       <MaxWidthWrapper className="pt-6 md:pt-10">
+        <Breadcrumb />
         <div className="flex flex-col space-y-4">
           <div className="flex items-center space-x-4">
             {/* <Link

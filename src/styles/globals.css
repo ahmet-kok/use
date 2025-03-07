@@ -5,6 +5,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Adds padding at the top when scrolling to anchors */
   }
   
   :root {
