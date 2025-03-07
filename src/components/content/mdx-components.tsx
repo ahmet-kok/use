@@ -1,68 +1,161 @@
-import * as React from "react";
-import Link from "@/components/link/link";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+
 import { cn } from "@/lib/utils";
 import { MdxCard } from "@/components/content/mdx-card";
+import Link from "@/components/link/link";
 import { Callout } from "@/components/shared/callout";
 import { CopyButton } from "@/components/shared/copy-button";
 
 const components = {
-  h1: ({ className, ...props }) => (
-    <h1
-      className={cn(
-        "mt-2 scroll-m-20 text-4xl font-bold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h2: ({ className, ...props }) => (
-    <h2
-      className={cn(
-        "mt-10 scroll-m-20 border-b pb-1 text-2xl font-semibold tracking-tight first:mt-0",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h3: ({ className, ...props }) => (
-    <h3
-      className={cn(
-        "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h4: ({ className, ...props }) => (
-    <h4
-      className={cn(
-        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h5: ({ className, ...props }) => (
-    <h5
-      className={cn(
-        "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
-  h6: ({ className, ...props }) => (
-    <h6
-      className={cn(
-        "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
+  h1: ({ className, children, ...props }) => {
+    const id =
+      children &&
+      typeof children === "object" &&
+      "props" in children &&
+      children.props?.children
+        ? String(children.props.children)
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
+        : undefined;
+    return (
+      <h1
+        id={id}
+        className={cn(
+          "mt-2 scroll-m-20 text-4xl font-bold tracking-tight",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </h1>
+    );
+  },
+  h2: ({ className, children, ...props }) => {
+    const id =
+      children &&
+      typeof children === "object" &&
+      "props" in children &&
+      children.props?.children
+        ? String(children.props.children)
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
+        : undefined;
+
+    return (
+      <h2
+        id={id}
+        className={cn(
+          "mt-10 scroll-m-20 border-b pb-1 text-2xl font-semibold tracking-tight first:mt-0",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </h2>
+    );
+  },
+  h3: ({ className, children, ...props }) => {
+    const id =
+      children &&
+      typeof children === "object" &&
+      "props" in children &&
+      children.props?.children
+        ? String(children.props.children)
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
+        : undefined;
+
+    return (
+      <h3
+        id={id}
+        className={cn(
+          "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </h3>
+    );
+  },
+  h4: ({ className, children, ...props }) => {
+    const id =
+      children &&
+      typeof children === "object" &&
+      "props" in children &&
+      children.props?.children
+        ? String(children.props.children)
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
+        : undefined;
+    return (
+      <h4
+        id={id}
+        className={cn(
+          "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </h4>
+    );
+  },
+  h5: ({ className, children, ...props }) => {
+    const id =
+      children &&
+      typeof children === "object" &&
+      "props" in children &&
+      children.props?.children
+        ? String(children.props.children)
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
+        : undefined;
+    return (
+      <h5
+        id={id}
+        className={cn(
+          "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </h5>
+    );
+  },
+  h6: ({ className, children, ...props }) => {
+    const id =
+      children &&
+      typeof children === "object" &&
+      "props" in children &&
+      children.props?.children
+        ? String(children.props.children)
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
+        : undefined;
+
+    return (
+      <h6
+        id={id}
+        className={cn(
+          "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </h6>
+    );
+  },
   a: ({ className, ...props }) => (
     <a
       className={cn("font-medium underline underline-offset-4", className)}
@@ -183,15 +276,30 @@ const components = {
   },
   Callout,
   Card: MdxCard,
-  Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
-    <h3
-      className={cn(
-        "mt-8 scroll-m-20 font-heading text-xl font-semibold tracking-tight",
-        className,
-      )}
-      {...props}
-    />
-  ),
+  Step: ({ className, children, ...props }: React.ComponentProps<"h3">) => {
+    const id =
+      children &&
+      typeof children === "object" &&
+      "props" in children &&
+      children.props?.children
+        ? String(children.props.children)
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/[^\w-]/g, "")
+        : undefined;
+    return (
+      <h3
+        id={id}
+        className={cn(
+          "mt-8 scroll-m-20 font-heading text-xl font-semibold tracking-tight",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </h3>
+    );
+  },
   Steps: ({ ...props }) => (
     <div
       className="[&>h3]:step steps mb-12 ml-4 border-l pl-8 [counter-reset:step]"
