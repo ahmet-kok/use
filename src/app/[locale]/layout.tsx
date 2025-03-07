@@ -9,8 +9,8 @@ import { ThemeProvider } from "next-themes";
 
 import { cn, constructMetadata, constructViewport } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
-import { Analytics } from "@/components/analytics";
 import ModalProvider from "@/components/modals/providers";
+import { Settings } from "@/components/settings";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 
 const inter = Inter({
@@ -56,9 +56,8 @@ export default function RootLayout({
             <NextIntlClientProvider messages={messages}>
               <ModalProvider locale={locale}>{children}</ModalProvider>
             </NextIntlClientProvider>
-            <Analytics />
             <Toaster richColors closeButton />
-            <TailwindIndicator />
+            <Settings />
           </ThemeProvider>
         </SessionProvider>
       </body>
