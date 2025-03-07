@@ -1,7 +1,7 @@
-import Link from "@/components/link/link";
 import { Post } from "contentlayer/generated";
 
 import { cn, formatDate, placeholderBlurhash } from "@/lib/utils";
+import Link from "@/components/link/link";
 import BlurImage from "@/components/shared/blur-image";
 
 import Author from "./author";
@@ -63,7 +63,13 @@ export function BlogCard({
         <div className="mt-4 flex items-center space-x-3">
           <div className="flex items-center -space-x-2">
             {data.authors.map((author) => (
-              <Author username={author} key={data._id + author} imageOnly />
+              <Author
+                key={data._id + author}
+                name={author}
+                title={author}
+                image={author}
+                imageOnly
+              />
             ))}
           </div>
 

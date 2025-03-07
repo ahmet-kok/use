@@ -67,7 +67,7 @@ export default async function CareerPage({ params }: PricingPageParams) {
           >
             <CalendarIcon className="size-5" />
             <span>Schedule a 15-minute call</span>
-            <ArrowRightIcon className="h-4 w-4" />
+            <ArrowRightIcon className="size-4" />
           </Link>
         </div>
       </section>

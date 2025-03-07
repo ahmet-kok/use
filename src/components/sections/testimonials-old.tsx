@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { testimonials } from "@/config/landing";
 import { HeaderSection } from "@/components/shared/header-section";
 
-export default async function Testimonials({ locale }) {
+export default function Testimonials({ locale }) {
   const t = useTranslations("Testimonials");
   return (
     <section>

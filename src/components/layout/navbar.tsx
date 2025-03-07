@@ -71,7 +71,7 @@ export function NavBar({
                 className={`inline-block transition-[opacity,transform] duration-500 ${
                   scrolled
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-[100%] opacity-0"
+                    : "translate-y-full opacity-0"
                 }`}
               >
                 use technology efficiently
@@ -79,7 +79,7 @@ export function NavBar({
               <span
                 className={`absolute left-0 top-0 inline-block transition-[opacity,transform] duration-500 ${
                   scrolled
-                    ? "translate-y-[-100%] opacity-0"
+                    ? "-translate-y-full opacity-0"
                     : "translate-y-0 opacity-100"
                 }`}
               >
