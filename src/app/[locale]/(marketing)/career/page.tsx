@@ -16,6 +16,7 @@ import CareerList, { CareerSkeleton } from "./CareerList";
 export const metadata = constructMetadata({
   title: "Career",
   description: "Explore our career opportunities.",
+  image: "/api/og?heading=Career",
 });
 
 type PricingPageParams = {

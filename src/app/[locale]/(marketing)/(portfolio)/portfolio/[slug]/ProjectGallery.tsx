@@ -41,14 +41,14 @@ export function ProjectGallery({ images, title }: ProjectGalleryProps) {
             className="text-dark-500 hover:text-dark-900 p-2 transition-colors dark:text-gray-400 dark:hover:text-white"
             aria-label="Scroll left"
           >
-            <ArrowLeft className="h-5 w-5" />
+            <ArrowLeft className="size-5" />
           </button>
           <button
             onClick={() => scrollGallery("right")}
             className="text-dark-500 hover:text-dark-900 p-2 transition-colors dark:text-gray-400 dark:hover:text-white"
             aria-label="Scroll right"
           >
-            <ArrowRight className="h-5 w-5" />
+            <ArrowRight className="size-5" />
           </button>
         </div>
       </div>
@@ -60,7 +60,7 @@ export function ProjectGallery({ images, title }: ProjectGalleryProps) {
           return (
             <div
               key={index}
-              className="bg-dark-100 dark:bg-dark-100 h-[400px] w-max flex-shrink-0 overflow-hidden rounded-lg"
+              className="bg-dark-100 dark:bg-dark-100 h-[400px] w-max shrink-0 overflow-hidden rounded-lg"
             >
               <BlurImage
                 alt={`${title} - Image ${index + 1}`}

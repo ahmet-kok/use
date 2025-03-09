@@ -208,7 +208,7 @@ export default async function PostPage(props: {
                                   ?.url || post.testimonialImage[0]?.url
                               }
                               alt={post.testimonialAuthor}
-                              className="h-12 w-12 rounded-full"
+                              className="size-12 rounded-full"
                               width={48}
                               height={48}
                               placeholder="blur"

@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { env } from "@/env.mjs";
 import { postMessage } from "@/lib/airtable";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    /* const response = await fetch(process.env.AIRTABLE_WEBHOOK_URL!, {
+    /* const response = await fetch(env.AIRTABLE_WEBHOOK_URL!, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

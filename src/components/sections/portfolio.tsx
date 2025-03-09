@@ -65,7 +65,7 @@ function PortfolioSkeleton() {
           <div key={i} className="py-12 first:pt-0 last:pb-0">
             <div className="relative flex flex-col items-start gap-6 md:flex-row">
               {/* Image */}
-              <div className="bg-gray-300 dark:bg-dark-800 aspect-video w-60 max-w-full flex-shrink-0 animate-pulse overflow-hidden rounded-lg" />
+              <div className="bg-gray-300 dark:bg-dark-800 aspect-video w-60 max-w-full shrink-0 animate-pulse overflow-hidden rounded-lg" />
 
               {/* Content */}
               <div className="min-w-0 flex-1 space-y-4">

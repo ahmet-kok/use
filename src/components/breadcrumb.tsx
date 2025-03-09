@@ -26,13 +26,13 @@ export function Breadcrumb() {
               href="/"
               className="text-dark-500 hover:text-dark-900 transition-colors dark:text-gray-400 dark:hover:text-white"
             >
-              <Home className="h-4 w-4" />
+              <Home className="size-4" />
               <span className="sr-only">Home</span>
             </Link>
           </li>
           {breadcrumbs.map((item, index) => (
             <li key={item.href} className="flex items-center">
-              <ChevronRight className="text-dark-300 h-4 w-4 dark:text-gray-600" />
+              <ChevronRight className="text-dark-300 size-4 dark:text-gray-600" />
               {index === breadcrumbs.length - 1 ? (
                 <span className="text-dark-900 ml-2 font-medium dark:text-white">
                   {item.label}

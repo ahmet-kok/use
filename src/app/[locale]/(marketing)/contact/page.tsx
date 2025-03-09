@@ -14,7 +14,7 @@ import { ContactForm } from "@/components/sections/contact-form";
 export const metadata = constructMetadata({
   title: "Contact",
   description: "Contact us for more information.",
-  image: `${siteConfig.url}/api/og?header=Contact`,
+  image: "/api/og?heading=Contact",
 });
 
 type PricingPageParams = {

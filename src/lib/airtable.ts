@@ -1,9 +1,11 @@
 import { cache } from "react";
 import Airtable, { Attachment, FieldSet } from "airtable";
+import { revalidatePath } from "next/cache";
+import { env } from "@/env.mjs";
 
 // Configure Airtable with environment variables
-const airtableApiKey = process.env.AIRTABLE_API_KEY;
-const airtableBaseId = process.env.AIRTABLE_BASE_ID;
+const airtableApiKey = env.AIRTABLE_API_KEY;
+const airtableBaseId = env.AIRTABLE_BASE_ID;
 
 // Initialize Airtable
 const base = new Airtable({
@@ -406,7 +408,7 @@ export const postMessage = async (
   companyWebsite: string,
   message: string,
 ) => {
-  if (!process.env.AIRTABLE_WEBHOOK_URL) {
+  if (!env.AIRTABLE_WEBHOOK_URL) {
     throw new Error("AIRTABLE_WEBHOOK_URL is not set");
   }
   if (!name || !email || !companyName || !companyWebsite || !message) {
@@ -440,7 +442,7 @@ export const postMessage = async (
     };
   }
 
-  const response = await fetch(process.env.AIRTABLE_WEBHOOK_URL, {
+  const response = await fetch(env.AIRTABLE_WEBHOOK_URL, {
     method: "POST",
     body: JSON.stringify({ name, email, companyName, companyWebsite, message }),
   });
@@ -452,3 +454,8 @@ export const postMessage = async (
   }
   return { success: true };
 };
+
+export async function revalidateHomeCache() {
+  revalidatePath("/");
+  return { revalidated: true };
+}
