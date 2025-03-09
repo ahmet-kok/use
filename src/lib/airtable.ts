@@ -1,6 +1,7 @@
 import { cache } from "react";
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import Airtable, { Attachment, FieldSet } from "airtable";
-import { revalidatePath } from "next/cache";
+
 import { env } from "@/env.mjs";
 
 // Configure Airtable with environment variables
@@ -217,32 +218,37 @@ export interface Blog {
 }
 
 export const getBlog = cache(async (view: "all" | "featured") => {
-  try {
-    // Fetch career from Airtable
-    return await fetchFromAirtableSimple<Blog>("blog", {
-      view,
-      sort: [{ field: "date", direction: "desc" }],
-      transformer: (record: Airtable.Record<FieldSet>) => {
-        const fields = record.fields;
-        return {
-          id: record.id,
-          title: fields.title as string,
-          slug: fields.slug as string,
-          description: fields.description as string,
-          image: fields.image as Attachment[],
-          category: fields.category as string,
-          date: fields.date as string,
-          readTime: fields.readTime as string,
-          authorName: fields.authorName as string,
-          authorRole: fields.authorRole as string,
-          authorImage: fields.authorImage as Attachment[],
-        };
-      },
-    });
-  } catch (error) {
-    console.error("Error fetching career:", error);
-    throw new Error("Failed to fetch career");
-  }
+  const fetchBlog = async () => {
+    try {
+      return await fetchFromAirtableSimple<Blog>("blog", {
+        view,
+        sort: [{ field: "date", direction: "desc" }],
+        transformer: (record: Airtable.Record<FieldSet>) => {
+          const fields = record.fields;
+          return {
+            id: record.id,
+            title: fields.title as string,
+            slug: fields.slug as string,
+            description: fields.description as string,
+            image: fields.image as Attachment[],
+            category: fields.category as string,
+            date: fields.date as string,
+            readTime: fields.readTime as string,
+            authorName: fields.authorName as string,
+            authorRole: fields.authorRole as string,
+            authorImage: fields.authorImage as Attachment[],
+          };
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching blog:", error);
+      throw new Error("Failed to fetch blog");
+    }
+  };
+
+  return unstable_cache(fetchBlog, [`blog-${view}`], {
+    tags: ["blog"],
+  })();
 });
 
 export interface singlePortfolio {
@@ -346,28 +352,33 @@ export interface Testimonial {
 }
 
 export const getTestimonials = cache(async () => {
-  try {
-    // Fetch testimonials from Airtable
-    return await fetchFromAirtableSimple<Testimonial>("testimonials", {
-      view: "all",
-      sort: [{ field: "order", direction: "desc" }],
-      transformer: (record: Airtable.Record<FieldSet>) => {
-        const fields = record.fields;
-        return {
-          id: record.id,
-          quote: fields.quote as string,
-          slug: fields.slug as string,
-          author: fields.author as string,
-          role: fields.role as string,
-          company: fields.company as string,
-          image: fields.image as Attachment[],
-        };
-      },
-    });
-  } catch (error) {
-    console.error("Error fetching testimonials:", error);
-    throw new Error("Failed to fetch testimonials");
-  }
+  const fetchTestimonials = async () => {
+    try {
+      // Fetch testimonials from Airtable
+      return await fetchFromAirtableSimple<Testimonial>("testimonials", {
+        view: "all",
+        sort: [{ field: "order", direction: "desc" }],
+        transformer: (record: Airtable.Record<FieldSet>) => {
+          const fields = record.fields;
+          return {
+            id: record.id,
+            quote: fields.quote as string,
+            slug: fields.slug as string,
+            author: fields.author as string,
+            role: fields.role as string,
+            company: fields.company as string,
+            image: fields.image as Attachment[],
+          };
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching testimonials:", error);
+      throw new Error("Failed to fetch testimonials");
+    }
+  };
+  return unstable_cache(fetchTestimonials, [`testimonials`], {
+    tags: ["testimonials"],
+  })();
 });
 
 export interface Company {
@@ -455,7 +466,15 @@ export const postMessage = async (
   return { success: true };
 };
 
-export async function revalidateHomeCache() {
+export async function revalidateHomeCache(locale = "") {
+  // Revalidate by path
   revalidatePath("/");
+  if (locale) {
+    revalidatePath(`/${locale}`);
+  }
+
+  // Revalidate by tag - more specific and efficient
+  revalidateTag("testimonials");
+
   return { revalidated: true };
 }

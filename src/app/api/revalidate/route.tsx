@@ -1,37 +1,54 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-
-import { env } from "@/env.mjs";
 
 export async function POST(request: NextRequest) {
   try {
-    const { path, token } = await request.json();
+    const { secret, tag, path, locale } = await request.json();
 
-    // Validate the token
-    if (!token || token !== env.REVALIDATION_SECRET) {
+    // Check for secret
+    if (secret !== process.env.REVALIDATION_SECRET) {
       return NextResponse.json({ message: "Invalid token" }, { status: 401 });
     }
 
-    if (!path) {
-      return NextResponse.json(
-        { message: "Path is required" },
-        { status: 400 },
-      );
+    // Track what was revalidated
+    let revalidated: string[] = [];
+
+    // Revalidate by tag if provided (more efficient)
+    if (tag) {
+      revalidateTag(tag);
+      revalidated.push(`tag: ${tag}`);
     }
 
-    revalidatePath(path);
+    // Revalidate by path if provided
+    if (path) {
+      revalidatePath(path);
+      revalidated.push(`path: ${path}`);
+    }
 
+    // Revalidate locale-specific paths
+    if (locale) {
+      revalidatePath(`/${locale}`);
+      revalidated.push(`path: /${locale}`);
+    }
+
+    // Always revalidate home
+    if (!path && !tag) {
+      revalidatePath("/");
+      revalidated.push("path: /");
+    }
+
+    return NextResponse.json({
+      revalidated: true,
+      details: revalidated.join(", "),
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error("Revalidation error:", error);
     return NextResponse.json(
       {
-        revalidated: true,
-        message: `Path ${path} revalidated`,
+        error: "Revalidation failed",
+        details: String(error),
       },
-      { status: 200 },
-    );
-  } catch (error) {
-    console.error("Error revalidating:", error);
-    return NextResponse.json(
-      { message: "Error revalidating" },
       { status: 500 },
     );
   }
