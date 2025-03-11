@@ -39,6 +39,13 @@ export async function GET(
         : attachments[index].url;
 
     // Add cache headers to reduce Airtable API calls
+    //return image file itself
+    const image = await fetch(imageUrl);
+    return new NextResponse(image.body, {
+      headers: {
+        "Content-Type": image.headers.get("Content-Type") || "image/jpeg",
+      },
+    });
     return NextResponse.redirect(
       imageUrl /* , {
       headers: {
