@@ -5,6 +5,7 @@ import type { Portfolio } from "@/lib/airtable";
 import { getPortfolio } from "@/lib/airtable";
 
 import { HeaderSection } from "../shared/header-section";
+import MaxWidthWrapper from "../shared/max-width-wrapper";
 import PortfolioList from "./portfolio-list";
 
 interface PortfolioProps {
@@ -24,7 +25,7 @@ export default function Portfolio({
 }: PortfolioProps) {
   const t = useTranslations("Portfolio");
   return (
-    <section>
+    <MaxWidthWrapper>
       <HeaderSection
         title="Our journey"
         link={link}
@@ -34,7 +35,7 @@ export default function Portfolio({
       <Suspense fallback={<PortfolioSkeleton />}>
         <PortfolioListWrapper view={view} category={category} />
       </Suspense>
-    </section>
+    </MaxWidthWrapper>
   );
 }
 
@@ -53,7 +54,7 @@ function PortfolioSkeleton() {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className="bg-gray-300 dark:bg-dark-800 h-8 animate-pulse rounded-lg px-3 py-1"
+            className="dark:bg-dark-800 h-8 animate-pulse rounded-lg bg-gray-300 px-3 py-1"
             style={{ width: "100px" }}
           />
         ))}
@@ -65,13 +66,13 @@ function PortfolioSkeleton() {
           <div key={i} className="py-12 first:pt-0 last:pb-0">
             <div className="relative flex flex-col items-start gap-6 md:flex-row">
               {/* Image */}
-              <div className="bg-gray-300 dark:bg-dark-800 aspect-video w-60 max-w-full shrink-0 animate-pulse overflow-hidden rounded-lg" />
+              <div className="dark:bg-dark-800 aspect-video w-60 max-w-full shrink-0 animate-pulse overflow-hidden rounded-lg bg-gray-300" />
 
               {/* Content */}
               <div className="min-w-0 flex-1 space-y-4">
-                <div className="bg-gray-300 dark:bg-dark-800 h-4 w-24 animate-pulse rounded" />
-                <div className="bg-gray-300 dark:bg-dark-800 h-6 w-48 animate-pulse rounded" />
-                <div className="bg-gray-300 dark:bg-dark-800 mb-4 h-4 w-full animate-pulse rounded" />
+                <div className="dark:bg-dark-800 h-4 w-24 animate-pulse rounded bg-gray-300" />
+                <div className="dark:bg-dark-800 h-6 w-48 animate-pulse rounded bg-gray-300" />
+                <div className="dark:bg-dark-800 mb-4 h-4 w-full animate-pulse rounded bg-gray-300" />
               </div>
             </div>
           </div>

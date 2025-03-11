@@ -9,12 +9,12 @@ export function CareerSkeleton() {
   const t = useTranslations("CareerPage.careerList");
 
   return (
-    <div className=" overflow-hidden rounded-lg border ">
+    <div className="overflow-hidden rounded-lg border">
       <table className="w-full border-collapse text-left">
         <thead>
-          <tr className="  border-b ">
+          <tr className="border-b">
             <th scope="col">{t("position")}</th>
-            <th scope="col" className="hiddensm:table-cell">
+            <th scope="col" className="hidden sm:table-cell">
               {t("type")}
             </th>
             <th scope="col" className="hidden sm:table-cell">
@@ -54,10 +54,10 @@ export default function CareerList({ career }: { career: Career[] }) {
   const t = useTranslations("CareerPage.careerList");
 
   return (
-    <div className=" overflow-hidden rounded-lg border ">
+    <div className="overflow-hidden rounded-lg border">
       <table className="w-full border-collapse text-left">
         <thead>
-          <tr className="  border-b ">
+          <tr className="border-b">
             <th scope="col">{t("position")}</th>
             <th scope="col" className="hidden sm:table-cell">
               {t("type")}
@@ -74,22 +74,20 @@ export default function CareerList({ career }: { career: Career[] }) {
           {career.map((position) => (
             <tr
               key={position.id}
-              className="hover:bg-dark-50 dark:hover:bg-gray-300 transition-colors"
+              className="hover:bg-dark-50 transition-colors dark:hover:bg-gray-300"
             >
-              <td className="p-4 sm:px-6">
+              <td>
                 <h4 className="font-medium">{position.title}</h4>
                 <p className="mt-1 line-clamp-2">{position.description}</p>
                 <p className="mt-2 whitespace-nowrap sm:hidden">
                   {position.type} • {position.location}
                 </p>
               </td>
-              <td className="hidden whitespace-nowrap p-4 sm:table-cell sm:px-6">
+              <td className="hidden whitespace-nowrap sm:table-cell">
                 {position.type}
               </td>
-              <td className="hidden p-4 sm:table-cell sm:px-6">
-                {position.location}
-              </td>
-              <td className="p-4 text-right sm:px-6">
+              <td className="hidden sm:table-cell">{position.location}</td>
+              <td className="text-right">
                 <Link
                   prefetch={true}
                   href={position.url}

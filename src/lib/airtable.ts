@@ -3,6 +3,9 @@ import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import Airtable, { Attachment, FieldSet } from "airtable";
 
 import { env } from "@/env.mjs";
+import { siteConfig } from "@/config/site";
+
+const url = siteConfig.url;
 
 // Configure Airtable with environment variables
 const airtableApiKey = env.AIRTABLE_API_KEY;
@@ -37,18 +40,39 @@ export const TABLE_NAMES = {
 
 // Utility function to get image URL from Airtable attachments
 export function getImageUrl(
-  attachments: any[] | undefined,
-): { url: string; thumbnail: string } | undefined {
-  if (!attachments || attachments.length === 0) return undefined;
-  return {
-    url: attachments[0]?.url,
-    thumbnail: attachments[0]?.thumbnails?.large?.url,
-  };
+  recordId?: string,
+  fieldName = "image",
+  tableName = "testimonials",
+  index = "0",
+  thumbnail = false,
+): Attachment {
+  if (recordId) {
+    const stableAttachment: Attachment = {
+      url: "",
+      id: "",
+      filename: "",
+      size: 0,
+      type: "",
+    };
+    // Override just the URL properties with our stable URLs
+    if (thumbnail) {
+      stableAttachment.url = `${url}/api/images/${recordId}?table=${tableName}&field=${fieldName}&index=${index}&thumbnail=true`;
+    } else {
+      stableAttachment.url = `${url}/api/images/${recordId}?table=${tableName}&field=${fieldName}&index=${index}`;
+    }
+
+    return stableAttachment;
+  }
+
+  // Fallback to original attachments if no recordId provided
+  return { url: "", id: "", filename: "", size: 0, type: "" };
 }
 
+// Keep the Image interface for backward compatibility
 export interface Image {
   url: string;
   thumbnail: string;
+  // Note: full Airtable.Attachment has more properties like id, filename, size, type, etc.
 }
 
 // Generic function to fetch data from Airtable with improved typing
@@ -180,26 +204,27 @@ export const getSingleBlog = cache(async (slug: string) => {
       view: "single",
       transformer: (record: Airtable.Record<FieldSet>) => {
         const fields = record.fields;
+
         return {
           id: record.id,
           title: fields.title as string,
           slug: fields.slug as string,
           description: fields.description as string,
           content: fields.content as string,
-          image: fields.image as Attachment[],
+          image: [getImageUrl(record.id, "image", "blog")],
           category: fields.category as string,
           date: fields.date as string,
           readTime: fields.readTime as string,
           authorName: fields.authorName as string,
           authorRole: fields.authorRole as string,
-          authorImage: fields.authorImage as Attachment[],
+          authorImage: [getImageUrl(record.id, "authorImage", "blog")],
         };
       },
     });
     return records[0];
   } catch (error) {
-    console.error("Error fetching career:", error);
-    throw new Error("Failed to fetch career");
+    console.error("Error fetching blog:", error);
+    throw new Error("Failed to fetch blog");
   }
 });
 
@@ -230,13 +255,13 @@ export const getBlog = cache(async (view: "all" | "featured") => {
             title: fields.title as string,
             slug: fields.slug as string,
             description: fields.description as string,
-            image: fields.image as Attachment[],
+            image: [getImageUrl(record.id, "image", "blog")],
             category: fields.category as string,
             date: fields.date as string,
             readTime: fields.readTime as string,
             authorName: fields.authorName as string,
             authorRole: fields.authorRole as string,
-            authorImage: fields.authorImage as Attachment[],
+            authorImage: [getImageUrl(record.id, "authorImage", "blog")],
           };
         },
       });
@@ -280,6 +305,7 @@ export const getSinglePortfolio = cache(async (slug: string) => {
         view: "single",
         transformer: (record: Airtable.Record<FieldSet>) => {
           const fields = record.fields;
+          const images = fields.images as Attachment[];
           return {
             id: record.id,
             title: fields.title as string,
@@ -292,13 +318,17 @@ export const getSinglePortfolio = cache(async (slug: string) => {
             year: fields.year as string,
             client: fields.client as string,
             services: fields.services as string,
-            image: fields.image as Attachment[],
-            images: fields.images as Attachment[],
+            image: [getImageUrl(record.id, "image", "portfolio")],
+            images: images.map((image, index) =>
+              getImageUrl(record.id, "images", "portfolio", index.toString()),
+            ) as Attachment[],
             testimonialQuote: fields.testimonialQuote as string,
             testimonialAuthor: fields.testimonialAuthor as string,
             testimonialRole: fields.testimonialRole as string,
             testimonialCompany: fields.testimonialCompany as string,
-            testimonialImage: fields.testimonialImage as Attachment[],
+            testimonialImage: [
+              getImageUrl(record.id, "testimonialImage", "portfolio"),
+            ],
           };
         },
       },
@@ -325,13 +355,14 @@ export const getPortfolio = cache(async (view: "all" | "featured") => {
       sort: [{ field: "order", direction: "asc" }],
       transformer: (record: Airtable.Record<FieldSet>) => {
         const fields = record.fields;
+
         return {
           id: record.id,
           title: fields.title as string,
           slug: fields.slug as string,
           description: fields.description as string,
           category: fields.category as string,
-          image: fields.image as Attachment[],
+          image: [getImageUrl(record.id, "image", "portfolio")],
         };
       },
     });
@@ -360,6 +391,7 @@ export const getTestimonials = cache(async () => {
         sort: [{ field: "order", direction: "desc" }],
         transformer: (record: Airtable.Record<FieldSet>) => {
           const fields = record.fields;
+
           return {
             id: record.id,
             quote: fields.quote as string,
@@ -367,7 +399,7 @@ export const getTestimonials = cache(async () => {
             author: fields.author as string,
             role: fields.role as string,
             company: fields.company as string,
-            image: fields.image as Attachment[],
+            image: [getImageUrl(record.id, "image", "testimonials")],
           };
         },
       });
@@ -396,10 +428,11 @@ export const getCompanies = cache(async () => {
       sort: [{ field: "order", direction: "asc" }],
       transformer: (record: Airtable.Record<FieldSet>) => {
         const fields = record.fields;
+
         return {
           id: record.id,
           name: fields.name as string,
-          logo: fields.logo as Attachment[],
+          logo: [getImageUrl(record.id, "logo", "companies")],
           url: fields.url as string,
           slug: fields.slug as string,
         };
@@ -475,6 +508,12 @@ export async function revalidateHomeCache(locale = "") {
 
   // Revalidate by tag - more specific and efficient
   revalidateTag("testimonials");
+  revalidateTag("blog");
+  revalidateTag("portfolio");
+  revalidateTag("companies");
+
+  // Also revalidate the API routes for images
+  revalidatePath("/api/images/[id]");
 
   return { revalidated: true };
 }

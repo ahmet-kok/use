@@ -30,7 +30,7 @@ export function constructMetadata({
   noIndex?: boolean;
 } = {}): Metadata {
   // Make sure we have a valid URL for metadataBase
-  const url = siteConfig.url || "http://localhost:3000";
+  const url = siteConfig.url;
 
   return {
     title: {

@@ -182,9 +182,9 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
           {t("email")}{" "}
           <a
             className="font-medium text-primary hover:underline"
-            href="mailto:support@fflowlink.com"
+            href="mailto:support@useefficiently.com"
           >
-            support@fflowlink.com
+            support@useefficiently.com
           </a>{" "}
           {t("forContact")}
           <br />

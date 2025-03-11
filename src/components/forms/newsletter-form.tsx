@@ -61,7 +61,7 @@ export function NewsletterForm() {
                 <Input
                   type="email"
                   className="rounded-full px-4"
-                  placeholder="fflowlink@example.com"
+                  placeholder="hello@useefficiently.com"
                   {...field}
                 />
               </FormControl>

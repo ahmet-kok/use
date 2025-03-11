@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import { Attachment } from "airtable";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+
 import { placeholderBlurhash } from "@/lib/utils";
 import BlurImage from "@/components/shared/blur-image";
 
@@ -58,22 +59,17 @@ export function ProjectGallery({ images, title }: ProjectGalleryProps) {
       >
         {images.map((image, index) => {
           return (
-            <div
+            <BlurImage
               key={index}
-              className="bg-dark-100 dark:bg-dark-100 h-[400px] w-max shrink-0 overflow-hidden rounded-lg"
-            >
-              <BlurImage
-                alt={`${title} - Image ${index + 1}`}
-                blurDataURL={placeholderBlurhash}
-                className="h-full w-max"
-                width={image?.thumbnails?.large?.width}
-                height={image?.thumbnails?.large?.height}
-                placeholder="blur"
-                src={image.url}
-                loading="lazy"
-                sizes={`(max-width: ${image?.thumbnails?.large?.width}px) ${image?.thumbnails?.large?.width}px, ${image?.thumbnails?.large?.height}px`}
-              />
-            </div>
+              alt={`${title} - Image ${index + 1}`}
+              blurDataURL={placeholderBlurhash}
+              className="h-[600px] w-max shrink-0 overflow-hidden rounded-lg"
+              width={720}
+              height={1280}
+              placeholder="blur"
+              src={image.url}
+              loading="lazy"
+            />
           );
         })}
       </div>

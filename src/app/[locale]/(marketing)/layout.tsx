@@ -52,7 +52,7 @@ export default async function MarketingLayout({
         docsConfig={docsConfig}
         translations={translations}
       />
-      <main className="px-6 flex-1">{children}</main>
+      <main className="flex-1">{children}</main>
       <SiteFooter />
     </div>
   );

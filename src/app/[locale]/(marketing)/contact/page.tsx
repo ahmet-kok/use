@@ -8,8 +8,9 @@ import {
 import { contactInfo, meetingTypes, siteConfig } from "@/config/site";
 import { constructMetadata } from "@/lib/utils";
 import { Header } from "@/components/ui/header";
+import { ContactForm } from "@/components/forms/contact-form";
 import Link from "@/components/link/link";
-import { ContactForm } from "@/components/sections/contact-form";
+import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 
 export const metadata = constructMetadata({
   title: "Contact",
@@ -30,7 +31,7 @@ export default async function CareerPage({ params }: PricingPageParams) {
 
   return (
     <>
-      <section className="grid gap-16 md:grid-cols-2">
+      <MaxWidthWrapper className="grid gap-16 md:grid-cols-2">
         {/* Contact Info */}
         <div className="space-y-16">
           <Header
@@ -49,7 +50,7 @@ export default async function CareerPage({ params }: PricingPageParams) {
           </div>
 
           {/* Meeting Scheduling Options */}
-          <div className="border-t pt-8">
+          <div className="pt-8">
             <div className="mb-6 flex items-center gap-3">
               <CalendarIcon className="size-6" />
               <h3>Schedule a Meeting</h3>
@@ -96,7 +97,7 @@ export default async function CareerPage({ params }: PricingPageParams) {
           <p>Share detailed information about your project through our form</p>
           <ContactForm />
         </div>
-      </section>
+      </MaxWidthWrapper>
     </>
   );
 }

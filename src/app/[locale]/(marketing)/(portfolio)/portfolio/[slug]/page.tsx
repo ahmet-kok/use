@@ -9,7 +9,11 @@ import { Metadata } from "next";
 
 import { BLOG_CATEGORIES } from "@/config/blog";
 import { getTableOfContents } from "@/lib/toc";
-import { constructMetadata, placeholderBlurhash } from "@/lib/utils";
+import {
+  constructMetadata,
+  getBlurDataURL,
+  placeholderBlurhash,
+} from "@/lib/utils";
 import { Breadcrumb } from "@/components/breadcrumb";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
@@ -97,6 +101,7 @@ export default async function PostPage(props: {
     ),
   ]);
  */
+  const thumbnailBlurhash = await getBlurDataURL(post.image[0].url);
 
   return (
     <>
@@ -119,7 +124,7 @@ export default async function PostPage(props: {
           <div className="relative col-span-4 mb-10 flex flex-col space-y-8 border-y bg-background md:rounded-xl md:border lg:col-span-3">
             <BlurImage
               alt={post.title}
-              blurDataURL={placeholderBlurhash}
+              blurDataURL={thumbnailBlurhash ?? placeholderBlurhash}
               className="aspect-[1200/630] border-b object-cover md:rounded-t-xl"
               width={1200}
               height={630}
@@ -173,7 +178,7 @@ export default async function PostPage(props: {
               )}
 
               {/* post Images */}
-              {post.images && post.images.length > 0 && (
+                {post.images && post.images.length > 0 && (
                 <ProjectGallery images={post.images} title={post.title} />
               )}
 
@@ -202,20 +207,15 @@ export default async function PostPage(props: {
                         </p>
                         <div className="flex items-center space-x-4">
                           {post.testimonialImage && (
-                            <Image
-                              src={
-                                post.testimonialImage[0]?.thumbnails?.large
-                                  ?.url || post.testimonialImage[0]?.url
-                              }
-                              alt={post.testimonialAuthor}
+                            <BlurImage
+                              alt={post.title}
+                              blurDataURL={placeholderBlurhash}
                               className="size-12 rounded-full"
                               width={48}
                               height={48}
-                              placeholder="blur"
-                              blurDataURL={
-                                post.testimonialImage[0]?.thumbnails?.small?.url
-                              }
                               loading="lazy"
+                              placeholder="blur"
+                              src={post.testimonialImage[0].url}
                             />
                           )}
                           <div>

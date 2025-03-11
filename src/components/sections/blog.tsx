@@ -5,6 +5,7 @@ import type { Blog } from "@/lib/airtable";
 import { getBlog } from "@/lib/airtable";
 
 import { HeaderSection } from "../shared/header-section";
+import MaxWidthWrapper from "../shared/max-width-wrapper";
 import BlogList from "./blog-list";
 
 interface BlogProps {
@@ -24,7 +25,7 @@ export default function Blog({
 }: BlogProps) {
   const t = useTranslations("Blog");
   return (
-    <section>
+    <MaxWidthWrapper>
       <HeaderSection
         title="Our journey"
         link={link}
@@ -34,7 +35,7 @@ export default function Blog({
       <Suspense fallback={<BlogSkeleton />}>
         <BlogListWrapper view={view} category={category} />
       </Suspense>
-    </section>
+    </MaxWidthWrapper>
   );
 }
 

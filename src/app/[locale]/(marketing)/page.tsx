@@ -9,6 +9,7 @@ import InfoLanding from "@/components/sections/info-landing";
 import Powered from "@/components/sections/powered";
 import PreviewLanding from "@/components/sections/preview-landing";
 import Testimonials from "@/components/sections/testimonials";
+import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 
 // Type for page params
 type HomePageParams = {
@@ -23,7 +24,7 @@ export default async function HomePage(props: {
   const t = await getTranslations("HomePage");
 
   return (
-    <main>
+    <MaxWidthWrapper>
       <HeroLanding locale={params.locale} />
       <Companies locale={params.locale} />
       {/* <HeroLanding locale={params.locale} />
@@ -34,6 +35,6 @@ export default async function HomePage(props: {
       <Features />  */}
       <Testimonials locale={params.locale} />
       <Blog view="featured" link="/blog" linkText="View All" />
-    </main>
+    </MaxWidthWrapper>
   );
 }

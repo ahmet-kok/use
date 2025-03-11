@@ -37,6 +37,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "v5.airtableusercontent.com",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_APP_URL,
+      },
     ],
   },
   serverExternalPackages: ["@prisma/client"],

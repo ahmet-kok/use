@@ -56,12 +56,12 @@ export function NavBar({
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 flex w-full justify-center bg-background/60 px-6 backdrop-blur-xl transition-all",
+        "sticky top-0 z-40 flex w-full justify-center bg-background/60 backdrop-blur-xl transition-all",
         scroll ? (scrolled ? "border-b" : "bg-transparent") : "border-b",
       )}
     >
       <MaxWidthWrapper
-        className="grid h-14 w-full grid-cols-2 justify-between px-0"
+        className="grid h-14 w-full grid-cols-2 justify-between"
         large={documentation}
       >
         <div className="flex items-center gap-6 md:gap-10">

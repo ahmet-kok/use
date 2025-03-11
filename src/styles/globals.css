@@ -177,8 +177,9 @@ td {
 }
 
 section {
-  @apply mx-auto mb-8 mt-16 max-w-5xl;
-}
+  @apply mb-8 mt-16;
+/*   @apply mx-auto mb-8 mt-16 max-w-5xl;
+ */}
 
 label {
   @apply mb-2 block text-sm font-medium;

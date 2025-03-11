@@ -10,6 +10,7 @@ import { getCareer } from "@/lib/airtable";
 import { constructMetadata } from "@/lib/utils";
 import { Header } from "@/components/ui/header";
 import Link from "@/components/link/link";
+import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 
 import CareerList, { CareerSkeleton } from "./CareerList";
 
@@ -31,7 +32,7 @@ export default async function CareerPage({ params }: PricingPageParams) {
   const messages = await getMessages({ locale });
 
   return (
-    <>
+    <MaxWidthWrapper>
       <Header
         title="Join Our Team"
         description="We're looking for passionate individuals who share our commitment to creating meaningful digital experiences through minimalist design."
@@ -97,7 +98,7 @@ export default async function CareerPage({ params }: PricingPageParams) {
           </div>
         </div>
       </section>
-    </>
+    </MaxWidthWrapper>
   );
 }
 

@@ -148,7 +148,7 @@ export default async function PostPage(props: {
               src={post.image[0].url}
               sizes="(max-width: 768px) 770px, 1000px"
             />
-            <div className="px-[.8rem] pb-10 md:px-8">
+            <div className="px-[.8rem] pb-10 md:px-6">
               <Mdx code={post.content} />
             </div>
           </div>
