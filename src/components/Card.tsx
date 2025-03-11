@@ -13,18 +13,7 @@ interface CardProps {
   description?: string;
   link: string;
   linkText?: string;
-  image?: {
-    url: string;
-    thumbnails?: {
-      large: {
-        url: string;
-      };
-      small: {
-        url: string;
-      };
-    };
-  };
-
+  image?: string;
   className?: string;
   index: number;
   articleClassName?: string;
@@ -71,7 +60,7 @@ export function Card({
                 height={imageHeight}
                 placeholder="blur"
                 loading={index < 2 ? "eager" : "lazy"}
-                src={image?.url}
+                src={image}
                 sizes={`(max-width: ${imageWidth}px) ${imageWidth}px, ${imageHeight}px`}
                 priority={index < 2}
               />

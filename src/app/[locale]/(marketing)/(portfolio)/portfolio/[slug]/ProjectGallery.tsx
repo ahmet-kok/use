@@ -1,15 +1,13 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
-import { Attachment } from "airtable";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { placeholderBlurhash } from "@/lib/utils";
 import BlurImage from "@/components/shared/blur-image";
 
 interface ProjectGalleryProps {
-  images: Attachment[];
+  images: string[];
   title: string;
 }
 
@@ -67,7 +65,7 @@ export function ProjectGallery({ images, title }: ProjectGalleryProps) {
               width={720}
               height={1280}
               placeholder="blur"
-              src={image.url}
+              src={image}
               loading="lazy"
             />
           );

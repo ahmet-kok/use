@@ -9,7 +9,8 @@ export const siteConfig: SiteConfig = {
   description:
     "We are a design agency guided by Dieter Rams' principles. Our mission is to create digital experiences that are innovative, useful, and environmentally friendly.",
   url: site_url,
-  ogImage: `${site_url}/_static/og.jpg`,
+  ogImage: `${site_url}/api/og?heading=Airtable Services Partner`,
+
   links: {
     twitter: "",
     github: "",

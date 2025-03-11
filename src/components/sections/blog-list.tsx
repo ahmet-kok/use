@@ -28,7 +28,7 @@ export default function BlogList({ blog, category }: BlogListProps) {
           index={index}
           title={post.title}
           description={post.description}
-          image={post.image[0]}
+          image={post.image}
           imageWidth={800}
           imageHeight={600}
           link={`/blog/${post.slug}`}

@@ -34,7 +34,7 @@ export default function PortfolioList({
           details={[post.category]}
           detailsClassName="text-sm"
           descriptionClassName="line-clamp-2"
-          image={post.image[0]}
+          image={post.image}
           imageWidth={800}
           imageHeight={600}
           link={`/portfolio/${post.slug}`}

@@ -40,32 +40,15 @@ export const TABLE_NAMES = {
 
 // Utility function to get image URL from Airtable attachments
 export function getImageUrl(
-  recordId?: string,
+  recordId: string,
   fieldName = "image",
   tableName = "testimonials",
   index = "0",
   thumbnail = false,
-): Attachment {
-  if (recordId) {
-    const stableAttachment: Attachment = {
-      url: "",
-      id: "",
-      filename: "",
-      size: 0,
-      type: "",
-    };
-    // Override just the URL properties with our stable URLs
-    if (thumbnail) {
-      stableAttachment.url = `${url}/api/images/${recordId}?table=${tableName}&field=${fieldName}&index=${index}&thumbnail=true`;
-    } else {
-      stableAttachment.url = `${url}/api/images/${recordId}?table=${tableName}&field=${fieldName}&index=${index}`;
-    }
-
-    return stableAttachment;
-  }
-
-  // Fallback to original attachments if no recordId provided
-  return { url: "", id: "", filename: "", size: 0, type: "" };
+): string {
+  return thumbnail
+    ? `${url}/api/images/${recordId}?table=${tableName}&field=${fieldName}&index=${index}&thumbnail=true`
+    : `${url}/api/images/${recordId}?table=${tableName}&field=${fieldName}&index=${index}`;
 }
 
 // Keep the Image interface for backward compatibility
@@ -188,13 +171,13 @@ export interface singleBlog {
   slug: string;
   description: string;
   content: string;
-  image: Attachment[];
+  image: string;
   category: string;
   date: string;
   readTime: string;
   authorName: string;
   authorRole: string;
-  authorImage: Attachment[];
+  authorImage: string;
 }
 
 export const getSingleBlog = cache(async (slug: string) => {
@@ -211,13 +194,13 @@ export const getSingleBlog = cache(async (slug: string) => {
           slug: fields.slug as string,
           description: fields.description as string,
           content: fields.content as string,
-          image: [getImageUrl(record.id, "image", "blog")],
+          image: getImageUrl(record.id, "image", "blog"),
           category: fields.category as string,
           date: fields.date as string,
           readTime: fields.readTime as string,
           authorName: fields.authorName as string,
           authorRole: fields.authorRole as string,
-          authorImage: [getImageUrl(record.id, "authorImage", "blog")],
+          authorImage: getImageUrl(record.id, "authorImage", "blog"),
         };
       },
     });
@@ -233,13 +216,13 @@ export interface Blog {
   title: string;
   slug: string;
   description: string;
-  image: Attachment[];
+  image: string;
   category: string;
   date: string;
   readTime: string;
   authorName: string;
   authorRole: string;
-  authorImage: Attachment[];
+  authorImage: string;
 }
 
 export const getBlog = cache(async (view: "all" | "featured") => {
@@ -255,13 +238,13 @@ export const getBlog = cache(async (view: "all" | "featured") => {
             title: fields.title as string,
             slug: fields.slug as string,
             description: fields.description as string,
-            image: [getImageUrl(record.id, "image", "blog")],
+            image: getImageUrl(record.id, "image", "blog"),
             category: fields.category as string,
             date: fields.date as string,
             readTime: fields.readTime as string,
             authorName: fields.authorName as string,
             authorRole: fields.authorRole as string,
-            authorImage: [getImageUrl(record.id, "authorImage", "blog")],
+            authorImage: getImageUrl(record.id, "authorImage", "blog"),
           };
         },
       });
@@ -288,13 +271,13 @@ export interface singlePortfolio {
   year: string;
   client: string;
   services: string;
-  image: Attachment[];
-  images: Attachment[];
+  image: string;
+  images: string[];
   testimonialQuote: string;
   testimonialAuthor: string;
   testimonialRole: string;
   testimonialCompany: string;
-  testimonialImage: Attachment[];
+  testimonialImage: string;
 }
 export const getSinglePortfolio = cache(async (slug: string) => {
   try {
@@ -305,7 +288,7 @@ export const getSinglePortfolio = cache(async (slug: string) => {
         view: "single",
         transformer: (record: Airtable.Record<FieldSet>) => {
           const fields = record.fields;
-          const images = fields.images as Attachment[];
+          const images = fields.images as string[];
           return {
             id: record.id,
             title: fields.title as string,
@@ -318,17 +301,19 @@ export const getSinglePortfolio = cache(async (slug: string) => {
             year: fields.year as string,
             client: fields.client as string,
             services: fields.services as string,
-            image: [getImageUrl(record.id, "image", "portfolio")],
+            image: getImageUrl(record.id, "image", "portfolio"),
             images: images.map((image, index) =>
               getImageUrl(record.id, "images", "portfolio", index.toString()),
-            ) as Attachment[],
+            ),
             testimonialQuote: fields.testimonialQuote as string,
             testimonialAuthor: fields.testimonialAuthor as string,
             testimonialRole: fields.testimonialRole as string,
             testimonialCompany: fields.testimonialCompany as string,
-            testimonialImage: [
-              getImageUrl(record.id, "testimonialImage", "portfolio"),
-            ],
+            testimonialImage: getImageUrl(
+              record.id,
+              "testimonialImage",
+              "portfolio",
+            ),
           };
         },
       },
@@ -346,7 +331,7 @@ export interface Portfolio {
   slug: string;
   description: string;
   category: string;
-  image: Attachment[];
+  image: string;
 }
 export const getPortfolio = cache(async (view: "all" | "featured") => {
   try {
@@ -362,7 +347,7 @@ export const getPortfolio = cache(async (view: "all" | "featured") => {
           slug: fields.slug as string,
           description: fields.description as string,
           category: fields.category as string,
-          image: [getImageUrl(record.id, "image", "portfolio")],
+          image: getImageUrl(record.id, "image", "portfolio"),
         };
       },
     });
@@ -379,7 +364,7 @@ export interface Testimonial {
   author: string;
   role: string;
   company: string;
-  image: Attachment[];
+  image: string;
 }
 
 export const getTestimonials = cache(async () => {
@@ -399,7 +384,7 @@ export const getTestimonials = cache(async () => {
             author: fields.author as string,
             role: fields.role as string,
             company: fields.company as string,
-            image: [getImageUrl(record.id, "image", "testimonials")],
+            image: getImageUrl(record.id, "image", "testimonials"),
           };
         },
       });
@@ -416,7 +401,7 @@ export const getTestimonials = cache(async () => {
 export interface Company {
   id: string;
   name: string;
-  logo: Attachment[];
+  logo: string;
   url: string;
   slug?: string;
 }
@@ -432,7 +417,7 @@ export const getCompanies = cache(async () => {
         return {
           id: record.id,
           name: fields.name as string,
-          logo: [getImageUrl(record.id, "logo", "companies")],
+          logo: getImageUrl(record.id, "logo", "companies"),
           url: fields.url as string,
           slug: fields.slug as string,
         };

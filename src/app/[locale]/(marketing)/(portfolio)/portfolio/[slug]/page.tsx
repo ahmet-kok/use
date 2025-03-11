@@ -50,7 +50,8 @@ export async function generateMetadata(props: {
   return constructMetadata({
     title: `${title} – UseEfficiently`,
     description: description,
-    image: image[0].url,
+    /* image: image, */
+    image: "/api/og?type=Portfolio&heading=" + title,
   });
 }
 
@@ -101,7 +102,7 @@ export default async function PostPage(props: {
     ),
   ]);
  */
-  const thumbnailBlurhash = await getBlurDataURL(post.image[0].url);
+  const thumbnailBlurhash = await getBlurDataURL(post.image);
 
   return (
     <>
@@ -130,7 +131,7 @@ export default async function PostPage(props: {
               height={630}
               loading="lazy"
               placeholder="blur"
-              src={post.image[0].url}
+              src={post.image}
               sizes="(max-width: 768px) 770px, 1000px"
             />
             <div className="space-y-24 p-6">
@@ -178,7 +179,7 @@ export default async function PostPage(props: {
               )}
 
               {/* post Images */}
-                {post.images && post.images.length > 0 && (
+              {post.images && post.images.length > 0 && (
                 <ProjectGallery images={post.images} title={post.title} />
               )}
 
@@ -215,7 +216,7 @@ export default async function PostPage(props: {
                               height={48}
                               loading="lazy"
                               placeholder="blur"
-                              src={post.testimonialImage[0].url}
+                              src={post.testimonialImage}
                             />
                           )}
                           <div>

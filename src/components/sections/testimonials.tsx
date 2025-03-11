@@ -41,7 +41,7 @@ async function TestimonialsWrapper() {
                 width={100}
                 height={100}
                 placeholder="blur"
-                src={item.image[0].url}
+                src={item.image}
                 sizes="(max-width: 100px) 100px, 100px"
                 loading="lazy"
               />

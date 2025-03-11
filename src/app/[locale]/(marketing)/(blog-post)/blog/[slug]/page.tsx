@@ -49,7 +49,9 @@ export async function generateMetadata(props: {
   return constructMetadata({
     title: `${title} – UseEfficiently`,
     description: description,
-    image: image[0].url,
+    /*     image: image,
+     */
+    image: "/api/og?type=Blog&heading=" + title,
   });
 }
 
@@ -87,7 +89,7 @@ export default async function PostPage(props: {
     ),
   ]);
  */
-  const thumbnailBlurhash = await getBlurDataURL(post.image[0].url);
+  const thumbnailBlurhash = await getBlurDataURL(post.image);
 
   return (
     <>
@@ -125,7 +127,7 @@ export default async function PostPage(props: {
             <Author
               name={post.authorName}
               title={post.authorRole}
-              image={post.authorImage[0].url}
+              image={post.authorImage}
               key={post.id + post.authorName}
             />
           </div>
@@ -145,7 +147,7 @@ export default async function PostPage(props: {
               height={630}
               loading="lazy"
               placeholder="blur"
-              src={post.image[0].url}
+              src={post.image}
               sizes="(max-width: 768px) 770px, 1000px"
             />
             <div className="px-[.8rem] pb-10 md:px-6">

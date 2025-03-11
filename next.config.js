@@ -43,7 +43,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: process.env.NEXT_PUBLIC_APP_URL,
+        hostname: "app.useefficiently.com",
+      },
+      {
+        protocol: "https",
+        hostname: "useefficiently.com",
       },
     ],
   },

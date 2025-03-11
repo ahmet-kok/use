@@ -54,7 +54,7 @@ interface CompanyListProps {
 
 export function CompanyList({ companies }: CompanyListProps) {
   /* const companiesWithThumbnailBlurhash = companies.map(async (item) => {
-    const thumbnailBlurhash = await getBlurDataURL(item.logo[0].url);
+    const thumbnailBlurhash = await getBlurDataURL(item.logo);
     return {
       thumbnailBlurhash,
     };
@@ -80,7 +80,7 @@ export function CompanyList({ companies }: CompanyListProps) {
               height={100}
               priority
               placeholder="blur"
-              src={item.logo[0].url}
+              src={item.logo}
               sizes="(max-width: 100px) 100px, 100px"
             />
           </div>
