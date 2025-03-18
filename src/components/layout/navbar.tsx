@@ -83,7 +83,7 @@ export function NavBar({
                     : "translate-y-0 opacity-100"
                 }`}
               >
-                {siteConfig.name}
+                UseEfficiently
               </span>
             </div>
           </Link>

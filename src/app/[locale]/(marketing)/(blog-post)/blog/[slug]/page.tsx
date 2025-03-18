@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 
 import { getBlog, getSingleBlog } from "@/lib/airtable";
 import { Mdx } from "@/components/content/mdx-components";
@@ -6,21 +8,28 @@ import { Mdx } from "@/components/content/mdx-components";
 import "@/styles/mdx.css";
 
 import { Metadata } from "next";
+import { Mail } from "lucide-react";
+import { SiLinkedin, SiX } from "react-icons/si";
 
 import { BLOG_CATEGORIES } from "@/config/blog";
+import { siteConfig } from "@/config/site";
+import { generateArticleSchema } from "@/lib/structured-data";
 import { getTableOfContents } from "@/lib/toc";
 import {
   cn,
+  constructCanonicalUrl,
   constructMetadata,
   formatDate,
   getBlurDataURL,
   placeholderBlurhash,
 } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import { Breadcrumb } from "@/components/breadcrumb";
 import Author from "@/components/content/author";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import { DashboardTableOfContents } from "@/components/shared/toc";
+import ShareButton from "@/components/shared/ShareButton";
 
 // Type for static params generation (without Promise)
 type BlogPostPageParams = {
@@ -44,14 +53,29 @@ export async function generateMetadata(props: {
     return;
   }
 
-  const { title, description, image } = post;
+  const { title, description, image, category, date, authorName } = post;
+  const canonicalUrl = constructCanonicalUrl(
+    `/${params.locale}/blog/${params.slug}`,
+  );
+
+  // Find related keywords based on category or content
+  const keywords = [
+    "blog",
+    category,
+    "article",
+    ...title.split(" ").slice(0, 3),
+  ].filter(Boolean);
 
   return constructMetadata({
     title: `${title} – UseEfficiently`,
     description: description,
-    /*     image: image,
-     */
-    image: "/api/og?type=Blog&heading=" + title,
+    image: image || "/api/og?type=Blog&heading=" + title,
+    canonical: canonicalUrl,
+    keywords,
+    type: "article",
+    publishedTime: date,
+    authors: [authorName || "UseEfficiently Team"],
+    hreflangPath: `/blog/${params.slug}`,
   });
 }
 
@@ -59,9 +83,7 @@ export default async function PostPage(props: {
   params: Promise<BlogPostPageParams>;
 }) {
   const params = await props.params;
-  // get the first item from the array
-  let post = await getSingleBlog(params.slug);
-
+  const post = await getSingleBlog(params.slug);
   if (!post) {
     notFound();
   }
@@ -70,46 +92,30 @@ export default async function PostPage(props: {
     (category) => category.slug === post.category,
   )!;
 
-  /* const relatedArticles =
-    (post.related &&
-      post.related.map(
-        (slug) => allPosts.find((post) => post.slugAsParams === slug)!,
-      )) ||
-    []; */
-
   const toc = await getTableOfContents(post.content);
-
-  /* const [thumbnailBlurhash, images] = await Promise.all([
-    getBlurDataURL(post.image),
-    await Promise.all(
-      post.images.map(async (src: string) => ({
-        src,
-        blurDataURL: await getBlurDataURL(src),
-      })),
-    ),
-  ]);
- */
   const thumbnailBlurhash = await getBlurDataURL(post.image);
+
+  // Generate article structured data
+  const articleSchema = generateArticleSchema({
+    title: post.title,
+    description: post.description,
+    image: post.image,
+    datePublished: post.date,
+    url: constructCanonicalUrl(`/${params.locale}/blog/${params.slug}`),
+    authorName: post.authorName || "UseEfficiently Team",
+  });
 
   return (
     <>
+      <Script
+        id="article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <MaxWidthWrapper className="pt-6 md:pt-10">
         <Breadcrumb />
         <div className="flex flex-col space-y-4">
           <div className="flex items-center space-x-4">
-            {/* <Link
-              href={`/blog/category/${category.slug}`}
-              className={cn(
-                buttonVariants({
-                  variant: "outline",
-                  size: "sm",
-                  rounded: "lg",
-                }),
-                "h-8",
-              )}
-            >
-              {category.title}
-            </Link> */}
             <time
               dateTime={post.date}
               className="text-sm font-medium text-muted-foreground"
@@ -156,40 +162,69 @@ export default async function PostPage(props: {
           </div>
 
           <div className="sticky top-20 col-span-1 mt-52 hidden flex-col divide-y divide-muted self-start pb-24 lg:flex">
+            <div className="mb-8 flex flex-col space-y-4">
+              <p className="text-[15px] font-medium">Share this article</p>
+              <div className="flex space-x-4">
+                <Link
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(constructCanonicalUrl(`/${params.locale}/blog/${params.slug}`))}&via=useefficiently`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    buttonVariants({
+                      size: "sm",
+                      rounded: "lg",
+                      variant: "outline",
+                    }),
+                    "group text-nowrap",
+                  )}
+                  aria-label="Share on Twitter"
+                >
+                  <SiX className="size-4" />
+                </Link>
+                <Link
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(constructCanonicalUrl(`/${params.locale}/blog/${params.slug}`))}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    buttonVariants({
+                      size: "sm",
+                      rounded: "lg",
+                      variant: "outline",
+                    }),
+                    "group text-nowrap",
+                  )}
+                  aria-label="Share on LinkedIn"
+                >
+                  <SiLinkedin className="size-4" />
+                </Link>
+                <Link
+                  href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(`Check out this article: ${constructCanonicalUrl(`/${params.locale}/blog/${params.slug}`)}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    buttonVariants({
+                      size: "sm",
+                      rounded: "lg",
+                      variant: "outline",
+                    }),
+                    "group text-nowrap",
+                  )}
+                  aria-label="Share by Email"
+                >
+                  <Mail className="size-4" />
+                </Link>
+              </div>
+            </div>
+            <ShareButton
+              title={post.title}
+              description={post.description}
+              link={`${siteConfig.url}/${params.locale}/blog/${params.slug}`}
+              imageUrl={post.image}
+            />
             <DashboardTableOfContents toc={toc} />
           </div>
         </MaxWidthWrapper>
       </div>
-
-      {/* <MaxWidthWrapper>
-        {relatedArticles.length > 0 && (
-          <div className="flex flex-col space-y-4 pb-16">
-            <p className="font-heading text-2xl text-foreground">
-              More Articles
-            </p>
-
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-6">
-              {relatedArticles.map((post) => (
-                <Link
-                  key={post.slug}
-                  href={post.slug}
-                  className="flex flex-col space-y-2 rounded-xl border p-5 transition-colors duration-300 hover:bg-muted/80"
-                >
-                  <h3 className="font-heading text-xl text-foreground">
-                    {post.title}
-                  </h3>
-                  <p className="line-clamp-2 text-[15px] text-muted-foreground">
-                    {post.description}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {formatDate(post.date)}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </MaxWidthWrapper> */}
     </>
   );
 }

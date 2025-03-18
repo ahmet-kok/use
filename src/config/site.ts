@@ -5,14 +5,14 @@ import { env } from "@/env.mjs";
 const site_url = env.NEXT_PUBLIC_APP_URL;
 
 export const siteConfig: SiteConfig = {
-  name: "UseEfficiently",
+  name: "UseEfficiently: Airtable Project & Youth Solutions",
   description:
-    "We are a design agency guided by Dieter Rams' principles. Our mission is to create digital experiences that are innovative, useful, and environmentally friendly.",
+    "UseEfficiently: Airtable projects & youth programs by a design agency following Dieter Rams' principles. We create innovative, useful, and environmentally friendly digital experiences.",
   url: site_url,
   ogImage: `${site_url}/api/og?heading=Airtable Services Partner`,
 
   links: {
-    twitter: "",
+    twitter: "https://x.com/useefficiently",
     github: "",
     airtable: "https://ecosystem.airtable.com/consultants/useefficiently",
   },

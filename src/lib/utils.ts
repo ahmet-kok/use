@@ -2,6 +2,7 @@ import { Metadata, Viewport } from "next";
 import { clsx, type ClassValue } from "clsx";
 import ms from "ms";
 import { twMerge } from "tailwind-merge";
+import { headers } from "next/headers";
 
 import { env } from "@/env.mjs";
 import { siteConfig } from "@/config/site";
@@ -14,6 +15,29 @@ export function cn(...inputs: ClassValue[]) {
 export const lightThemeColor = "#ffffff"; // Light theme color
 export const darkThemeColor = "#18181b"; // Dark theme color
 
+/**
+ * Generate alternates object with hreflang links for all locales
+ * @param path Path without locale prefix
+ */
+export function generateHreflangAlternates(path: string) {
+  const alternates: Record<string, string> = {};
+  
+  // Map locales to their hreflang tags
+  const hreflangMap: Record<string, string> = {
+    en: "en-US",
+    tr: "tr-TR",
+    // Add more locale mappings as needed
+  };
+  
+  // Generate alternates for each locale
+  Object.entries(hreflangMap).forEach(([locale, hreflang]) => {
+    alternates[hreflang] = constructCanonicalUrl(`/${locale}${path}`);
+  });
+  
+  return alternates;
+}
+
+// Update constructMetadata to include hreflang alternates
 export function constructMetadata({
   title = siteConfig.name,
   titleTemplate = `%s | ${siteConfig.name}`,
@@ -21,6 +45,12 @@ export function constructMetadata({
   image = siteConfig.ogImage,
   icons = "/favicon.ico",
   noIndex = false,
+  keywords = [],
+  canonical,
+  type = "website",
+  publishedTime,
+  authors = ["UseEfficiently"],
+  hreflangPath,
 }: {
   title?: string;
   titleTemplate?: string;
@@ -28,9 +58,42 @@ export function constructMetadata({
   image?: string;
   icons?: string;
   noIndex?: boolean;
+  keywords?: string[];
+  canonical?: string;
+  type?: "website" | "article";
+  publishedTime?: string;
+  authors?: string[];
+  hreflangPath?: string;
 } = {}): Metadata {
   // Make sure we have a valid URL for metadataBase
   const url = siteConfig.url;
+
+  // Default SEO keywords for the site - updated with targeted keywords
+  const defaultKeywords = [
+    "Airtable",
+    "Project Management",
+    "Youth Programs",
+    "Design Agency",
+    "Digital Experience",
+    "Dieter Rams",
+    "Minimalist Design",
+    "API Integration",
+    "LinkedIn API",
+    "Workflow Automation",
+    "Next.js",
+    "React",
+    "Web Development",
+    "Innovation",
+    "Custom Solutions",
+  ];
+
+  // Combine default and page-specific keywords
+  const allKeywords = [...defaultKeywords, ...keywords];
+  
+  // Generate hreflang alternates if path is provided
+  const languageAlternates = hreflangPath 
+    ? { languages: generateHreflangAlternates(hreflangPath) }
+    : undefined;
 
   return {
     title: {
@@ -38,29 +101,18 @@ export function constructMetadata({
       template: titleTemplate,
     },
     description,
-    keywords: [
-      "Next.js",
-      "React",
-      "Neon",
-      "Auth.js",
-      "shadcn ui",
-      "Resend",
-      "React Email",
-      "Stripe",
-    ],
-    authors: [
-      {
-        name: "UseEfficiently",
-      },
-    ],
+    keywords: allKeywords,
+    authors: authors.map(author => ({
+      name: author,
+    })),
     creator: "UseEfficiently",
     openGraph: {
-      type: "website",
+      type,
       locale: "en_US",
-      url: url,
+      url: canonical || url,
       title,
       description,
-      siteName: title,
+      siteName: siteConfig.name,
       images: [
         {
           url: image,
@@ -69,6 +121,10 @@ export function constructMetadata({
           alt: title,
         },
       ],
+      ...(publishedTime && { 
+        publishedTime,
+        authors,
+      }),
     },
     twitter: {
       card: "summary_large_image",
@@ -76,10 +132,15 @@ export function constructMetadata({
       description,
       images: [image],
       creator: "@useefficiently",
+      site: "@useefficiently",
     },
     icons,
     metadataBase: new URL(url),
     manifest: `${url}/site.webmanifest`,
+    alternates: {
+      ...(canonical && { canonical }),
+      ...(languageAlternates?.languages && { languages: languageAlternates.languages }),
+    },
     ...(noIndex && {
       robots: {
         index: false,
@@ -261,4 +322,21 @@ export class ApiResponse<T> {
   static error<T>(code: number, message: string): string {
     return JSON.stringify(new ApiResponse(code, message, null));
   }
+}
+
+/**
+ * Constructs canonical URL for the current page
+ * @param path - Current path including locale
+ */
+export function constructCanonicalUrl(path: string): string {
+  // Use siteConfig URL as the base
+  const url = siteConfig.url;
+  
+  // Normalize path to not have trailing slash
+  const normalizedPath = path.endsWith('/') && path !== '/' 
+    ? path.slice(0, -1) 
+    : path;
+  
+  // Return full canonical URL
+  return `${url}${normalizedPath}`;
 }

@@ -12,7 +12,7 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   const t = useTranslations("Footer");
 
   return (
-    <footer className={cn("border-t mt-32", className)}>
+    <footer className={cn("mt-32 border-t", className)}>
       <MaxWidthWrapper>
         <div className="grid grid-cols-2 gap-6 py-14 md:grid-cols-5">
           {footerLinks.map((section) => (
@@ -38,16 +38,16 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             <NewsletterForm />
           </div>
         </div>
-        <div className=" mt-16 border-t pt-8">
+        <div className="mt-16 border-t pt-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className=" text-sm ">
-              © {new Date().getFullYear()} Agency. All rights reserved.
+            <p className="text-sm">
+              © {new Date().getFullYear()} UseEfficiently. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               <Link
                 prefetch={true}
                 href="/privacy"
-                className=" hover:text-dark-900 text-sm  dark:hover:text-white"
+                className="hover:text-dark-900 text-sm dark:hover:text-white"
               >
                 Privacy Policy
               </Link>
@@ -55,7 +55,7 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
               <Link
                 prefetch={true}
                 href="/terms"
-                className=" hover:text-dark-900 text-sm  dark:hover:text-white"
+                className="hover:text-dark-900 text-sm dark:hover:text-white"
               >
                 Terms of Service
               </Link>
