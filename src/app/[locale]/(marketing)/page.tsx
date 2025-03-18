@@ -16,13 +16,14 @@ import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 
 // Type for page params
 type HomePageParams = {
-  locale: string;
+  params: Promise<{ locale: string }>;
 };
 
 export const metadata = constructMetadata();
 
-export default async function HomePage(props: { params: HomePageParams }) {
-  setRequestLocale(props.params.locale);
+export default async function HomePage(props: HomePageParams) {
+  const { locale } = await props.params;
+  setRequestLocale(locale);
   const t = await getTranslations("HomePage");
 
   return (
@@ -45,15 +46,15 @@ export default async function HomePage(props: { params: HomePageParams }) {
           }),
         }}
       />
-      <HeroLanding locale={props.params.locale} />
-      <Companies locale={props.params.locale} />
+      <HeroLanding locale={locale} />
+      <Companies locale={locale} />
       {/* <HeroLanding locale={params.locale} />
       <PreviewLanding /> 
-      <Powered locale={params.locale} /> 
-      <BentoGrid locale={params.locale} /> 
-      <InfoLanding locale={params.locale} /> 
+      <Powered locale={locale} /> 
+      <BentoGrid locale={locale} /> 
+      <InfoLanding locale={locale} /> 
       <Features />  */}
-      <Testimonials locale={props.params.locale} />
+      <Testimonials locale={locale} />
       <Blog view="featured" link="/blog" linkText="View All" />
     </MaxWidthWrapper>
   );

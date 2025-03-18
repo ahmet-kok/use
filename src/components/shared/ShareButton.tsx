@@ -93,7 +93,7 @@ export default function ShareButton({
             }),
           )}
         >
-          <ShareIcon className="h-4 w-4" />
+          <ShareIcon className="size-4" />
         </button>
 
         <button
