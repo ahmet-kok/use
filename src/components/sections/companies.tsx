@@ -68,7 +68,7 @@ function CompanyCard({ item }: { item: Company }) {
       href={item.slug ? `/portfolio/${item.slug}` : item.url}
       target={item.slug ? "_self" : "_blank"}
       rel="noopener noreferrer"
-      className="group flex h-16"
+      className="group flex h-14"
     >
       <BlurImage
         alt={item.name}
