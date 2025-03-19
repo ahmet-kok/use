@@ -1,5 +1,6 @@
 import { constructMetadata } from "@/lib/utils";
 import Blog from "@/components/sections/blog";
+import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 
 export const metadata = constructMetadata({
   title: "Blog",
@@ -8,5 +9,9 @@ export const metadata = constructMetadata({
 });
 
 export default function BlogPage() {
-  return <Blog view="all" category main />;
+  return (
+    <MaxWidthWrapper page>
+      <Blog view="all" category main />
+    </MaxWidthWrapper>
+  );
 }

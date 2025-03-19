@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card-old";
 
 export function UpgradeCard() {
   const t = useTranslations("UpgradeCard");

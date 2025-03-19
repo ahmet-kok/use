@@ -28,8 +28,8 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import Author from "@/components/content/author";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
-import { DashboardTableOfContents } from "@/components/shared/toc";
 import ShareButton from "@/components/shared/ShareButton";
+import { DashboardTableOfContents } from "@/components/shared/toc";
 
 // Type for static params generation (without Promise)
 type BlogPostPageParams = {
@@ -113,7 +113,7 @@ export default async function PostPage(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <MaxWidthWrapper className="pt-6 md:pt-10">
-        <Breadcrumb />
+        <Breadcrumb title={post.title} />
         <div className="flex flex-col space-y-4">
           <div className="flex items-center space-x-4">
             <time
@@ -162,59 +162,6 @@ export default async function PostPage(props: {
           </div>
 
           <div className="sticky top-20 col-span-1 mt-52 hidden flex-col divide-y divide-muted self-start pb-24 lg:flex">
-            <div className="mb-8 flex flex-col space-y-4">
-              <p className="text-[15px] font-medium">Share this article</p>
-              <div className="flex space-x-4">
-                <Link
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(constructCanonicalUrl(`/${params.locale}/blog/${params.slug}`))}&via=useefficiently`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    buttonVariants({
-                      size: "sm",
-                      rounded: "lg",
-                      variant: "outline",
-                    }),
-                    "group text-nowrap",
-                  )}
-                  aria-label="Share on Twitter"
-                >
-                  <SiX className="size-4" />
-                </Link>
-                <Link
-                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(constructCanonicalUrl(`/${params.locale}/blog/${params.slug}`))}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    buttonVariants({
-                      size: "sm",
-                      rounded: "lg",
-                      variant: "outline",
-                    }),
-                    "group text-nowrap",
-                  )}
-                  aria-label="Share on LinkedIn"
-                >
-                  <SiLinkedin className="size-4" />
-                </Link>
-                <Link
-                  href={`mailto:?subject=${encodeURIComponent(post.title)}&body=${encodeURIComponent(`Check out this article: ${constructCanonicalUrl(`/${params.locale}/blog/${params.slug}`)}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    buttonVariants({
-                      size: "sm",
-                      rounded: "lg",
-                      variant: "outline",
-                    }),
-                    "group text-nowrap",
-                  )}
-                  aria-label="Share by Email"
-                >
-                  <Mail className="size-4" />
-                </Link>
-              </div>
-            </div>
             <ShareButton
               title={post.title}
               description={post.description}

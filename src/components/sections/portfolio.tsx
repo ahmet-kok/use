@@ -3,10 +3,9 @@ import { useTranslations } from "next-intl";
 
 import type { Portfolio } from "@/lib/airtable";
 import { getPortfolio } from "@/lib/airtable";
-
-import { HeaderSection } from "../shared/header-section";
-import MaxWidthWrapper from "../shared/max-width-wrapper";
-import PortfolioList from "./portfolio-list";
+import PortfolioList from "@/components/sections/portfolio-list";
+import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
+import { Section } from "@/components/shared/section";
 
 interface PortfolioProps {
   view: "all" | "featured";
@@ -25,17 +24,16 @@ export default function Portfolio({
 }: PortfolioProps) {
   const t = useTranslations("Portfolio");
   return (
-    <MaxWidthWrapper>
-      <HeaderSection
-        title="Our journey"
-        link={link}
-        linkText={linkText}
-        main={main}
-      />
+    <Section
+      title="Our journey"
+      link={link}
+      linkText={linkText}
+      tag={main ? "h1" : "h2"}
+    >
       <Suspense fallback={<PortfolioSkeleton />}>
         <PortfolioListWrapper view={view} category={category} />
       </Suspense>
-    </MaxWidthWrapper>
+    </Section>
   );
 }
 

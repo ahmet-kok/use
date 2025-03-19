@@ -1,79 +1,100 @@
-import * as React from "react"
+import { Fragment } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
+import { placeholderBlurhash } from "@/lib/utils";
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm",
-      className
-    )}
-    {...props}
-  />
-))
-Card.displayName = "Card"
+import BlurImage from "../shared/blur-image";
+import CustomButton from "../shared/custom-button";
 
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
-    {...props}
-  />
-))
-CardHeader.displayName = "CardHeader"
+interface CardProps {
+  children?: React.ReactNode;
+  title?: string;
+  description?: string;
+  link: string;
+  linkText?: string;
+  image?: string;
+  className?: string;
+  index: number;
+  articleClassName?: string;
+  imageClassName?: string;
+  contentClassName?: string;
+  details?: string[];
+  titleClassName?: string;
+  descriptionClassName?: string;
+  detailsClassName?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+}
 
-const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "text-lg font-semibold leading-none tracking-tight",
-      className
-    )}
-    {...props}
-  />
-))
-CardTitle.displayName = "CardTitle"
-
-const CardDescription = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
-    {...props}
-  />
-))
-CardDescription.displayName = "CardDescription"
-
-const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-))
-CardContent.displayName = "CardContent"
-
-const CardFooter = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(" flex items-center p-6 pt-0", className)}
-    {...props}
-  />
-))
-CardFooter.displayName = "CardFooter"
-
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+export function Card({
+  children,
+  title,
+  description,
+  details,
+  link,
+  linkText,
+  image,
+  index,
+  articleClassName = "",
+  imageClassName = "",
+  contentClassName = "",
+  titleClassName = "",
+  detailsClassName = "",
+  descriptionClassName = "",
+  imageWidth = 64,
+  imageHeight = 64,
+  className = "",
+}: CardProps) {
+  return (
+    <>
+      <article>
+        <Link prefetch={true} href={link || "#"} className={`${className}`}>
+          <div className={`${articleClassName}`}>
+            {image && (
+              <BlurImage
+                alt={title || ""}
+                blurDataURL={placeholderBlurhash}
+                className={`${imageClassName}`}
+                width={imageWidth}
+                height={imageHeight}
+                placeholder="blur"
+                loading={index < 2 ? "eager" : "lazy"}
+                src={image}
+                sizes={`(max-width: ${imageWidth}px) ${imageWidth}px, ${imageHeight}px`}
+                priority={index < 2}
+              />
+            )}
+            {title && (
+              <div className={`${contentClassName}`}>
+                {details && (
+                  <div className={`${detailsClassName}`}>
+                    {details.map((detail, index) => (
+                      <Fragment key={`${detail}-${index}`}>
+                        <span>{detail}</span>
+                        {index < details.length - 1 && (
+                          <span
+                            key={`separator-${index}`}
+                            className="text-dark-300 dark:text-gray-700"
+                          >
+                            •
+                          </span>
+                        )}
+                      </Fragment>
+                    ))}
+                  </div>
+                )}
+                {title && <h2 className={`${titleClassName}`}>{title}</h2>}
+                {description && (
+                  <p className={`${descriptionClassName}`}>{description}</p>
+                )}
+              </div>
+            )}
+            {link && <CustomButton text={linkText || "Read More"} />}
+          </div>
+          {children && children}
+        </Link>
+      </article>
+    </>
+  );
+}

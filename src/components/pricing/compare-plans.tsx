@@ -1,7 +1,7 @@
 import { PlansRow } from "@/types";
 import { CircleCheck, Info } from "lucide-react";
 
-import { HeaderSection } from "@/components/shared/header-section";
+import { Section } from "@/components/shared/section";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 import {
   Popover,
@@ -24,10 +24,10 @@ export function ComparePlans() {
 
   return (
     <MaxWidthWrapper>
-      <HeaderSection
+      <Section
         label={tPricingPage("plans")}
         title={tPricingPage("compareOurPlans")}
-        subtitle={tPricingPage("findThePerfectPlan")}
+        text={tPricingPage("findThePerfectPlan")}
       />
 
       <div className="my-10 overflow-x-scroll max-lg:mx-[-0.8rem] md:overflow-x-visible">

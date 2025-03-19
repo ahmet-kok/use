@@ -108,7 +108,7 @@ export function NavBar({
                 </Link>
               ))}
               <Link
-                href={`/pricing`}
+                href={`/discovery`}
                 prefetch={true}
                 className={cn(
                   buttonVariants({

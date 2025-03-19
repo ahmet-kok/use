@@ -5,7 +5,7 @@ import { env } from "@/env.mjs";
 const site_url = env.NEXT_PUBLIC_APP_URL;
 
 export const siteConfig: SiteConfig = {
-  name: "UseEfficiently: Airtable Project & Youth Solutions",
+  name: "UseEfficiently: Airtable Project & Solutions",
   description:
     "UseEfficiently: Airtable projects & youth programs by a design agency following Dieter Rams' principles. We create innovative, useful, and environmentally friendly digital experiences.",
   url: site_url,
@@ -23,28 +23,36 @@ export const footerLinks: SidebarNavItem[] = [
   {
     title: "Company",
     items: [
-      { title: "About", href: "#" },
-      { title: "Enterprise", href: "#" },
-      { title: "Terms", href: "/terms" },
-      { title: "Privacy", href: "/privacy" },
+      { title: "About", href: "/about" },
+      { title: "Team", href: "/team" },
+      { title: "Careers", href: "/careers" },
+      { title: "Contact", href: "/contact" },
     ],
   },
   {
-    title: "Product",
+    title: "Resources",
     items: [
-      { title: "Security", href: "#" },
-      { title: "Customization", href: "#" },
-      { title: "Customers", href: "#" },
-      { title: "Changelog", href: "#" },
+      { title: "Blog", href: "/blog" },
+      { title: "Portfolio", href: "/portfolio" },
+      {
+        title: "Our Airtable Course (Turkish)",
+        href: "https://youtube.com/playlist?list=PLyq1-Tl4KTG9uc0w6wSmBE-QNKZpuKOzP&feature=shared",
+      },
     ],
   },
   {
-    title: "Docs",
+    title: "Social",
     items: [
-      { title: "Introduction", href: "#" },
-      { title: "Installation", href: "#" },
-      { title: "Components", href: "#" },
-      { title: "Code Blocks", href: "#" },
+      {
+        title: "Airtable Partner Directory",
+        href: "https://ecosystem.airtable.com/consultants/useefficiently",
+      },
+      {
+        title: "LinkedIn",
+        href: "https://www.linkedin.com/company/useefficiently",
+      },
+      { title: "X", href: "https://x.com/useefficiently" },
+      { title: "WhatsApp", href: "https://wa.me/message/EXPEJSVJRRMIH1" },
     ],
   },
 ];
@@ -70,10 +78,11 @@ export const contactInfo = [
 
 export const meetingTypes = [
   {
-    slug: "discovery",
+    slug: "/discovery",
+    formId: "21rvTSZqjUus",
     title: "Discovery Call",
-    description: "25-minute introductory call to discuss your project needs",
-    duration: "25 min",
+    description: "30-minute introductory call to discuss your project needs",
+    duration: "30 min",
   } /* ,
     {
       slug: "consultation",

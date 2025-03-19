@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { HeaderSection } from "../shared/header-section";
+import { Section } from "../shared/section";
 
 const pricingFaqData = ["item1", "item2", "item3", "item4", "item5"];
 
@@ -16,10 +16,10 @@ export function PricingFaq() {
   const tFaqItems = useTranslations("PricingPage.faqItems");
   return (
     <section className="container max-w-4xl py-2">
-      <HeaderSection
+      <Section
         label={tFaq("label")}
         title={tFaq("title")}
-        subtitle={tFaq("subtitle")}
+        text={tFaq("text")}
       />
 
       <Accordion type="single" collapsible className="my-12 w-full">

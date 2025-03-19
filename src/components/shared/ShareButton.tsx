@@ -1,6 +1,7 @@
 "use client";
 
-import { ShareIcon } from "lucide-react";
+import { Share2 } from "lucide-react";
+import { SiInstagram, SiLinkedin, SiX } from "react-icons/si";
 
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,8 @@ export default function ShareButton({
   // Use our proxied image URL for sharing
 
   const handleShare = async () => {
+    navigator.clipboard.writeText(link);
+
     if (navigator.share) {
       try {
         const shareData: ShareData = {
@@ -71,12 +74,8 @@ export default function ShareButton({
     url.searchParams.set("text", text);
     url.searchParams.set("url", link);
     url.searchParams.set("image", imageUrl);
+    url.searchParams.set("via", "useefficiently");
     window.open(url.toString(), "_blank", "width=600,height=600");
-  };
-
-  const handleInstagramShare = () => {
-    // Instagram doesn't have a direct web sharing API, so we'll copy the URL
-    navigator.clipboard.writeText(link);
   };
 
   return (
@@ -85,6 +84,7 @@ export default function ShareButton({
       <div className="flex space-x-4">
         <button
           onClick={handleShare}
+          aria-label="Share on Twitter"
           className={cn(
             buttonVariants({
               size: "sm",
@@ -93,7 +93,7 @@ export default function ShareButton({
             }),
           )}
         >
-          <ShareIcon className="size-4" />
+          <Share2 className="size-5" />
         </button>
 
         <button
@@ -106,7 +106,9 @@ export default function ShareButton({
               variant: "outline",
             }),
           )}
-        ></button>
+        >
+          <SiLinkedin className="size-5" />
+        </button>
 
         <button
           onClick={handleXShare}
@@ -118,19 +120,9 @@ export default function ShareButton({
               variant: "outline",
             }),
           )}
-        ></button>
-
-        <button
-          onClick={handleInstagramShare}
-          aria-label="Copy link for Instagram"
-          className={cn(
-            buttonVariants({
-              size: "sm",
-              rounded: "lg",
-              variant: "outline",
-            }),
-          )}
-        ></button>
+        >
+          <SiX className="size-5" />
+        </button>
       </div>
     </div>
   );

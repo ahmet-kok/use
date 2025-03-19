@@ -1,5 +1,6 @@
 import { constructMetadata } from "@/lib/utils";
 import Portfolio from "@/components/sections/portfolio";
+import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 
 export const metadata = constructMetadata({
   title: "Portfolio",
@@ -8,5 +9,9 @@ export const metadata = constructMetadata({
 });
 
 export default function PortfolioPage() {
-  return <Portfolio view="all" category main />;
+  return (
+    <MaxWidthWrapper page>
+      <Portfolio view="all" category main />
+    </MaxWidthWrapper>
+  );
 }

@@ -27,7 +27,7 @@ export default async function HomePage(props: HomePageParams) {
   const t = await getTranslations("HomePage");
 
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper page>
       <Script
         id="website-schema"
         type="application/ld+json"

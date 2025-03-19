@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
+import Link from "next/link";
 
-import { Card } from "@/components/Card";
+import { Blog } from "@/lib/airtable";
+import { placeholderBlurhash } from "@/lib/utils";
+import { Card } from "@/components/ui/card";
 
+import BlurImage from "../shared/blur-image";
+import CustomButton from "../shared/custom-button";
 import { BlogListProps } from "./blog";
 import TagList from "./tag-list";
 
@@ -23,26 +28,55 @@ export default function BlogList({ blog, category }: BlogListProps) {
         />
       )}
       {filteredBlog.map((post, index) => (
-        <Card
-          key={post.id}
-          index={index}
-          title={post.title}
-          description={post.description}
-          image={post.image}
-          imageWidth={800}
-          imageHeight={600}
-          link={`/blog/${post.slug}`}
-          linkText="Read Post"
-          titleClassName="text-lg font-medium"
-          descriptionClassName="line-clamp-2"
-          articleClassName="flex flex-col md:flex-row gap-6 items-start relative"
-          imageClassName="max-w-60 aspect-video rounded-lg overflow-hidden bg-gray-300 dark:bg-gray-300 flex-shrink-0 object-cover"
-          details={[post.category, post.readTime, post.date]}
-          detailsClassName="flex items-baseline gap-4 mb-2 text-sm"
-          className="group block"
-          contentClassName="flex-1 min-w-0"
-        />
+        <BlogCard key={post.id} post={post} index={index} />
       ))}
     </div>
+  );
+}
+
+function BlogCard({ post, index }: { post: Blog; index: number }) {
+  const details = [post.category, post.readTime, post.date];
+  return (
+    <Link prefetch={true} href={`/blog/${post.slug}`} className="group block">
+      <div className="relative flex flex-col items-start gap-6 md:flex-row">
+        <BlurImage
+          alt={post.title || ""}
+          blurDataURL={placeholderBlurhash}
+          className="aspect-video max-w-60 shrink-0 overflow-hidden rounded-lg bg-gray-300 object-cover dark:bg-gray-300"
+          width={800}
+          height={600}
+          placeholder="blur"
+          loading={index < 2 ? "eager" : "lazy"}
+          src={post.image}
+          sizes={`(max-width: 800px) 800px, 600px`}
+          priority={index < 2}
+        />
+        <div className="min-w-0 flex-1">
+          <div className="mb-2 flex items-baseline gap-4 text-sm">
+            {details.map((detail, index) => (
+              <Fragment key={`${detail}-${index}`}>
+                <span>{detail}</span>
+                {index < details.length - 1 && (
+                  <span
+                    key={`separator-${index}`}
+                    className="text-dark-300 dark:text-gray-700"
+                  >
+                    •
+                  </span>
+                )}
+              </Fragment>
+            ))}
+          </div>
+          <h2 className="text-lg font-medium">{post.title}</h2>
+
+          <p className="line-clamp-2 text-base">{post.description}</p>
+        </div>
+        <CustomButton
+          text="Read Post"
+          link={`/blog/${post.slug}`}
+          button={false}
+        />
+      </div>
+    </Link>
   );
 }

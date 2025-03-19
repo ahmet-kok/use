@@ -3,7 +3,7 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-} from "@/components/ui/card";
+} from "@/components/ui/card-old";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function CardSkeleton() {

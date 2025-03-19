@@ -3,9 +3,8 @@ import { useTranslations } from "next-intl";
 
 import type { Blog } from "@/lib/airtable";
 import { getBlog } from "@/lib/airtable";
+import { Section } from "@/components/shared/section";
 
-import { HeaderSection } from "../shared/header-section";
-import MaxWidthWrapper from "../shared/max-width-wrapper";
 import BlogList from "./blog-list";
 
 interface BlogProps {
@@ -25,17 +24,16 @@ export default function Blog({
 }: BlogProps) {
   const t = useTranslations("Blog");
   return (
-    <MaxWidthWrapper>
-      <HeaderSection
-        title="Our journey"
-        link={link}
-        linkText={linkText}
-        main={main}
-      />
+    <Section
+      title="Our journey"
+      link={link}
+      linkText={linkText}
+      tag={main ? "h1" : "h2"}
+    >
       <Suspense fallback={<BlogSkeleton />}>
         <BlogListWrapper view={view} category={category} />
       </Suspense>
-    </MaxWidthWrapper>
+    </Section>
   );
 }
 

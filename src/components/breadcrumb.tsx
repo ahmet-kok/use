@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, Home } from "lucide-react";
 
-export function Breadcrumb() {
+export function Breadcrumb({ title }: { title: string }) {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
 
@@ -14,7 +14,8 @@ export function Breadcrumb() {
     const label = segment.charAt(0).toUpperCase() + segment.slice(1);
     return { href, label };
   });
-
+  breadcrumbs.pop();
+  breadcrumbs.push({ href: `/${title}`, label: title });
   if (segments.length === 0) return null;
 
   return (

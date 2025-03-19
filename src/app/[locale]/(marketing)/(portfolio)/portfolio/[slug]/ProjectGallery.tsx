@@ -61,7 +61,7 @@ export function ProjectGallery({ images, title }: ProjectGalleryProps) {
               key={index}
               alt={`${title} - Image ${index + 1}`}
               blurDataURL={placeholderBlurhash}
-              className="h-[600px] w-max shrink-0 overflow-hidden rounded-lg"
+              className="h-fit w-max shrink-0 overflow-hidden rounded-lg"
               width={720}
               height={1280}
               placeholder="blur"

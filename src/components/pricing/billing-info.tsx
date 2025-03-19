@@ -10,7 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card-old";
 import { cn, formatDate, formatDateWithLocale } from "@/lib/utils";
 import { UserSubscriptionPlan } from "@/types";
 import { useLocale, useTranslations } from "next-intl";

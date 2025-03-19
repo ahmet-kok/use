@@ -13,6 +13,7 @@
     "@ant-design/icons": "^5.4.0",
     "@auth/drizzle-adapter": "^1.4.2",
     "@eslint/object-schema": "^2.1.6",
+    "@fillout/react": "^1.2.10",
     "@hookform/resolvers": "^3.9.0",
     "@langchain/community": "^0.3.34",
     "@langchain/core": "^0.2.28",

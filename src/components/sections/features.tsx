@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 
 import { features } from "@/config/landing";
 import { Button } from "@/components/ui/button";
-import { HeaderSection } from "@/components/shared/header-section";
+import { Section } from "@/components/shared/section";
 import { Icons } from "@/components/shared/icons";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 
@@ -14,10 +14,10 @@ export default function Features() {
     <section>
       <div className="pb-6 pt-28">
         <MaxWidthWrapper>
-          <HeaderSection
+          <Section
             label={t("label")}
             title={t("title")}
-            subtitle={t("subtitle")}
+            text={t("text")}
           />
 
           <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

@@ -14,7 +14,7 @@ export const getMarketingConfig = (
     },
     {
       title: t("Marketing.nav.company"),
-      href: `/company`,
+      href: `/about`,
     },
     {
       title: t("Marketing.nav.contact"),

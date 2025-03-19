@@ -12,7 +12,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { BillingFormButton } from "@/components/forms/billing-form-button";
 import Link from "@/components/link/link";
 import { ModalContext } from "@/components/modals/providers";
-import { HeaderSection } from "@/components/shared/header-section";
+import { Section } from "@/components/shared/section";
 import { Icons } from "@/components/shared/icons";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
 
@@ -144,7 +144,7 @@ export function PricingCards({ userId, subscriptionPlan }: PricingCardsProps) {
   return (
     <MaxWidthWrapper>
       <section className="flex flex-col items-center text-center">
-        <HeaderSection label={t("pricing")} title={t("startAtFullSpeed")} />
+        <Section label={t("pricing")} title={t("startAtFullSpeed")} />
 
         <div className="mb-4 mt-10 flex items-center gap-5">
           <ToggleGroup

@@ -89,7 +89,7 @@ export function NavMobile({
               </li>
             ))}
           <li>
-            <Link href="/contact" className="flex w-full font-medium">
+            <Link href="/discovery" className="flex w-full font-medium">
               Book a free discovery call
             </Link>
           </li>

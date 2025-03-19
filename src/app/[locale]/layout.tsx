@@ -92,7 +92,7 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${inter.variable} min-h-screen bg-background font-sans antialiased`}
+        className={`${inter.variable} min-h-screen bg-background font-sans antialiased cursor-default`}
       >
         <SessionProvider>
           <ThemeProvider

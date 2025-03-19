@@ -429,6 +429,38 @@ export const getCompanies = cache(async () => {
   }
 });
 
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  image: string;
+  bio: string;
+  linkedin: string;
+}
+
+export const getTeam = cache(async () => {
+  try {
+    return await fetchFromAirtableSimple<TeamMember>("team", {
+      view: "all",
+      sort: [{ field: "name", direction: "asc" }],
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        return {
+          id: record.id,
+          name: fields.name as string,
+          role: fields.role as string,
+          image: getImageUrl(record.id, "image", "team"),
+          bio: fields.bio as string,
+          linkedin: fields.linkedin as string,
+        };
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching team:", error);
+    throw new Error("Failed to fetch team");
+  }
+});
+
 // send message to Airtable
 export const postMessage = async (
   name: string,

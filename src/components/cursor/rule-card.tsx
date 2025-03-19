@@ -2,7 +2,7 @@ import Link from "@/components/link/link";
 
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card-old";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { CopyButton } from "./copy-button";

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { getPortfolio, getSinglePortfolio } from "@/lib/airtable";
@@ -7,8 +6,7 @@ import "@/styles/mdx.css";
 
 import { Metadata } from "next";
 
-import { BLOG_CATEGORIES } from "@/config/blog";
-import { getTableOfContents } from "@/lib/toc";
+import { siteConfig } from "@/config/site";
 import {
   constructMetadata,
   getBlurDataURL,
@@ -17,6 +15,7 @@ import {
 import { Breadcrumb } from "@/components/breadcrumb";
 import BlurImage from "@/components/shared/blur-image";
 import MaxWidthWrapper from "@/components/shared/max-width-wrapper";
+import ShareButton from "@/components/shared/ShareButton";
 import { DashboardTableOfContents } from "@/components/shared/toc";
 
 import { ProjectGallery } from "./ProjectGallery";
@@ -66,16 +65,6 @@ export default async function PostPage(props: {
     notFound();
   }
 
-  const category = BLOG_CATEGORIES.find(
-    (category) => category.slug === post.category,
-  )!;
-
-  /* const relatedArticles =
-    (post.related &&
-      post.related.map(
-        (slug) => allPosts.find((post) => post.slugAsParams === slug)!,
-      )) ||
-    []; */
   const items = [
     { title: "Challenge", url: "#challenge" },
     { title: "Solution", url: "#solution" },
@@ -92,22 +81,12 @@ export default async function PostPage(props: {
 
   const toc = { items };
 
-  /* const [thumbnailBlurhash, images] = await Promise.all([
-    getBlurDataURL(post.image),
-    await Promise.all(
-      post.images.map(async (src: string) => ({
-        src,
-        blurDataURL: await getBlurDataURL(src),
-      })),
-    ),
-  ]);
- */
   const thumbnailBlurhash = await getBlurDataURL(post.image);
 
   return (
     <>
       <MaxWidthWrapper className="pt-6 md:pt-10">
-        <Breadcrumb />
+        <Breadcrumb title={post.title} />
         <div className="flex flex-col space-y-4">
           <h1 className="font-heading text-3xl text-foreground sm:text-4xl">
             {post.title}
@@ -234,6 +213,12 @@ export default async function PostPage(props: {
           </div>
 
           <div className="sticky top-20 col-span-1 mt-52 hidden flex-col divide-y divide-muted self-start pb-24 lg:flex">
+            <ShareButton
+              title={post.title}
+              description={post.description}
+              link={`${siteConfig.url}/${params.locale}/portfolio/${params.slug}`}
+              imageUrl={post.image}
+            />
             <DashboardTableOfContents toc={toc} />
           </div>
         </MaxWidthWrapper>

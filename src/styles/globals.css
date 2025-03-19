@@ -145,11 +145,11 @@
 }
 
 h1 {
-  @apply mb-6 text-3xl font-medium;
+  @apply text-balance text-4xl font-medium;
 }
 
 h2 {
-  @apply mb-6 text-2xl font-medium;
+  @apply text-2xl font-medium;
 }
 
 h3 {
@@ -161,7 +161,7 @@ h4 {
 }
 
 p {
-  @apply max-w-lg text-sm text-muted-foreground;
+  @apply text-sm text-muted-foreground;
 }
 
 table {
