@@ -15,7 +15,7 @@ import { Section } from "@/components/shared/section";
 import CareerList, { CareerSkeleton } from "./CareerList";
 
 export const metadata = constructMetadata({
-  title: "Career",
+  title: "Careers",
   description: "Explore our career opportunities.",
   image: "/api/og?heading=Career",
 });
