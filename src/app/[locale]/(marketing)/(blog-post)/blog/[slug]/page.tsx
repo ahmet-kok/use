@@ -113,8 +113,8 @@ export default async function PostPage(props: {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <MaxWidthWrapper className="pt-6 md:pt-10">
-        <Breadcrumb title={post.title} />
-        <div className="flex flex-col space-y-4">
+{/*         <Breadcrumb title={post.title} />
+ */}        <div className="flex flex-col space-y-4">
           <div className="flex items-center space-x-4">
             <time
               dateTime={post.date}

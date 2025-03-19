@@ -52,7 +52,7 @@ interface CompanyListProps {
 
 export function CompanyList({ companies }: CompanyListProps) {
   return (
-    <div className="grid gap-x-8 gap-y-6 lg:grid-cols-2">
+    <div className="grid gap-6 lg:grid-cols-2">
       {companies.map((item, index) => (
         <CompanyCard key={item.id} item={item} />
       ))}
@@ -68,12 +68,12 @@ function CompanyCard({ item }: { item: Company }) {
       href={item.slug ? `/portfolio/${item.slug}` : item.url}
       target={item.slug ? "_self" : "_blank"}
       rel="noopener noreferrer"
-      className="group flex h-14"
+      className="group flex items-center rounded-lg border p-1 pr-3"
     >
       <BlurImage
         alt={item.name}
         blurDataURL={placeholderBlurhash}
-        className="relative aspect-square h-full w-fit shrink-0 rounded-lg object-cover"
+        className="relative aspect-square h-14 w-fit shrink-0 rounded-md object-cover"
         width={100}
         height={100}
         priority
@@ -81,13 +81,14 @@ function CompanyCard({ item }: { item: Company }) {
         src={item.logo}
         sizes="(max-width: 100px) 100px, 100px"
       />
-      <div className="ml-6 flex w-full items-center justify-between border-b">
+      <div className="ml-4 flex w-full items-center justify-between">
         <span className="pr-3 text-base">{item.name}</span>
         {item.slug && (
           <CustomButton
             text={"View project"}
             link={`/portfolio/${item.slug}`}
             button={false}
+            className="text-sm"
           />
         )}
       </div>
