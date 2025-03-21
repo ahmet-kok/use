@@ -1,5 +1,4 @@
-import { cache } from "react";
-import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import Airtable, { Attachment, FieldSet } from "airtable";
 
 import { env } from "@/env.mjs";
@@ -120,6 +119,36 @@ export async function fetchFromAirtableSimple<T>(
     ...options,
   });
 }
+// Cache duration in milliseconds (6 hours)
+const CACHE_DURATION = 6 * 60 * 60 * 1000;
+
+// Cache storage with timestamps
+type CacheEntry<T> = {
+  data: T;
+  timestamp: number;
+};
+
+const cache: { [key: string]: CacheEntry<any> } = {};
+
+// Cache helper functions
+function getCachedData<T>(key: string): T | null {
+  const entry = cache[key];
+  if (!entry) return null;
+
+  const isExpired = Date.now() - entry.timestamp > CACHE_DURATION;
+  if (isExpired) {
+    delete cache[key];
+    return null;
+  }
+
+  return entry.data;
+}
+function setCachedData<T>(key: string, data: T): void {
+  cache[key] = {
+    data,
+    timestamp: Date.now(),
+  };
+}
 
 // Define Career type based on the schema
 export interface Career {
@@ -133,37 +162,30 @@ export interface Career {
 }
 
 // Function to get career with caching
-export const getCareer = cache(
-  async ({
-    view = "all",
-  }: {
-    view?: string;
-    type?: string;
-  } = {}) => {
-    try {
-      // Fetch career from Airtable
-      return await fetchFromAirtableSimple<Career>("career", {
-        view,
-        sort: [{ field: "order", direction: "asc" }],
-        transformer: (record: Airtable.Record<FieldSet>) => {
-          const fields = record.fields;
-          return {
-            id: record.id,
-            title: fields.title as string,
-            description: fields.description as string,
-            type: fields.type as string,
-            location: fields.location as string,
-            url: fields.url as string,
-            order: (fields.order as number) || 0,
-          };
-        },
-      });
-    } catch (error) {
-      console.error("Error fetching career:", error);
-      throw new Error("Failed to fetch career");
-    }
-  },
-);
+export const getCareer = async (view: "all" | "featured") => {
+  const cacheKey = `career:${view}`;
+  const cached = getCachedData<Career[]>(cacheKey);
+  if (cached) return cached;
+
+  const data = await fetchFromAirtableSimple<Career>("career", {
+    view,
+    sort: [{ field: "order", direction: "asc" }],
+    transformer: (record: Airtable.Record<FieldSet>) => {
+      const fields = record.fields;
+      return {
+        id: record.id,
+        title: fields.title as string,
+        description: fields.description as string,
+        type: fields.type as string,
+        location: fields.location as string,
+        url: fields.url as string,
+        order: (fields.order as number) || 0,
+      };
+    },
+  });
+  setCachedData(cacheKey, data);
+  return data;
+};
 
 export interface singleBlog {
   id: string;
@@ -180,9 +202,12 @@ export interface singleBlog {
   authorImage: string;
 }
 
-export const getSingleBlog = cache(async (slug: string) => {
+export const getSingleBlog = async (slug: string) => {
+  const cacheKey = `blog:${slug}`;
+  const cached = getCachedData<singleBlog>(cacheKey);
+  if (cached) return cached;
   try {
-    const records = await fetchFromAirtableSimple<singleBlog>("blog", {
+    const data = await fetchFromAirtableSimple<singleBlog>("blog", {
       filterByFormula: `{slug} = '${slug}'`,
       view: "single",
       transformer: (record: Airtable.Record<FieldSet>) => {
@@ -203,13 +228,16 @@ export const getSingleBlog = cache(async (slug: string) => {
           authorImage: getImageUrl(record.id, "authorImage", "blog"),
         };
       },
+    }).then((res) => {
+      return res[0];
     });
-    return records[0];
+    setCachedData(cacheKey, data);
+    return data;
   } catch (error) {
     console.error("Error fetching blog:", error);
     throw new Error("Failed to fetch blog");
   }
-});
+};
 
 export interface Blog {
   id: string;
@@ -225,39 +253,38 @@ export interface Blog {
   authorImage: string;
 }
 
-export const getBlog = cache(async (view: "all" | "featured") => {
-  const fetchBlog = async () => {
-    try {
-      return await fetchFromAirtableSimple<Blog>("blog", {
-        view,
-        sort: [{ field: "date", direction: "desc" }],
-        transformer: (record: Airtable.Record<FieldSet>) => {
-          const fields = record.fields;
-          return {
-            id: record.id,
-            title: fields.title as string,
-            slug: fields.slug as string,
-            description: fields.description as string,
-            image: getImageUrl(record.id, "image", "blog"),
-            category: fields.category as string,
-            date: fields.date as string,
-            readTime: fields.readTime as string,
-            authorName: fields.authorName as string,
-            authorRole: fields.authorRole as string,
-            authorImage: getImageUrl(record.id, "authorImage", "blog"),
-          };
-        },
-      });
-    } catch (error) {
-      console.error("Error fetching blog:", error);
-      throw new Error("Failed to fetch blog");
-    }
-  };
-
-  return unstable_cache(fetchBlog, [`blog-${view}`], {
-    tags: ["blog"],
-  })();
-});
+export const getBlog = async (view: "all" | "featured") => {
+  const cacheKey = `blog:${view}`;
+  const cached = getCachedData<Blog[]>(cacheKey);
+  if (cached) return cached;
+  try {
+    const data = await fetchFromAirtableSimple<Blog>("blog", {
+      view,
+      sort: [{ field: "date", direction: "desc" }],
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        return {
+          id: record.id,
+          title: fields.title as string,
+          slug: fields.slug as string,
+          description: fields.description as string,
+          image: getImageUrl(record.id, "image", "blog"),
+          category: fields.category as string,
+          date: fields.date as string,
+          readTime: fields.readTime as string,
+          authorName: fields.authorName as string,
+          authorRole: fields.authorRole as string,
+          authorImage: getImageUrl(record.id, "authorImage", "blog"),
+        };
+      },
+    });
+    setCachedData(cacheKey, data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching blog:", error);
+    throw new Error("Failed to fetch blog");
+  }
+};
 
 export interface singlePortfolio {
   id: string;
@@ -279,51 +306,54 @@ export interface singlePortfolio {
   testimonialCompany: string;
   testimonialImage: string;
 }
-export const getSinglePortfolio = cache(async (slug: string) => {
+export const getSinglePortfolio = async (slug: string) => {
+  const cacheKey = `portfolio:${slug}`;
+  const cached = getCachedData<singlePortfolio>(cacheKey);
+  if (cached) return cached;
   try {
-    const records = await fetchFromAirtableSimple<singlePortfolio>(
-      "portfolio",
-      {
-        filterByFormula: `{slug} = '${slug}'`,
-        view: "single",
-        transformer: (record: Airtable.Record<FieldSet>) => {
-          const fields = record.fields;
-          const images = fields.images as string[];
-          return {
-            id: record.id,
-            title: fields.title as string,
-            slug: fields.slug as string,
-            description: fields.description as string,
-            challenge: fields.challenge as string,
-            solution: fields.solution as string,
-            outcome: fields.outcome as string,
-            category: fields.category as string,
-            year: fields.year as string,
-            client: fields.client as string,
-            services: fields.services as string,
-            image: getImageUrl(record.id, "image", "portfolio"),
-            images: images.map((image, index) =>
-              getImageUrl(record.id, "images", "portfolio", index.toString()),
-            ),
-            testimonialQuote: fields.testimonialQuote as string,
-            testimonialAuthor: fields.testimonialAuthor as string,
-            testimonialRole: fields.testimonialRole as string,
-            testimonialCompany: fields.testimonialCompany as string,
-            testimonialImage: getImageUrl(
-              record.id,
-              "testimonialImage",
-              "portfolio",
-            ),
-          };
-        },
+    const data = await fetchFromAirtableSimple<singlePortfolio>("portfolio", {
+      filterByFormula: `{slug} = '${slug}'`,
+      view: "single",
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        const images = fields.images as string[];
+        return {
+          id: record.id,
+          title: fields.title as string,
+          slug: fields.slug as string,
+          description: fields.description as string,
+          challenge: fields.challenge as string,
+          solution: fields.solution as string,
+          outcome: fields.outcome as string,
+          category: fields.category as string,
+          year: fields.year as string,
+          client: fields.client as string,
+          services: fields.services as string,
+          image: getImageUrl(record.id, "image", "portfolio"),
+          images: images.map((image, index) =>
+            getImageUrl(record.id, "images", "portfolio", index.toString()),
+          ),
+          testimonialQuote: fields.testimonialQuote as string,
+          testimonialAuthor: fields.testimonialAuthor as string,
+          testimonialRole: fields.testimonialRole as string,
+          testimonialCompany: fields.testimonialCompany as string,
+          testimonialImage: getImageUrl(
+            record.id,
+            "testimonialImage",
+            "portfolio",
+          ),
+        };
       },
-    );
-    return records[0];
+    }).then((res) => {
+      return res[0];
+    });
+    setCachedData(cacheKey, data);
+    return data;
   } catch (error) {
     console.error("Error fetching portfolio:", error);
     throw new Error("Failed to fetch portfolio");
   }
-});
+};
 
 export interface Portfolio {
   id: string;
@@ -333,9 +363,12 @@ export interface Portfolio {
   category: string;
   image: string;
 }
-export const getPortfolio = cache(async (view: "all" | "featured") => {
+export const getPortfolio = async (view: "all" | "featured") => {
+  const cacheKey = `portfolio:${view}`;
+  const cached = getCachedData<Portfolio[]>(cacheKey);
+  if (cached) return cached;
   try {
-    return await fetchFromAirtableSimple<Portfolio>("portfolio", {
+    const data = await fetchFromAirtableSimple<Portfolio>("portfolio", {
       view,
       sort: [{ field: "order", direction: "asc" }],
       transformer: (record: Airtable.Record<FieldSet>) => {
@@ -351,11 +384,13 @@ export const getPortfolio = cache(async (view: "all" | "featured") => {
         };
       },
     });
+    setCachedData(cacheKey, data);
+    return data;
   } catch (error) {
     console.error("Error fetching portfolio:", error);
     throw new Error("Failed to fetch portfolio");
   }
-});
+};
 
 export interface Testimonial {
   id: string;
@@ -367,36 +402,35 @@ export interface Testimonial {
   image: string;
 }
 
-export const getTestimonials = cache(async () => {
-  const fetchTestimonials = async () => {
-    try {
-      // Fetch testimonials from Airtable
-      return await fetchFromAirtableSimple<Testimonial>("testimonials", {
-        view: "all",
-        sort: [{ field: "order", direction: "desc" }],
-        transformer: (record: Airtable.Record<FieldSet>) => {
-          const fields = record.fields;
+export const getTestimonials = async () => {
+  const cacheKey = `testimonials`;
+  const cached = getCachedData<Testimonial[]>(cacheKey);
+  if (cached) return cached;
+  try {
+    const data = await fetchFromAirtableSimple<Testimonial>("testimonials", {
+      view: "all",
+      sort: [{ field: "order", direction: "desc" }],
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
 
-          return {
-            id: record.id,
-            quote: fields.quote as string,
-            slug: fields.slug as string,
-            author: fields.author as string,
-            role: fields.role as string,
-            company: fields.company as string,
-            image: getImageUrl(record.id, "image", "testimonials"),
-          };
-        },
-      });
-    } catch (error) {
-      console.error("Error fetching testimonials:", error);
-      throw new Error("Failed to fetch testimonials");
-    }
-  };
-  return unstable_cache(fetchTestimonials, [`testimonials`], {
-    tags: ["testimonials"],
-  })();
-});
+        return {
+          id: record.id,
+          quote: fields.quote as string,
+          slug: fields.slug as string,
+          author: fields.author as string,
+          role: fields.role as string,
+          company: fields.company as string,
+          image: getImageUrl(record.id, "image", "testimonials"),
+        };
+      },
+    });
+    setCachedData(cacheKey, data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching testimonials:", error);
+    throw new Error("Failed to fetch testimonials");
+  }
+};
 
 export interface Company {
   id: string;
@@ -406,9 +440,12 @@ export interface Company {
   slug?: string;
 }
 
-export const getCompanies = cache(async () => {
+export const getCompanies = async () => {
+  const cacheKey = `companies`;
+  const cached = getCachedData<Company[]>(cacheKey);
+  if (cached) return cached;
   try {
-    return await fetchFromAirtableSimple<Company>("companies", {
+    const data = await fetchFromAirtableSimple<Company>("companies", {
       view: "all",
       sort: [{ field: "order", direction: "asc" }],
       transformer: (record: Airtable.Record<FieldSet>) => {
@@ -423,11 +460,13 @@ export const getCompanies = cache(async () => {
         };
       },
     });
+    setCachedData(cacheKey, data);
+    return data;
   } catch (error) {
     console.error("Error fetching companies:", error);
     throw new Error("Failed to fetch companies");
   }
-});
+};
 
 export interface TeamMember {
   id: string;
@@ -438,9 +477,12 @@ export interface TeamMember {
   linkedin: string;
 }
 
-export const getTeam = cache(async () => {
+export const getTeam = async () => {
+  const cacheKey = `team`;
+  const cached = getCachedData<TeamMember[]>(cacheKey);
+  if (cached) return cached;
   try {
-    return await fetchFromAirtableSimple<TeamMember>("team", {
+    const data = await fetchFromAirtableSimple<TeamMember>("team", {
       view: "all",
       sort: [{ field: "name", direction: "asc" }],
       transformer: (record: Airtable.Record<FieldSet>) => {
@@ -455,11 +497,13 @@ export const getTeam = cache(async () => {
         };
       },
     });
+    setCachedData(cacheKey, data);
+    return data;
   } catch (error) {
     console.error("Error fetching team:", error);
     throw new Error("Failed to fetch team");
   }
-});
+};
 
 // send message to Airtable
 export const postMessage = async (
@@ -526,8 +570,11 @@ export async function revalidateHomeCache(locale = "") {
   // Revalidate by tag - more specific and efficient
   revalidateTag("testimonials");
   revalidateTag("blog");
-  revalidateTag("portfolio");
-  revalidateTag("companies");
+  revalidateTag("portfolio:all");
+  revalidateTag("projects:featured");
+  revalidateTag("companies:all");
+  revalidateTag("team:all");
+  revalidateTag("career:all");
 
   // Also revalidate the API routes for images
   revalidatePath("/api/images/[id]");

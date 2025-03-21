@@ -17,7 +17,7 @@ import CareerList, { CareerSkeleton } from "./CareerList";
 export const metadata = constructMetadata({
   title: "Careers",
   description: "Explore our career opportunities.",
-  image: "/api/og?heading=Career",
+  image: "/api/og?heading=Careers",
 });
 
 type PricingPageParams = {
@@ -107,6 +107,6 @@ export default async function CareerPage({ params }: PricingPageParams) {
 }
 
 async function CareerListWrapper() {
-  const career = await getCareer();
+  const career = await getCareer("all");
   return <CareerList career={career} />;
 }

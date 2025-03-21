@@ -68,7 +68,7 @@ export default async function CareerPage({ params }: PricingPageParams) {
           tag="h3"
           title="Join Our Team"
           text="We're always looking for talented individuals who share our passion for minimalist design and meaningful digital experiences."
-          link="/career"
+          link="/careers"
           linkText="View Open Positions"
           border
           button
