@@ -143,11 +143,47 @@ function getCachedData<T>(key: string): T | null {
 
   return entry.data;
 }
+
 function setCachedData<T>(key: string, data: T): void {
   cache[key] = {
     data,
     timestamp: Date.now(),
   };
+}
+
+// Function to clear specific cache keys or entire cache
+export function clearCache(keys?: string[]): { cleared: number } {
+  let clearedCount = 0;
+
+  if (keys && keys.length > 0) {
+    // Clear specific keys
+    keys.forEach((key) => {
+      // Support for wildcard pattern like 'blog:*'
+      if (key.endsWith("*")) {
+        const prefix = key.slice(0, -1);
+        Object.keys(cache).forEach((cacheKey) => {
+          if (cacheKey.startsWith(prefix)) {
+            delete cache[cacheKey];
+            clearedCount++;
+          }
+        });
+      } else if (cache[key]) {
+        delete cache[key];
+        clearedCount++;
+      }
+    });
+  } else {
+    // Clear entire cache
+    clearedCount = Object.keys(cache).length;
+    Object.keys(cache).forEach((key) => {
+      delete cache[key];
+    });
+  }
+
+  // For debugging - log the number of cleared entries
+  console.log(`Cache cleared: ${clearedCount} entries removed`);
+
+  return { cleared: clearedCount };
 }
 
 // Define Career type based on the schema
@@ -403,7 +439,7 @@ export interface Testimonial {
 }
 
 export const getTestimonials = async () => {
-  const cacheKey = `testimonials`;
+  const cacheKey = `testimonials:all`;
   const cached = getCachedData<Testimonial[]>(cacheKey);
   if (cached) return cached;
   try {
@@ -441,7 +477,7 @@ export interface Company {
 }
 
 export const getCompanies = async () => {
-  const cacheKey = `companies`;
+  const cacheKey = `companies:all`;
   const cached = getCachedData<Company[]>(cacheKey);
   if (cached) return cached;
   try {
@@ -478,7 +514,7 @@ export interface TeamMember {
 }
 
 export const getTeam = async () => {
-  const cacheKey = `team`;
+  const cacheKey = `team:all`;
   const cached = getCachedData<TeamMember[]>(cacheKey);
   if (cached) return cached;
   try {
@@ -561,6 +597,13 @@ export const postMessage = async (
 };
 
 export async function revalidateHomeCache(locale = "") {
+  // Clear in-memory cache completely to ensure no stale data remains
+  // This is the most reliable approach to ensure fresh data after revalidation
+  const cacheClearResult = clearCache();
+  console.log(
+    `revalidateHomeCache: Cleared ${cacheClearResult.cleared} cache entries`,
+  );
+
   // Revalidate by path
   revalidatePath("/");
   if (locale) {
@@ -568,16 +611,19 @@ export async function revalidateHomeCache(locale = "") {
   }
 
   // Revalidate by tag - more specific and efficient
-  revalidateTag("testimonials");
-  revalidateTag("blog");
-  revalidateTag("portfolio:all");
-  revalidateTag("projects:featured");
-  revalidateTag("companies:all");
-  revalidateTag("team:all");
-  revalidateTag("career:all");
+  revalidateTag("testimonials:*");
+  revalidateTag("blog:*");
+  revalidateTag("portfolio:*");
+  revalidateTag("projects:*");
+  revalidateTag("companies:*");
+  revalidateTag("team:*");
+  revalidateTag("career:*");
 
   // Also revalidate the API routes for images
   revalidatePath("/api/images/[id]");
 
-  return { revalidated: true };
+  return {
+    revalidated: true,
+    cacheCleared: cacheClearResult.cleared,
+  };
 }

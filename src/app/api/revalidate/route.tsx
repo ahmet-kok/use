@@ -1,5 +1,7 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+// Import the clearCache function from airtable.ts
+import { clearCache } from "@/lib/airtable";
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,6 +14,11 @@ export async function POST(request: NextRequest) {
 
     // Track what was revalidated
     let revalidated: string[] = [];
+
+    // Clear the entire in-memory cache for all revalidation requests
+    // This is the most reliable approach to ensure fresh data after revalidation
+    const cacheClearResult = clearCache();
+    console.log(`Revalidation: Cleared ${cacheClearResult.cleared} cache entries`);
 
     // Revalidate by tag if provided (more efficient)
     if (tag) {
@@ -39,6 +46,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       revalidated: true,
+      cacheCleared: cacheClearResult.cleared,
       details: revalidated.join(", "),
       timestamp: new Date().toISOString(),
     });
