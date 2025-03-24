@@ -23,29 +23,47 @@ export async function POST(request: NextRequest) {
 
     // Revalidate locale-specific paths
     if (locale) {
+      // Root page with locale
       revalidatePath(`/${locale}`);
       revalidated.push(`path: /${locale}`);
+      
+      // Locale-specific content paths
+      revalidatePath(`/${locale}/blog`);
+      revalidated.push(`path: /${locale}/blog`);
+      
+      revalidatePath(`/${locale}/portfolio`);
+      revalidated.push(`path: /${locale}/portfolio`);
+      
+      // Dynamic routes with locale
+      revalidatePath(`/${locale}/blog/[slug]`, "page");
+      revalidated.push(`path: /${locale}/blog/[slug]`);
+      
+      revalidatePath(`/${locale}/portfolio/[slug]`, "page");
+      revalidated.push(`path: /${locale}/portfolio/[slug]`);
     }
 
-    // Always revalidate home
-    if (!path) {
+    // If no specific path or locale, revalidate everything
+    if (!path && !locale) {
       revalidatePath("/");
       revalidated.push("path: /");
       
-      // Also revalidate key content paths
-      revalidatePath("/blog");
-      revalidated.push("path: /blog");
+      // Revalidate all locales
+      revalidatePath("/[locale]", "page");
+      revalidated.push("path: /[locale]");
       
-      // Revalidate dynamic blog pages
-      revalidatePath("/blog/[slug]", "page");
-      revalidated.push("path: /blog/[slug]");
+      // All content paths across all locales
+      revalidatePath("/[locale]/blog", "page");
+      revalidated.push("path: /[locale]/blog");
       
-      revalidatePath("/portfolio");
-      revalidated.push("path: /portfolio");
+      revalidatePath("/[locale]/portfolio", "page");
+      revalidated.push("path: /[locale]/portfolio");
       
-      // Revalidate dynamic portfolio pages
-      revalidatePath("/portfolio/[slug]", "page");
-      revalidated.push("path: /portfolio/[slug]");
+      // All dynamic routes across all locales
+      revalidatePath("/[locale]/blog/[slug]", "page");
+      revalidated.push("path: /[locale]/blog/[slug]");
+      
+      revalidatePath("/[locale]/portfolio/[slug]", "page");
+      revalidated.push("path: /[locale]/portfolio/[slug]");
     }
 
     // Also revalidate the API routes for images

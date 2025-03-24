@@ -505,25 +505,39 @@ export const postMessage = async (
 export async function revalidateHomeCache(locale = "") {
   console.log('Revalidating paths to refresh Next.js cache');
 
-  // Revalidate by path
+  // Revalidate by path with correct structure
   revalidatePath("/");
+  
+  // Revalidate with locale if provided
   if (locale) {
+    // Root page with locale
     revalidatePath(`/${locale}`);
+    
+    // Locale-specific content paths
+    revalidatePath(`/${locale}/blog`);
+    revalidatePath(`/${locale}/portfolio`);
+    revalidatePath(`/${locale}/team`);
+    revalidatePath(`/${locale}/about`);
+    revalidatePath(`/${locale}/contact`);
+    revalidatePath(`/${locale}/career`);
+    
+    // Dynamic routes with locale
+    revalidatePath(`/${locale}/blog/[slug]`, "page");
+    revalidatePath(`/${locale}/portfolio/[slug]`, "page");
+  } else {
+    // Revalidate all locales (including default)
+    revalidatePath("/[locale]", "page");
+    revalidatePath("/[locale]/blog", "page");
+    revalidatePath("/[locale]/portfolio", "page");
+    revalidatePath("/[locale]/team", "page");
+    revalidatePath("/[locale]/about", "page");
+    revalidatePath("/[locale]/contact", "page");
+    revalidatePath("/[locale]/career", "page");
+    
+    // Dynamic routes for all locales
+    revalidatePath("/[locale]/blog/[slug]", "page");
+    revalidatePath("/[locale]/portfolio/[slug]", "page");
   }
-
-  // Revalidate key content paths
-  revalidatePath("/blog");
-  // Revalidate dynamic blog pages
-  revalidatePath("/blog/[slug]", "page");
-  
-  revalidatePath("/portfolio");
-  // Revalidate dynamic portfolio pages
-  revalidatePath("/portfolio/[slug]", "page");
-  
-  revalidatePath("/team");
-  revalidatePath("/about");
-  revalidatePath("/contact");
-  revalidatePath("/career");
 
   // Also revalidate the API routes for images
   revalidatePath("/api/images/[id]");
