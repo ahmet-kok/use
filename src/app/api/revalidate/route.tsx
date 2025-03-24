@@ -1,11 +1,9 @@
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-// Import the clearCache function from airtable.ts
-import { clearCache } from "@/lib/airtable";
 
 export async function POST(request: NextRequest) {
   try {
-    const { secret, tag, path, locale } = await request.json();
+    const { secret, path, locale } = await request.json();
 
     // Check for secret
     if (secret !== process.env.REVALIDATION_SECRET) {
@@ -15,16 +13,7 @@ export async function POST(request: NextRequest) {
     // Track what was revalidated
     let revalidated: string[] = [];
 
-    // Clear the entire in-memory cache for all revalidation requests
-    // This is the most reliable approach to ensure fresh data after revalidation
-    const cacheClearResult = clearCache();
-    console.log(`Revalidation: Cleared ${cacheClearResult.cleared} cache entries`);
-
-    // Revalidate by tag if provided (more efficient)
-    if (tag) {
-      revalidateTag(tag);
-      revalidated.push(`tag: ${tag}`);
-    }
+    console.log('API route: Revalidating Next.js cache paths');
 
     // Revalidate by path if provided
     if (path) {
@@ -39,14 +28,32 @@ export async function POST(request: NextRequest) {
     }
 
     // Always revalidate home
-    if (!path && !tag) {
+    if (!path) {
       revalidatePath("/");
       revalidated.push("path: /");
+      
+      // Also revalidate key content paths
+      revalidatePath("/blog");
+      revalidated.push("path: /blog");
+      
+      // Revalidate dynamic blog pages
+      revalidatePath("/blog/[slug]", "page");
+      revalidated.push("path: /blog/[slug]");
+      
+      revalidatePath("/portfolio");
+      revalidated.push("path: /portfolio");
+      
+      // Revalidate dynamic portfolio pages
+      revalidatePath("/portfolio/[slug]", "page");
+      revalidated.push("path: /portfolio/[slug]");
     }
+
+    // Also revalidate the API routes for images
+    revalidatePath("/api/images/[id]");
+    revalidated.push("path: /api/images/[id]");
 
     return NextResponse.json({
       revalidated: true,
-      cacheCleared: cacheClearResult.cleared,
       details: revalidated.join(", "),
       timestamp: new Date().toISOString(),
     });

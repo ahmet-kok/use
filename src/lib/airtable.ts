@@ -119,72 +119,6 @@ export async function fetchFromAirtableSimple<T>(
     ...options,
   });
 }
-// Cache duration in milliseconds (6 hours)
-const CACHE_DURATION = 6 * 60 * 60 * 1000;
-
-// Cache storage with timestamps
-type CacheEntry<T> = {
-  data: T;
-  timestamp: number;
-};
-
-const cache: { [key: string]: CacheEntry<any> } = {};
-
-// Cache helper functions
-function getCachedData<T>(key: string): T | null {
-  const entry = cache[key];
-  if (!entry) return null;
-
-  const isExpired = Date.now() - entry.timestamp > CACHE_DURATION;
-  if (isExpired) {
-    delete cache[key];
-    return null;
-  }
-
-  return entry.data;
-}
-
-function setCachedData<T>(key: string, data: T): void {
-  cache[key] = {
-    data,
-    timestamp: Date.now(),
-  };
-}
-
-// Function to clear specific cache keys or entire cache
-export function clearCache(keys?: string[]): { cleared: number } {
-  let clearedCount = 0;
-
-  if (keys && keys.length > 0) {
-    // Clear specific keys
-    keys.forEach((key) => {
-      // Support for wildcard pattern like 'blog:*'
-      if (key.endsWith("*")) {
-        const prefix = key.slice(0, -1);
-        Object.keys(cache).forEach((cacheKey) => {
-          if (cacheKey.startsWith(prefix)) {
-            delete cache[cacheKey];
-            clearedCount++;
-          }
-        });
-      } else if (cache[key]) {
-        delete cache[key];
-        clearedCount++;
-      }
-    });
-  } else {
-    // Clear entire cache
-    clearedCount = Object.keys(cache).length;
-    Object.keys(cache).forEach((key) => {
-      delete cache[key];
-    });
-  }
-
-  // For debugging - log the number of cleared entries
-  console.log(`Cache cleared: ${clearedCount} entries removed`);
-
-  return { cleared: clearedCount };
-}
 
 // Define Career type based on the schema
 export interface Career {
@@ -197,30 +131,30 @@ export interface Career {
   order: number;
 }
 
-// Function to get career with caching
+// Function to get career without caching
 export const getCareer = async (view: "all" | "featured") => {
-  const cacheKey = `career:${view}`;
-  const cached = getCachedData<Career[]>(cacheKey);
-  if (cached) return cached;
-
-  const data = await fetchFromAirtableSimple<Career>("career", {
-    view,
-    sort: [{ field: "order", direction: "asc" }],
-    transformer: (record: Airtable.Record<FieldSet>) => {
-      const fields = record.fields;
-      return {
-        id: record.id,
-        title: fields.title as string,
-        description: fields.description as string,
-        type: fields.type as string,
-        location: fields.location as string,
-        url: fields.url as string,
-        order: (fields.order as number) || 0,
-      };
-    },
-  });
-  setCachedData(cacheKey, data);
-  return data;
+  try {
+    const data = await fetchFromAirtableSimple<Career>("career", {
+      view,
+      sort: [{ field: "order", direction: "asc" }],
+      transformer: (record: Airtable.Record<FieldSet>) => {
+        const fields = record.fields;
+        return {
+          id: record.id,
+          title: fields.title as string,
+          description: fields.description as string,
+          type: fields.type as string,
+          location: fields.location as string,
+          url: fields.url as string,
+          order: (fields.order as number) || 0,
+        };
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error fetching career:", error);
+    throw new Error("Failed to fetch career");
+  }
 };
 
 export interface singleBlog {
@@ -239,9 +173,6 @@ export interface singleBlog {
 }
 
 export const getSingleBlog = async (slug: string) => {
-  const cacheKey = `blog:${slug}`;
-  const cached = getCachedData<singleBlog>(cacheKey);
-  if (cached) return cached;
   try {
     const data = await fetchFromAirtableSimple<singleBlog>("blog", {
       filterByFormula: `{slug} = '${slug}'`,
@@ -267,7 +198,6 @@ export const getSingleBlog = async (slug: string) => {
     }).then((res) => {
       return res[0];
     });
-    setCachedData(cacheKey, data);
     return data;
   } catch (error) {
     console.error("Error fetching blog:", error);
@@ -290,9 +220,6 @@ export interface Blog {
 }
 
 export const getBlog = async (view: "all" | "featured") => {
-  const cacheKey = `blog:${view}`;
-  const cached = getCachedData<Blog[]>(cacheKey);
-  if (cached) return cached;
   try {
     const data = await fetchFromAirtableSimple<Blog>("blog", {
       view,
@@ -314,7 +241,6 @@ export const getBlog = async (view: "all" | "featured") => {
         };
       },
     });
-    setCachedData(cacheKey, data);
     return data;
   } catch (error) {
     console.error("Error fetching blog:", error);
@@ -343,9 +269,6 @@ export interface singlePortfolio {
   testimonialImage: string;
 }
 export const getSinglePortfolio = async (slug: string) => {
-  const cacheKey = `portfolio:${slug}`;
-  const cached = getCachedData<singlePortfolio>(cacheKey);
-  if (cached) return cached;
   try {
     const data = await fetchFromAirtableSimple<singlePortfolio>("portfolio", {
       filterByFormula: `{slug} = '${slug}'`,
@@ -383,7 +306,6 @@ export const getSinglePortfolio = async (slug: string) => {
     }).then((res) => {
       return res[0];
     });
-    setCachedData(cacheKey, data);
     return data;
   } catch (error) {
     console.error("Error fetching portfolio:", error);
@@ -400,9 +322,6 @@ export interface Portfolio {
   image: string;
 }
 export const getPortfolio = async (view: "all" | "featured") => {
-  const cacheKey = `portfolio:${view}`;
-  const cached = getCachedData<Portfolio[]>(cacheKey);
-  if (cached) return cached;
   try {
     const data = await fetchFromAirtableSimple<Portfolio>("portfolio", {
       view,
@@ -420,7 +339,6 @@ export const getPortfolio = async (view: "all" | "featured") => {
         };
       },
     });
-    setCachedData(cacheKey, data);
     return data;
   } catch (error) {
     console.error("Error fetching portfolio:", error);
@@ -439,9 +357,6 @@ export interface Testimonial {
 }
 
 export const getTestimonials = async () => {
-  const cacheKey = `testimonials:all`;
-  const cached = getCachedData<Testimonial[]>(cacheKey);
-  if (cached) return cached;
   try {
     const data = await fetchFromAirtableSimple<Testimonial>("testimonials", {
       view: "all",
@@ -460,7 +375,6 @@ export const getTestimonials = async () => {
         };
       },
     });
-    setCachedData(cacheKey, data);
     return data;
   } catch (error) {
     console.error("Error fetching testimonials:", error);
@@ -477,9 +391,6 @@ export interface Company {
 }
 
 export const getCompanies = async () => {
-  const cacheKey = `companies:all`;
-  const cached = getCachedData<Company[]>(cacheKey);
-  if (cached) return cached;
   try {
     const data = await fetchFromAirtableSimple<Company>("companies", {
       view: "all",
@@ -496,7 +407,6 @@ export const getCompanies = async () => {
         };
       },
     });
-    setCachedData(cacheKey, data);
     return data;
   } catch (error) {
     console.error("Error fetching companies:", error);
@@ -514,9 +424,6 @@ export interface TeamMember {
 }
 
 export const getTeam = async () => {
-  const cacheKey = `team:all`;
-  const cached = getCachedData<TeamMember[]>(cacheKey);
-  if (cached) return cached;
   try {
     const data = await fetchFromAirtableSimple<TeamMember>("team", {
       view: "all",
@@ -533,7 +440,6 @@ export const getTeam = async () => {
         };
       },
     });
-    setCachedData(cacheKey, data);
     return data;
   } catch (error) {
     console.error("Error fetching team:", error);
@@ -597,12 +503,7 @@ export const postMessage = async (
 };
 
 export async function revalidateHomeCache(locale = "") {
-  // Clear in-memory cache completely to ensure no stale data remains
-  // This is the most reliable approach to ensure fresh data after revalidation
-  const cacheClearResult = clearCache();
-  console.log(
-    `revalidateHomeCache: Cleared ${cacheClearResult.cleared} cache entries`,
-  );
+  console.log('Revalidating paths to refresh Next.js cache');
 
   // Revalidate by path
   revalidatePath("/");
@@ -610,20 +511,24 @@ export async function revalidateHomeCache(locale = "") {
     revalidatePath(`/${locale}`);
   }
 
-  // Revalidate by tag - more specific and efficient
-  revalidateTag("testimonials:*");
-  revalidateTag("blog:*");
-  revalidateTag("portfolio:*");
-  revalidateTag("projects:*");
-  revalidateTag("companies:*");
-  revalidateTag("team:*");
-  revalidateTag("career:*");
+  // Revalidate key content paths
+  revalidatePath("/blog");
+  // Revalidate dynamic blog pages
+  revalidatePath("/blog/[slug]", "page");
+  
+  revalidatePath("/portfolio");
+  // Revalidate dynamic portfolio pages
+  revalidatePath("/portfolio/[slug]", "page");
+  
+  revalidatePath("/team");
+  revalidatePath("/about");
+  revalidatePath("/contact");
+  revalidatePath("/career");
 
   // Also revalidate the API routes for images
   revalidatePath("/api/images/[id]");
 
   return {
-    revalidated: true,
-    cacheCleared: cacheClearResult.cleared,
+    revalidated: true
   };
 }
